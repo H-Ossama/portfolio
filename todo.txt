@@ -1,0 +1,32 @@
+TODO LIST
+=========
+
+WEBSITE IMPROVEMENTS
+------------------
+
+1. Mouse Pointer Customization
+    - Change cursor to match website theme
+    - Implement custom cursor styles
+
+2. Image Management
+    - Fix broken image links
+    - Optimize image loading
+    - Ensure proper image scaling
+
+3. Pro User Implementation
+    - Create secure authentication system
+    - Add private access features:
+      * Project management (add/edit/delete)
+      * Bio/user info updates
+      * Image upload functionality
+      * Project image management
+
+4. Light Mode Fixes
+    - Review color schemes
+    - Fix contrast issues
+    - Ensure consistent theme switching
+    - Test all components in light mode
+
+Priority: High
+Status: Pending
+Last Updated: [09/02/2025]

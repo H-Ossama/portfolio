@@ -1,11 +1,12 @@
-/* style.css */
+/* Root Variables */
 :root {
-    --primary-gold: #d4af37; /* Richer gold color */
+    --primary-gold: #d4af37;
     --primary-black: #0d0d0d;
     --secondary-gold: #c5a572;
     --text-white: #ffffff;
 }
 
+/* Global Reset */
 * {
     margin: 0;
     padding: 0;
@@ -13,21 +14,27 @@
     font-family: 'Arial', sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
+/* Base Styles */
 body {
     background-color: var(--primary-black);
     color: var(--text-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
 }
 
+/* Background Container - Fixed positioning */
 .bg-container {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
-    overflow: hidden;
-    
 }
 
 #background-canvas {
@@ -36,17 +43,19 @@ body {
     display: block;
 }
 
-/* Navigation Styling */
+/* Navigation - Improved visibility */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 5%;
-    background-color: rgba(0, 0, 0, 0.9);
+    padding: 1rem 5%;
+    background-color: rgba(13, 13, 13, 0.95);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 .logo {
@@ -75,7 +84,7 @@ nav ul li a.active {
     color: var(--primary-gold);
 }
 
-/* Hero Section Styling */
+/* Hero Section - Improved layout */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -83,7 +92,7 @@ nav ul li a.active {
     justify-content: center;
     padding: 6rem 2rem;
     position: relative;
-    overflow: hidden;
+    margin-top: 80px; /* Added to account for fixed nav */
 }
 
 .hero::before {
@@ -97,6 +106,19 @@ nav ul li a.active {
         radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.1), transparent 40%),
         radial-gradient(circle at 90% 90%, rgba(212, 175, 55, 0.05), transparent 40%);
     pointer-events: none;
+}
+
+.hero-container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-profile {
+    margin-bottom: 2rem;
 }
 
 .hero-container {
@@ -132,12 +154,13 @@ nav ul li a.active {
     transform: perspective(1000px) rotateY(0deg);
 }
 
+/* Profile Image - Correct path and styling */
 .profile-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 30px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
     border: 3px solid var(--primary-gold);
+    object-fit: cover;
 }
 
 .profile-backdrop {
@@ -183,6 +206,7 @@ nav ul li a.active {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    max-width: 800px;
 }
 
 .hero-header {
@@ -203,6 +227,7 @@ nav ul li a.active {
     background: linear-gradient(to right, #ffffff, var(--primary-gold));
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
     margin: 0.5rem 0;
 }
@@ -232,7 +257,8 @@ nav ul li a.active {
 .cta-container {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 2rem; /* Increased margin to avoid overlap */
+    justify-content: center; /* Center align buttons */
 }
 
 .contact-btn {
@@ -396,7 +422,7 @@ nav ul li a.active {
 /* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
-    bottom: 2rem;
+    bottom: 4rem; /* Increased bottom margin to avoid overlap */
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -429,7 +455,7 @@ nav ul li a.active {
     100% { transform: translateX(-50%) translateY(20px); opacity: 0; }
 }
 
-/* About Section Styling */
+/* About Section */
 .about {
     padding: 6rem 0;
     background: linear-gradient(135deg, rgba(13, 13, 13, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
@@ -688,6 +714,7 @@ nav ul li a.active {
     background: var(--primary-gold);
     transition: width 1.5s ease;
 }
+
 /* Projects Section */
 .projects {
     padding: 5rem 10%;
@@ -817,7 +844,7 @@ nav ul li a.active {
     color: var(--primary-black);
 }
 
-/* Modern Education Section Styling */
+/* Education Section */
 .education {
     padding: 8rem 0;
     background: linear-gradient(to bottom right, #0f0f0f, #1a1a1a);
@@ -962,7 +989,6 @@ nav ul li a.active {
     left: 0;
     color: #ffd700;
 }
-
 .edu-skills {
     display: flex;
     gap: 1rem;
@@ -1018,7 +1044,8 @@ nav ul li a.active {
 .edu-card {
     animation: fadeInUp 0.6s ease forwards;
 }
-/* Technologies Section Styling */
+
+/* Technologies Section */
 .technologies {
     padding: 6rem 0;
     background: linear-gradient(135deg, rgba(13, 13, 13, 0.97) 0%, rgba(0, 0, 0, 0.95) 100%);
@@ -1300,6 +1327,8 @@ footer {
 .social-links a:hover {
     color: var(--primary-gold);
 }
+
+/* Utility Classes */
 .btn {
     display: inline-block;
     background-color: var(--primary-gold);
@@ -1311,7 +1340,6 @@ footer {
     transition: transform 0.3s ease, background-color 0.3s ease;
     position: relative;
     overflow: hidden;
-    
 }
 
 .btn::before {
@@ -1334,6 +1362,7 @@ footer {
 .btn:hover::before {
     transform: translateX(0);
 }
+
 .contact-button-wrapper {
     text-align: center;
     margin: 2rem 0;
@@ -1391,8 +1420,6 @@ footer {
     color: var(--primary-black);
     font-weight: 600;
 }
-
-
 
 /* Add this to your global CSS */
 .contact {
@@ -1496,4 +1523,117 @@ footer {
         transform: scale(1);
         opacity: 1;
     }
+}
+
+/* Accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none;
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    /* Add dark mode specific styles if needed */
+}
+
+/* Add smooth transitions */
+.hero-content, .hero-profile, .project-card, .edu-card, .tech-item {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Ensure sections have proper spacing */
+/* section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+} */
+
+/* Improve card visibility */
+.project-card, .edu-card-inner, .tech-category {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Add hover effects */
+.project-card:hover, .edu-card-inner:hover, .tech-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* Improve text contrast */
+.project-info h3, .edu-title h3, .tech-details h4 {
+    color: var(--primary-gold);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Fix mobile navigation */
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: rgba(13, 13, 13, 0.95);
+        padding: 1rem;
+        flex-direction: column;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .nav-links.active {
+        transform: translateY(0);
+    }
+
+    .burger-menu {
+        display: block;
+    }
+}
+
+/* Add loading animation */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading::after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--primary-gold);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Ensure content is visible */
+.hero-container, .project-grid, .education-container, .tech-container {
+    position: relative;
+    z-index: 2;
 }

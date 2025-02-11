@@ -2,6 +2,20 @@
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Add loading state
+    const loading = document.createElement('div');
+    loading.className = 'loading';
+    document.body.appendChild(loading);
+
+    // Ensure all assets are loaded
+    window.addEventListener('load', () => {
+        loading.style.opacity = '0';
+        setTimeout(() => {
+            loading.remove();
+            document.body.style.overflow = 'visible';
+        }, 500);
+    });
+
     // Initialize AOS
     AOS.init({
         duration: 1000,
@@ -9,8 +23,71 @@ document.addEventListener('DOMContentLoaded', () => {
         offset: 100
     });
 
-    // Create the background canvas
-    // ... (rest of the canvas animation code)
+    // Background Canvas Animation
+    const canvas = document.getElementById('background-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas size
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Particle system
+    const particles = [];
+    const particleCount = 100;
+    
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+    
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.opacity = Math.random() * 0.5;
+        }
+    
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+    
+            if (this.x < 0 || this.x > canvas.width) this.reset();
+            if (this.y < 0 || this.y > canvas.height) this.reset();
+        }
+    
+        draw() {
+            ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    
+    // Create particles
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+    
+    // Animation loop
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
 
     // Typing Animation
     const text = "Backend Developer";
@@ -156,6 +233,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     });
 });
+
+// Ensure background canvas is properly sized
+window.addEventListener('resize', () => {
+    const canvas = document.getElementById('background-canvas');
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+});
+
+// Add mobile menu functionality
+const burgerMenu = document.querySelector('.burger-menu');
+const navLinks = document.querySelector('.nav-links');
+
+if (burgerMenu && navLinks) {
+    burgerMenu.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        burgerMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!burgerMenu.contains(e.target) && !navLinks.contains(e.target)) {
+            navLinks.classList.remove('active');
+            burgerMenu.classList.remove('active');
+        }
+    });
+}
 
 const updateCopyrightYear = () => {
     const yearElement = document.getElementById('current-year');
