@@ -9,9 +9,11 @@ WEBSITE IMPROVEMENTS
     - Implement custom cursor styles
 
 2. Image Management
-    - Fix broken image links
-    - Optimize image loading
-    - Ensure proper image scaling
+    2.1- Fix broken image links
+    2.2- Optimize image loading
+    2.3- Ensure proper image scaling
+    2.4- fix the about me img
+
 
 3. Pro User Implementation
     - Create secure authentication system
@@ -26,6 +28,11 @@ WEBSITE IMPROVEMENTS
     - Fix contrast issues
     - Ensure consistent theme switching
     - Test all components in light mode
+5- fix the sidebarte cantact media
+6- fix cv buttons at the end of the page are not working.
+7- get an email if some one send you request from contact me page.
+8- redisign the contact me page.
+
 
 Priority: High
 Status: Pending

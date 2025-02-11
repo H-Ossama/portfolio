@@ -14,7 +14,7 @@
         <!-- Open Graph / Social Media Meta Tags -->
         <meta property="og:title" content="Oussama Hattan | Backend Developer Portfolio">
         <meta property="og:description" content="Professional backend developer portfolio showcasing projects and expertise">
-        <meta property="og:image" content="/assets/images/profile-pic-2.png">
+        <meta property="og:image" content="./images/Oussama.png">
         <meta property="og:url" content="https://yourwebsite.com">
         
         <!-- Security Headers -->
@@ -22,7 +22,7 @@
         <meta http-equiv="X-Frame-Options" content="DENY">
         
         <!-- Stylesheets -->
-        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="./style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
@@ -59,7 +59,7 @@
             <li><a href="#education">Education</a></li>
             <li><a href="#technologies">Technologies</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#contact.html">Contact</a></li>
         </ul>
         <div class="theme-toggle">
             <i class="fas fa-moon"></i>
@@ -72,7 +72,7 @@
         <!-- Left Side - Profile -->
         <div class="hero-profile" data-aos="fade-right">
             <div class="profile-frame">
-                <img src="/assets/images/profile-pic-2.png" class="profile-image" alt="Profile picture of Oussama Hattan">
+                <img src="./images/profile-pic-2.png" class="profile-image" alt="Profile picture of Oussama Hattan">
                 <div class="profile-backdrop"></div>
             </div>
             <div class="social-links">
@@ -105,12 +105,12 @@
                 Turning complex problems into elegant solutions.
             </p>
 
-            <div class="tech-stack">
+            <!-- <div class="tech-stack">
                 <i class="fab fa-python" data-aos="zoom-in" data-aos-delay="200"></i>
                 <i class="fab fa-node-js" data-aos="zoom-in" data-aos-delay="400"></i>
                 <i class="fab fa-java" data-aos="zoom-in" data-aos-delay="600"></i>
                 <i class="fas fa-database" data-aos="zoom-in" data-aos-delay="800"></i>
-            </div>
+            </div> -->
 
             <div class="cta-container">
                 <button class="contact-btn primary" onclick="window.location.href='contact.html'">
@@ -137,7 +137,7 @@
     <div class="project-grid">
         <div class="project-card">
             <div class="project-image">
-                <img src="assets/images/project1.jpg" alt="Project 1">
+                <img src="./images/project1.jpg" alt="Project 1">
             </div>
             <div class="project-info">
                 <h3>E-Commerce API</h3>
@@ -151,7 +151,7 @@
 
         <div class="project-card">
             <div class="project-image">
-                <img src="assets/images/project2.jpg" alt="Project 2">
+                <img src="./images/project2.jpg" alt="Project 2">
             </div>
             <div class="project-info">
                 <h3>Social Media App</h3>
@@ -165,7 +165,7 @@
 
         <div class="project-card">
             <div class="project-image">
-                <img src="assets/images/project3.jpg" alt="Project 3">
+                <img src="./images/project3.jpg" alt="Project 3">
             </div>
             <div class="project-info">
                 <h3>Data Visualization Dashboard</h3>
@@ -179,7 +179,7 @@
 
         <div class="project-card">
             <div class="project-image">
-                <img src="assets/images/project4.jpg" alt="Project 4">
+                <img src="./images/project4.jpg" alt="Project 4">
             </div>
             <div class="project-info">
                 <h3>Chatbot Application</h3>
@@ -362,7 +362,7 @@
                                 <div class="skill-bar" style="--skill-level: 85%"></div>
                             </div>
                         </div>
-                        <div class="tech-details">
+                        <div class "tech-details">
                             <h4>Git</h4>
                             <span class="tech-level">Advanced</span>
                         </div>
@@ -391,7 +391,7 @@
         <div class="about-left">
             <div class="about-image-container">
                 <div class="image-hex">
-                    <img src="/assets/images/profile-pic-2.png" alt="Oussama Hattan">
+                    <img src="./images/profile-pic-2.png" alt="Oussama Hattan">
                 </div>
                 <div class="floating-icons">
                     <i class="fab fa-python"></i>
@@ -423,11 +423,11 @@
                 </div>
                 
                 <div class="about-cta">
-                    <a href="/assets/OussamaHattanResume(ENG).pdf" class="cta-button download-btn" download>
+                    <a href="./assets/OussamaHattanResume(ENG).pdf" class="cta-button download-btn" download>
                         <i class="fas fa-download"></i>
                         <span>Download CV</span>
                     </a>
-                    <a href="/assets/OussamaHattanResume(ENG).pdf" class="cta-button view-btn">
+                    <a href="./assets/OussamaHattanResume(ENG).pdf" class="cta-button view-btn">
                         <i class="fas fa-eye"></i>
                         <span>View CV</span>
                     </a>
@@ -436,6 +436,44 @@
         </div>
     </div>
 </section>
+
+<!-- Pro User Login Modal -->
+<div id="pro-user-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Pro User Login</h2>
+        <form id="pro-user-form">
+            <div class="form-group">
+                <label for="pro-user-name">Full Name</label>
+                <input type="text" id="pro-user-name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-email">Email</label>
+                <input type="email" id="pro-user-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-company">Company</label>
+                <input type="text" id="pro-user-company" name="company" required>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-project-type">Project Type</label>
+                <select id="pro-user-project-type" name="projectType" required>
+                    <option value="">Select project type</option>
+                    <option value="backend">Backend Development</option>
+                    <option value="fullstack">Full Stack Project</option>
+                    <option value="consulting">Technical Consulting</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-message">Message</label>
+                <textarea id="pro-user-message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+    </div>
+</div>
+
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -465,7 +503,7 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="/script.js"></script>
+    <script src="./script.js"></script>
 
 
 </body>

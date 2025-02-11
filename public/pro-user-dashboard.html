@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Dashboard | Portfolio</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <div class="bg-container">
+        <canvas id="background-canvas"></canvas>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="dashboard-nav">
+        <div class="nav-left">
+            <a href="index.html" class="logo">Backend Dev</a>
+        </div>
+        <div class="nav-right">
+            <div class="user-profile" onclick="toggleUserMenu()">
+                <img src="./images/profile-pic-2.png" alt="Profile" class="nav-profile-pic">
+                <span class="username">H_Oussama</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- User Menu Dropdown -->
+        <div class="user-menu" id="userMenu">
+            <div class="menu-item" onclick="openSettings()">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+            <div class="menu-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Layout -->
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#projects" class="nav-item active" data-section="projects">
+                    <i class="fas fa-code"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="#education" class="nav-item" data-section="education">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Education</span>
+                </a>
+                <a href="#technologies" class="nav-item" data-section="technologies">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Technologies</span>
+                </a>
+                <a href="#about" class="nav-item" data-section="about">
+                    <i class="fas fa-user"></i>
+                    <span>About</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Dynamic content sections will be loaded here -->
+            <div id="content-area"></div>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> Settings</h2>
+                <button class="close-btn" onclick="closeModal('settings-modal')">&times;</button>
+            </div>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label for="new-username">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="new-username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="new-password">
+                        <i class="fas fa-lock"></i> New Password
+                    </label>
+                    <input type="password" id="new-password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="cursor-style">
+                        <i class="fas fa-mouse-pointer"></i> Cursor Style
+                    </label>
+                    <select id="cursor-style" name="cursor">
+                        <option value="default">Default</option>
+                        <option value="pointer">Pointer</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="./dashboard.js"></script>
+</body>
+</html>
