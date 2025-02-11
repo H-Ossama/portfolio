@@ -14,7 +14,7 @@
         <!-- Open Graph / Social Media Meta Tags -->
         <meta property="og:title" content="Oussama Hattan | Backend Developer Portfolio">
         <meta property="og:description" content="Professional backend developer portfolio showcasing projects and expertise">
-        <meta property="og:image" content="./images/Oussama.png">
+        <meta property="og:image" content="../assets/images/oussama.png">
         <meta property="og:url" content="https://yourwebsite.com">
         
         <!-- Security Headers -->
@@ -22,14 +22,12 @@
         <meta http-equiv="X-Frame-Options" content="DENY">
         
         <!-- Stylesheets -->
+        <link rel="stylesheet" href="./styles/base.css">
         <link rel="stylesheet" href="./styles/index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
-    <div class="bg-container">
-    <canvas id="background-canvas"></canvas>
-</div>
     <!-- Fallback for JavaScript disabled -->
     <noscript>
         <div class="noscript-message">
@@ -42,9 +40,6 @@
         <canvas id="background-canvas"></canvas>
     </div>
     
-    
-    <section class="home" id="home"></section>
-
     <!-- Navigation -->
     <nav role="navigation" aria-label="Main navigation">
         <a href="#home" class="logo" aria-label="Home">Backend Dev</a>
@@ -59,77 +54,62 @@
             <li><a href="#education">Education</a></li>
             <li><a href="#technologies">Technologies</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
         <div class="theme-toggle">
             <i class="fas fa-moon"></i>
         </div>
     </nav>
 
-<!-- Hero Section -->
-<div class="hero">
-    <div class="hero-container">
-        <!-- Left Side - Profile -->
-        <div class="hero-profile" data-aos="fade-right">
-            <div class="profile-frame">
-                <img src="./images/profile-pic-2.png" class="profile-image" alt="Profile picture of Oussama Hattan">
-                <div class="profile-backdrop"></div>
-            </div>
-            <div class="social-links">
-                <a href="https://github.com/ossama21" class="social-icon" aria-label="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/h-oussama/" class="social-icon" aria-label="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://x.com/H_Oussama77" class="social-icon" aria-label="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Right Side - Content -->
-        <div class="hero-content" data-aos="fade-left">
-            <div class="hero-header">
-                <span class="greeting">Hello, I'm</span>
-                <h1 class="name typing-text">Hattan Oussama </h1>
-                <div class="title-container">
-                    <span class="title">Backend Developer</span>
-                    <span class="separator"></span>
-                    <span class="location">Moroccan</span>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-profile">
+                <div class="profile-frame">
+                    <img src="./assets/images/oussama.png" alt="Oussama Hattan" class="profile-image">
+                    <div class="profile-backdrop"></div>
                 </div>
             </div>
-
-            <p class="hero-description">
-                Specializing in building robust backend solutions and scalable architectures.
-                Turning complex problems into elegant solutions.
-            </p>
-
-            <!-- <div class="tech-stack">
-                <i class="fab fa-python" data-aos="zoom-in" data-aos-delay="200"></i>
-                <i class="fab fa-node-js" data-aos="zoom-in" data-aos-delay="400"></i>
-                <i class="fab fa-java" data-aos="zoom-in" data-aos-delay="600"></i>
-                <i class="fas fa-database" data-aos="zoom-in" data-aos-delay="800"></i>
-            </div> -->
-
-            <div class="cta-container">
-                <button class="contact-btn primary" onclick="window.location.href='contact.html'">
-                    <span>Let's Connect</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-                <button class="contact-btn secondary" onclick="window.location.href='#projects'">
-                    <span>View Projects</span>
-                    <i class="fas fa-code"></i>
-                </button>
+            <div class="hero-content">
+                <div class="hero-header">
+                    <span class="greeting">Hello, I'm</span>
+                    <h1 class="name">Oussama Hattan</h1>
+                    <div class="title-container">
+                        <span>Backend Developer</span>
+                        <span class="separator"></span>
+                        <span>Problem Solver</span>
+                    </div>
+                </div>
+                <p class="hero-description">
+                    I specialize in building robust and scalable server-side applications. 
+                    With expertise in Node.js, Python, and database management, I create efficient 
+                    backend solutions that power modern web applications.
+                </p>
+                <div class="cta-container">
+                    <a href="contact.html" class="contact-btn primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Contact Me</span>
+                    </a>
+                    <a href="./assets/OussamaHattanResume(ENG).pdf" class="contact-btn secondary">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Download CV</span>
+                    </a>
+                </div>
+                <div class="tech-stack">
+                    <i class="fab fa-node-js" title="Node.js"></i>
+                    <i class="fab fa-python" title="Python"></i>
+                    <i class="fas fa-database" title="Database Management"></i>
+                    <i class="fab fa-docker" title="Docker"></i>
+                    <i class="fab fa-aws" title="AWS"></i>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+            <span>Scroll Down</span>
+        </div>
+    </section>
 
-    <div class="scroll-indicator">
-        <div class="mouse"></div>
-        <p>Scroll Down</p>
-    </div>
-</div>
 <!-- Projects Section -->
 <section class="projects" id="projects" data-aos="fade-up">
     
@@ -137,7 +117,7 @@
     <div class="project-grid">
         <div class="project-card">
             <div class="project-image">
-                <img src="./images/project1.jpg" alt="Project 1">
+                <img src="./assets/images/project1.jpg" alt="Project 1">
             </div>
             <div class="project-info">
                 <h3>E-Commerce API</h3>
@@ -151,7 +131,7 @@
 
         <div class="project-card">
             <div class="project-image">
-                <img src="./images/project2.jpg" alt="Project 2">
+                <img src="./assets/images/project2.jpg" alt="Project 2">
             </div>
             <div class="project-info">
                 <h3>Social Media App</h3>
@@ -165,7 +145,7 @@
 
         <div class="project-card">
             <div class="project-image">
-                <img src="./images/project3.jpg" alt="Project 3">
+                <img src="./assets/images/project3.jpg" alt="Project 3">
             </div>
             <div class="project-info">
                 <h3>Data Visualization Dashboard</h3>
@@ -179,7 +159,7 @@
 
         <div class="project-card">
             <div class="project-image">
-                <img src="./images/project4.jpg" alt="Project 4">
+                <img src="./assets/images/project4.jpg" alt="Project 4">
             </div>
             <div class="project-info">
                 <h3>Chatbot Application</h3>
@@ -391,7 +371,7 @@
         <div class="about-left">
             <div class="about-image-container">
                 <div class="image-hex">
-                    <img src="./images/profile-pic-2.png" alt="Oussama Hattan">
+                    <img src="./assets/images/profile-pic-2.png" alt="Oussama Hattan">
                 </div>
                 <div class="floating-icons">
                     <i class="fab fa-python"></i>
