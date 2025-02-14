@@ -1,0 +1,552 @@
+/* Winter Snow Theme */
+:root {
+    --winter-bg: #87CEEB;         /* Dark blue-gray background - Change this value to adjust background */
+    --winter-primary: #4895ef;    /* Winter blue */
+    --winter-secondary: #4361ee;  /* Darker winter blue */
+    --winter-accent: #3f37c9;     /* Deep winter blue */
+    --winter-section-bg: #242b45; /* Slightly lighter sections */
+    --winter-text: #ffffff;       /* White text for contrast */
+    --winter-text-light: rgba(255, 255, 255, 0.8);
+    --winter-card: rgba(255, 255, 255, 0.1);
+    --winter-border: rgba(67, 97, 238, 0.2);
+    --winter-shadow: 0 8px 32px rgba(67, 97, 238, 0.2);
+    --frost-blur: blur(10px);
+}
+
+:root {
+    --winter-bg: #87CEEB;  /* You can change this value to any color you want */
+}
+
+/* Direct body background override */
+body[data-theme="light"] {
+    background: var(--winter-bg) !important;
+}
+
+/* Section backgrounds */
+body[data-theme="light"] section {
+    background: var(--winter-bg) !important;
+}
+
+/* Clear any gradient overlays that might interfere */
+body[data-theme="light"] .section-bg-overlay {
+    background: none !important;
+}
+
+[data-theme="light"] {
+    /* Core Colors - Adjusted for better particle visibility */
+    --winter-primary: #4361ee;    /* Bright Blue */
+    --winter-secondary: #3f37c9;  /* Deep Blue */
+    --winter-accent: #4895ef;     /* Light Blue */
+    --winter-bg: #5e70bd;         /* Dark blue-gray background */
+    --winter-section-bg: #242b45; /* Slightly lighter sections */
+    --winter-text: #ffffff;       /* White Text */
+    --winter-text-light: rgba(255, 255, 255, 0.8);
+    --winter-card: rgba(255, 255, 255, 0.1);
+    --winter-border: rgba(67, 97, 238, 0.2);
+    --winter-shadow: 0 8px 32px rgba(67, 97, 238, 0.2);
+    --winter-gradient: linear-gradient(135deg, #4361ee, #4895ef);
+    --winter-gradient-hover: linear-gradient(135deg, #3f37c9, #4361ee);
+    --winter-dark-gradient: linear-gradient(135deg, #151626, #1d1f38);
+    background-color: var(--winter-bg);
+
+    /* Updated Navigation Colors */
+    --nav-bg: rgba(26, 27, 46, 0.95);
+    --nav-text: #ffffff;
+    --nav-hover: #4361ee;
+    --nav-active: #4895ef;
+    --nav-border: rgba(67, 97, 238, 0.3);
+}
+
+/* Base Styles Override */
+[data-theme="light"] body {
+    background: var(--winter-bg);
+    background-image: 
+        linear-gradient(45deg, rgba(72, 149, 239, 0.1) 0%, transparent 70%),
+        linear-gradient(-45deg, rgba(63, 55, 201, 0.1) 0%, transparent 70%);
+    color: var(--winter-text);
+}
+
+/* Navigation */
+[data-theme="light"] nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: var(--frost-blur);
+    border: 1px solid var(--winter-border);
+    box-shadow: var(--winter-shadow);
+}
+
+[data-theme="light"] .nav-links li a {
+    color: var(--nav-text);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="light"] .nav-links li a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--nav-hover);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+[data-theme="light"] .nav-links li a:hover::before,
+[data-theme="light"] .nav-links li a.active::before {
+    width: 80%;
+}
+
+[data-theme="light"] .nav-links li a:hover,
+[data-theme="light"] .nav-links li a.active {
+    color: var(--nav-active);
+    background: rgba(67, 97, 238, 0.1);
+}
+
+[data-theme="light"] .logo {
+    color: var(--winter-accent);
+}
+
+/* Hero Section */
+[data-theme="light"] .hero {
+    background: var(--winter-dark-gradient);
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+}
+
+[data-theme="light"] .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at top right, rgba(67, 97, 238, 0.15), transparent 50%),
+        radial-gradient(circle at bottom left, rgba(72, 149, 239, 0.15), transparent 50%);
+    z-index: 1;
+}
+
+[data-theme="light"] .greeting {
+    color: var(--winter-accent);
+}
+
+[data-theme="light"] .name {
+    background: var(--winter-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .hero-description {
+    color: var(--winter-text-light);
+}
+
+/* Buttons */
+[data-theme="light"] .cta-button.primary {
+    background: var(--winter-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(67, 97, 238, 0.3);
+}
+
+[data-theme="light"] .cta-button.primary:hover {
+    background: var(--winter-gradient-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(44, 82, 130, 0.2);
+}
+
+[data-theme="light"] .cta-button.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .cta-button.secondary:hover {
+    background: rgba(74, 144, 226, 0.1);
+    transform: translateY(-3px);
+}
+
+/* Tech Stack */
+[data-theme="light"] .tech-item i {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(67, 97, 238, 0.3));
+}
+
+[data-theme="light"] .tech-item:hover i {
+    color: var(--winter-primary);
+    filter: drop-shadow(0 0 8px rgba(74, 144, 226, 0.5));
+}
+
+/* Profile Section */
+[data-theme="light"] .profile-frame {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    filter: drop-shadow(0 0 8px rgba(67, 97, 238, 0.3));
+}
+
+[data-theme="light"] .profile-frame::before {
+    background: var(--winter-gradient);
+}
+
+[data-theme="light"] .experience-badge {
+    background: var(--winter-gradient);
+    color: white;
+    filter: drop-shadow(0 0 8px rgba(67, 97, 238, 0.3));
+}
+
+/* Projects Section */
+[data-theme="light"] .project-card {
+    background: var(--winter-card);
+    backdrop-filter: var(--frost-blur);
+    border: 1px solid var(--winter-border);
+    box-shadow: var(--winter-shadow);
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .project-title {
+    color: var(--winter-text);
+}
+
+[data-theme="light"] .project-description {
+    color: var(--winter-text-light);
+}
+
+[data-theme="light"] .tech-tag {
+    background: rgba(74, 144, 226, 0.1);
+    color: var(--winter-primary);
+}
+
+/* Education Cards */
+[data-theme="light"] .edu-card-inner {
+    background: var(--winter-card);
+    backdrop-filter: var(--frost-blur);
+    border: 1px solid var(--winter-border);
+    box-shadow: var(--winter-shadow);
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .edu-year-badge {
+    background: var(--winter-gradient);
+    color: white;
+}
+
+/* Section Titles */
+[data-theme="light"] .section-title {
+    color: var(--winter-text);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .section-subtitle {
+    color: var(--winter-text-light);
+}
+
+/* Snow Effect */
+[data-theme="light"] .particles-container canvas {
+    opacity: 0.4;
+    mix-blend-mode: screen;
+}
+
+[data-theme="light"] .snowflake {
+    background: white;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: snowfall linear infinite;
+}
+
+[data-theme="light"] .winter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Floating Shapes */
+[data-theme="light"] .floating-shapes .shape {
+    background: var(--winter-gradient);
+    opacity: 0.1;
+    backdrop-filter: blur(5px);
+}
+
+/* Footer */
+[data-theme="light"] footer {
+    background: linear-gradient(to top, #2b2d42, #3f37c9);
+    color: #fff;
+    border-top: 1px solid var(--winter-border);
+}
+
+[data-theme="light"] .footer-section h3 {
+    color: var(--winter-primary);
+}
+
+[data-theme="light"] .social-links a {
+    background: rgba(74, 144, 226, 0.1);
+    color: var(--winter-primary);
+    border: 1px solid var(--winter-border);
+}
+
+[data-theme="light"] .social-links a:hover {
+    background: var(--winter-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+/* Custom Scrollbar */
+[data-theme="light"] ::-webkit-scrollbar-track {
+    background: #EDF2F7;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: var(--winter-gradient);
+    border-radius: 5px;
+}
+
+/* Snow Animation */
+[data-theme="light"] .winter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+[data-theme="light"] .snowflake {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-100%) rotate(0deg);
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+/* Card Hover Effects */
+[data-theme="light"] .project-card:hover,
+[data-theme="light"] .tech-category:hover,
+[data-theme="light"] .edu-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(67, 97, 238, 0.3);
+    box-shadow: 0 8px 32px rgba(67, 97, 238, 0.2);
+}
+
+/* Theme Toggle Button */
+[data-theme="light"] .theme-toggle {
+    background: var(--winter-gradient);
+    color: white;
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: var(--winter-gradient-hover);
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+}
+
+/* Enhanced Snow Visibility */
+[data-theme="light"] #winter-particles {
+    opacity: 0.8;
+    mix-blend-mode: screen;
+    filter: blur(0.5px);
+}
+
+[data-theme="light"] #winter-particles canvas {
+    filter: brightness(1.8) drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
+    animation: snowGlow 4s ease-in-out infinite;
+}
+
+@keyframes snowGlow {
+    0%, 100% { filter: brightness(1.8) drop-shadow(0 0 6px rgba(255, 255, 255, 0.9)); }
+    50% { filter: brightness(2) drop-shadow(0 0 8px rgba(255, 255, 255, 1)); }
+}
+
+/* Enhanced Snow Particles */
+[data-theme="light"] .particles-js-canvas-el {
+    opacity: 0.9 !important;
+    mix-blend-mode: screen;
+}
+
+/* Add glowing effect to sections */
+[data-theme="light"] .section-bg-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(67, 97, 238, 0.2),
+        transparent 40%
+    );
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* Enhance card visibility */
+[data-theme="light"] .project-card,
+[data-theme="light"] .tech-category,
+[data-theme="light"] .edu-card-inner {
+    background: var(--winter-card-bg);
+    box-shadow: 0 0 20px rgba(67, 97, 238, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--winter-border);
+}
+
+/* Add subtle glow to buttons */
+[data-theme="light"] .cta-button {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Section Backgrounds */
+[data-theme="light"] .hero,
+[data-theme="light"] .projects,
+[data-theme="light"] .education,
+[data-theme="light"] .technologies,
+[data-theme="light"] .about {
+    background: var(--winter-dark-gradient);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="light"] .hero::before,
+[data-theme="light"] .projects::before,
+[data-theme="light"] .education::before,
+[data-theme="light"] .technologies::before,
+[data-theme="light"] .about::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at top right, rgba(67, 97, 238, 0.15), transparent 50%),
+        radial-gradient(circle at bottom left, rgba(72, 149, 239, 0.15), transparent 50%);
+    z-index: 1;
+}
+
+/* Section Overlay for Better Snow Contrast */
+[data-theme="light"] .section-bg-overlay {
+    background: linear-gradient(
+        45deg,
+        rgba(26, 27, 46, 0.7),
+        rgba(36, 38, 68, 0.7)
+    );
+}
+
+/* Gradient Overlays for Sections */
+[data-theme="light"] section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(26, 27, 46, 0.97) 0%,
+        rgba(36, 38, 68, 0.95) 100%
+    );
+    z-index: 0;
+}
+
+[data-theme="light"] .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(67, 97, 238, 0.2) 0%,
+        rgba(26, 27, 46, 0.95) 100%
+    );
+    z-index: 0;
+}
+
+/* Ensure content stays above overlays */
+[data-theme="light"] .hero-container,
+[data-theme="light"] .projects-container,
+[data-theme="light"] .education-container,
+[data-theme="light"] .tech-container,
+[data-theme="light"] .about-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+/* Add depth to sections with alternating gradients */
+[data-theme="light"] section:nth-child(odd) {
+    background: linear-gradient(
+        45deg,
+        var(--winter-bg) 0%,
+        var(--winter-section-bg) 100%
+    );
+}
+
+[data-theme="light"] section:nth-child(even) {
+    background: linear-gradient(
+        -45deg,
+        var(--winter-bg) 0%,
+        var(--winter-section-bg) 100%
+    );
+}
+
+/* Enhanced section transitions */
+[data-theme="light"] section {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(67, 97, 238, 0.1);
+    border-bottom: 1px solid rgba(67, 97, 238, 0.1);
+}
+
+/* Section backgrounds */
+[data-theme="light"] section {
+    position: relative;
+    background: var(--winter-section-bg);
+    overflow: hidden;
+    border-top: 1px solid rgba(72, 149, 239, 0.1);
+    border-bottom: 1px solid rgba(72, 149, 239, 0.1);
+}
+
+/* Section overlay for better snow visibility */
+[data-theme="light"] .section-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(240, 247, 255, 0.95),
+        rgba(232, 241, 248, 0.95)
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Content z-index management */
+[data-theme="light"] .section-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Navigation styling */
+[data-theme="light"] nav {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: var(--frost-blur);
+    border: 1px solid var(--winter-border);
+    box-shadow: var(--winter-shadow);
+}
+
+/* Text colors */
+[data-theme="light"] h1, 
+[data-theme="light"] h2, 
+[data-theme="light"] h3 {
+    color: var(--winter-text);
+}
+
+[data-theme="light"] p {
+    color: var(--winter-text-light);
+}

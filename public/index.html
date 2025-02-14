@@ -1,6 +1,6 @@
 <!-- Updated index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,20 +14,59 @@
         <!-- Open Graph / Social Media Meta Tags -->
         <meta property="og:title" content="Oussama Hattan | Backend Developer Portfolio">
         <meta property="og:description" content="Professional backend developer portfolio showcasing projects and expertise">
-        <meta property="og:image" content="../assets/images/oussama.png">
+        <meta property="og:image" content="/assets/images/oussama.png">
         <meta property="og:url" content="https://yourwebsite.com">
         
         <!-- Security Headers -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="X-Frame-Options" content="DENY">
         
-        <!-- Stylesheets -->
+        <!-- Core Styles -->
         <link rel="stylesheet" href="./styles/base.css">
         <link rel="stylesheet" href="./styles/index.css">
+        
+        <!-- Theme Styles (preloaded for faster switching) -->
+        <link rel="preload" href="./styles/winter-theme.css" as="style">
+        <link rel="preload" href="./styles/winter-animations.css" as="style">
+        <link rel="preload" href="./styles/theme-transition.css" as="style">
+        
+        <!-- Light theme CSS will be loaded dynamically -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+        <!-- Preload light theme for faster switching -->
+        <link rel="preload" href="./styles/light-theme.css" as="style">
+        
+        <!-- Winter theme CSS will be loaded dynamically -->
+        <link rel="preload" href="./styles/winter-theme.css" as="style">
+        
+        <!-- Preload winter animations for faster switching -->
+        <link rel="preload" href="./styles/winter-animations.css" as="style">
+        
+        <!-- Particles.js for snow effect -->
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script src="./scripts/winterParticles.js"></script>
+        
+        <!-- Main Script -->
+        <script src="./script.js" defer></script>
+
+        <!-- Theme Styles -->
+        <link rel="stylesheet" href="./styles/theme-transition.css">
+        <link rel="stylesheet" href="./styles/light-theme.css">
+        <link rel="stylesheet" href="./styles/winter-animations.css">
+        
+        <!-- Particles.js -->
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        
+        <!-- Ensure winter particles script is loaded -->
+        <script src="./scripts/winterParticles.js"></script>
 </head>
 <body>
+    <!-- Winter particles container (moved to top for proper layering) -->
+    <div id="winter-particles"></div>
+
+    <!-- Theme transition overlay -->
+    <div class="theme-transition-overlay"></div>
+
     <!-- Fallback for JavaScript disabled -->
     <noscript>
         <div class="noscript-message">
@@ -35,155 +74,284 @@
         </div>
     </noscript>
 
+    <!-- Winter theme overlay container -->
+    <div class="winter-overlay" style="display: none;"></div>
+
     <!-- Background Canvas -->
     <div class="bg-container">
         <canvas id="background-canvas"></canvas>
     </div>
     
+    <!-- Particles container for snow effect -->
+    <div id="winter-particles"></div>
+    
     <!-- Navigation -->
+    <div class="logo-container">
+        <a href="#home" class="logo" aria-label="Home">
+            <i class="fas fa-code"></i>
+            <span>Backend Dev</span>
+        </a>
+    </div>
+
     <nav role="navigation" aria-label="Main navigation">
-        <a href="#home" class="logo" aria-label="Home">Backend Dev</a>
-        <div class="burger-menu" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
         <ul class="nav-links">
             <li><a href="#home" class="active">Home</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#education">Education</a></li>
-            <li><a href="#technologies">Technologies</a></li>
+            <li><a href="#technologies">Skills</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
-        <div class="theme-toggle">
-            <i class="fas fa-moon"></i>
-        </div>
     </nav>
 
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero frost-hover" id="home">
+        <div class="particles-container" id="particles-js"></div>
         <div class="hero-container">
-            <div class="hero-profile">
-                <div class="profile-frame">
-                    <img src="./assets/images/oussama.png" alt="Oussama Hattan" class="profile-image">
-                    <div class="profile-backdrop"></div>
-                </div>
-            </div>
             <div class="hero-content">
                 <div class="hero-header">
-                    <span class="greeting">Hello, I'm</span>
-                    <h1 class="name">Oussama Hattan</h1>
-                    <div class="title-container">
-                        <span>Backend Developer</span>
-                        <span class="separator"></span>
-                        <span>Problem Solver</span>
+                    <div class="greeting-wrapper shimmer-text">
+                        <span class="greeting-emoji">👋</span>
+                        <span class="greeting">Hello, I'm</span>
+                    </div>
+                    <h1 class="name shimmer-text">Oussama Hattan</h1>
+                    <div class="title-wrapper">
+                        <div class="title-container">
+                            <div class="dynamic-text">
+                                <span class="text first">Backend Developer</span>
+                                <span class="text">API Architect</span>
+                                <span class="text">Database Expert</span>
+                                <span class="text">Problem Solver</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p class="hero-description">
-                    I specialize in building robust and scalable server-side applications. 
-                    With expertise in Node.js, Python, and database management, I create efficient 
-                    backend solutions that power modern web applications.
-                </p>
-                <div class="cta-container">
-                    <a href="contact.html" class="contact-btn primary">
-                        <i class="fas fa-paper-plane"></i>
-                        <span>Contact Me</span>
-                    </a>
-                    <a href="./assets/OussamaHattanResume(ENG).pdf" class="contact-btn secondary">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Download CV</span>
-                    </a>
+                <div class="hero-description-wrapper">
+                    <p class="hero-description">
+                        Crafting robust and scalable backend solutions with a passion for clean code
+                        and optimal performance. Specialized in building enterprise-grade applications
+                        that drive business success.
+                    </p>
                 </div>
-                <div class="tech-stack">
-                    <i class="fab fa-node-js" title="Node.js"></i>
-                    <i class="fab fa-python" title="Python"></i>
-                    <i class="fas fa-database" title="Database Management"></i>
-                    <i class="fab fa-docker" title="Docker"></i>
-                    <i class="fab fa-aws" title="AWS"></i>
+                <div class="cta-wrapper">
+                    <div class="cta-container">
+                        <a href="contact.html" class="cta-button primary">
+                            <span class="button-content">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Let's Collaborate</span>
+                            </span>
+                            <span class="button-border"></span>
+                        </a>
+                        <a href="/assets/OussamaHattanResume(ENG).pdf" class="cta-button secondary">
+                            <span class="button-content">
+                                <i class="fas fa-file-alt"></i>
+                                <span>View Resume</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="tech-stack-wrapper">
+                    <div class="tech-stack">
+                        <div class="tech-item" data-tooltip="Node.js">
+                            <i class="fab fa-node-js"></i>
+                        </div>
+                        <div class="tech-item" data-tooltip="Python">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div class="tech-item" data-tooltip="Database">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="tech-item" data-tooltip="Docker">
+                            <i class="fab fa-docker"></i>
+                        </div>
+                        <div class="tech-item" data-tooltip="AWS">
+                            <i class="fab fa-aws"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-profile">
+                <div class="profile-wrapper winter-card">
+                    <div class="profile-card frosted-card">
+                        <div class="profile-content">
+                            <div class="profile-frame">
+                                <img src="../assets/images/oussama.png" alt="Oussama Hattan" class="profile-image">
+                                <div class="profile-backdrop"></div>
+                            </div>
+                            <div class="profile-info">
+                                <div class="experience-badge">
+                                    <span class="years">3+</span>
+                                    <span class="text">Years<br>Experience</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="floating-shapes">
+                            <div class="shape shape-1"></div>
+                            <div class="shape shape-2"></div>
+                            <div class="shape shape-3"></div>
+                        </div>
+                        <div class="ice-crystal"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="scroll-indicator">
-            <div class="mouse"></div>
-            <span>Scroll Down</span>
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrows">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </section>
 
 <!-- Projects Section -->
-<section class="projects" id="projects" data-aos="fade-up">
-    
-    <h2>My Projects</h2>
-    <div class="project-grid">
-        <div class="project-card">
-            <div class="project-image">
-                <img src="./assets/images/project1.jpg" alt="Project 1">
-            </div>
-            <div class="project-info">
-                <h3>E-Commerce API</h3>
-                <p>Scalable RESTful API with authentication and payment integration</p>
-                <div class="project-links">
-                    <a href="#" class="btn-github"><i class="fab fa-github"></i> Code</a>
-                    <a href="#" class="btn-live"><i class="fas fa-external-link-alt"></i> Live</a>
+<section class="projects snowfall-parallax" id="projects">
+    <div class="section-ambient-light"></div>
+    <div class="projects-container">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A selection of my recent work</p>
+        
+        <div class="project-grid">
+            <!-- Project 1 -->
+            <div class="project-card frosted-card winter-card" data-aos="fade-up">
+                <div class="project-image">
+                    <img src="../assets/images/project1.jpg" alt="E-Commerce API Project">
+                    <div class="project-overlay">
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Express</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">JWT</span>
+                        </div>
+                    </div>
                 </div>
+                <div class="project-info">
+                    <h3 class="project-title">E-Commerce API</h3>
+                    <p class="project-description">A robust RESTful API for e-commerce platforms with advanced authentication, payment integration, and order management.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/your-username/project1" class="project-link github" target="_blank">
+                            <i class="fab fa-github"></i>
+                            <span>View Code</span>
+                        </a>
+                        <a href="https://project1-demo.com" class="project-link live" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="ice-crystal"></div>
             </div>
-        </div>
 
-        <div class="project-card">
-            <div class="project-image">
-                <img src="./assets/images/project2.jpg" alt="Project 2">
-            </div>
-            <div class="project-info">
-                <h3>Social Media App</h3>
-                <p>Full-stack social media platform with real-time updates</p>
-                <div class="project-links">
-                    <a href="#" class="btn-github"><i class="fab fa-github"></i> Code</a>
-                    <a href="#" class="btn-live"><i class="fas fa-external-link-alt"></i> Live</a>
+            <!-- Project 2 -->
+            <div class="project-card frosted-card winter-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="project-image">
+                    <img src="../assets/images/project2.jpg" alt="Social Media App">
+                    <div class="project-overlay">
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Socket.IO</span>
+                            <span class="tech-tag">Redis</span>
+                        </div>
+                    </div>
                 </div>
+                <div class="project-info">
+                    <h3 class="project-title">Social Media Platform</h3>
+                    <p class="project-description">Full-stack social media application with real-time messaging, notifications, and content sharing capabilities.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/your-username/project2" class="project-link github" target="_blank">
+                            <i class="fab fa-github"></i>
+                            <span>View Code</span>
+                        </a>
+                        <a href="https://project2-demo.com" class="project-link live" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="ice-crystal"></div>
             </div>
-        </div>
 
-        <div class="project-card">
-            <div class="project-image">
-                <img src="./assets/images/project3.jpg" alt="Project 3">
-            </div>
-            <div class="project-info">
-                <h3>Data Visualization Dashboard</h3>
-                <p>Interactive dashboard for analyzing and visualizing complex data</p>
-                <div class="project-links">
-                    <a href="#" class="btn-github"><i class="fab fa-github"></i> Code</a>
-                    <a href="#" class="btn-live"><i class="fas fa-external-link-alt"></i> Live</a>
+            <!-- Project 3 -->
+            <div class="project-card frosted-card winter-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="project-image">
+                    <img src="../assets/images/project3.jpg" alt="Data Visualization Dashboard">
+                    <div class="project-overlay">
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                    </div>
                 </div>
+                <div class="project-info">
+                    <h3 class="project-title">Analytics Dashboard</h3>
+                    <p class="project-description">Interactive data visualization platform with real-time analytics, custom reports, and automated insights generation.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/your-username/project3" class="project-link github" target="_blank">
+                            <i class="fab fa-github"></i>
+                            <span>View Code</span>
+                        </a>
+                        <a href="https://project3-demo.com" class="project-link live" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="ice-crystal"></div>
             </div>
-        </div>
 
-        <div class="project-card">
-            <div class="project-image">
-                <img src="./assets/images/project4.jpg" alt="Project 4">
-            </div>
-            <div class="project-info">
-                <h3>Chatbot Application</h3>
-                <p>Conversational AI chatbot with natural language processing</p>
-                <div class="project-links">
-                    <a href="#" class="btn-github"><i class="fab fa-github"></i> Code</a>
-                    <a href="#" class="btn-live"><i class="fas fa-external-link-alt"></i> Live</a>
+            <!-- Project 4 -->
+            <div class="project-card frosted-card winter-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="project-image">
+                    <img src="../assets/images/project4.jpg" alt="AI Chatbot">
+                    <div class="project-overlay">
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">WebSocket</span>
+                        </div>
+                    </div>
                 </div>
+                <div class="project-info">
+                    <h3 class="project-title">AI Chatbot System</h3>
+                    <p class="project-description">Advanced conversational AI system with natural language processing and machine learning capabilities.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/your-username/project4" class="project-link github" target="_blank">
+                            <i class="fab fa-github"></i>
+                            <span>View Code</span>
+                        </a>
+                        <a href="https://project4-demo.com" class="project-link live" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="ice-crystal"></div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Education Section -->
-<section class="education" id="education">
+<section class="education snowfall-parallax" id="education">
+    <div class="section-ambient-light"></div>
     <div class="education-container">
         <div class="section-header">
-            <h2 class="section-title">Education Journey</h2>
-            <p class="section-subtitle">Learning Never Stops</p>
         </div>
 
         <div class="education-timeline">
             <!-- 2023 Entry -->
-            <div class="edu-card" data-aos="fade-up">
+            <div class="edu-card winter-card frosted-card" data-aos="fade-up">
                 <div class="edu-card-inner">
                     <div class="edu-year-badge">2023</div>
                     <div class="edu-content">
@@ -210,10 +378,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="ice-crystal"></div>
             </div>
 
             <!-- 2022 Entry -->
-            <div class="edu-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="edu-card winter-card frosted-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="edu-card-inner">
                     <div class="edu-year-badge">2022</div>
                     <div class="edu-content">
@@ -240,13 +409,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="ice-crystal"></div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Technologies Section -->
-<section class="technologies" id="technologies">
+<section class="technologies snowfall-parallax" id="technologies">
     <div class="tech-container">
         <div class="section-header">
             <h2 class="section-title">Technologies & Skills</h2>
@@ -255,7 +425,7 @@
         
         <div class="tech-grid">
             <!-- Backend Technologies -->
-            <div class="tech-category">
+            <div class="tech-category winter-card frosted-card">
                 <h3 class="category-title">Backend Development</h3>
                 <div class="tech-items">
                     <div class="tech-item" data-aos="zoom-in">
@@ -297,10 +467,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="ice-crystal"></div>
             </div>
 
             <!-- Database Technologies -->
-            <div class="tech-category">
+            <div class="tech-category winter-card frosted-card">
                 <h3 class="category-title">Databases</h3>
                 <div class="tech-items">
                     <div class="tech-item" data-aos="zoom-in">
@@ -329,10 +500,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="ice-crystal"></div>
             </div>
 
             <!-- Tools & Others -->
-            <div class="tech-category">
+            <div class="tech-category winter-card frosted-card">
                 <h3 class="category-title">Tools & DevOps</h3>
                 <div class="tech-items">
                     <div class="tech-item" data-aos="zoom-in">
@@ -361,53 +533,66 @@
                         </div>
                     </div>
                 </div>
+                <div class="ice-crystal"></div>
             </div>
         </div>
     </div>
 </section>
 <!-- About Section -->
-<section class="about" id="about">
+<section class="about snowfall-parallax" id="about">
     <div class="about-wrapper">
         <div class="about-left">
-            <div class="about-image-container">
-                <div class="image-hex">
-                    <img src="./assets/images/profile-pic-2.png" alt="Oussama Hattan">
+            <div class="about-image-container winter-card frosted-card">
+                <div class="image-frame">
+                    <img src="../assets/images/profile-pic-2.png" alt="Oussama Hattan">
                 </div>
-                <div class="floating-icons">
-                    <i class="fab fa-python"></i>
-                    <i class="fab fa-node-js"></i>
-                    <i class="fas fa-database"></i>
-                    <i class="fab fa-java"></i>
-                </div>
+                <div class="ice-crystal"></div>
             </div>
         </div>
         <div class="about-right">
-            <div class="section-title">
-                <h2 class="glowing-text">About Me</h2>
-                <div class="title-underline"></div>
+            <div class="about-title">
+                <h2>About Me</h2>
+                <p class="about-subtitle">Turning Ideas into Efficient Backend Solutions</p>
             </div>
             <div class="about-content">
-                <p class="about-text">I'm a passionate Backend Developer with expertise in building scalable and efficient server-side applications. With a Bachelor's in Web Development and certification in Full Stack Engineering from ALX, I bring both theoretical knowledge and practical experience to the table.</p>
+                <p class="about-text">
+                    I'm a <strong>passionate Backend Developer</strong> with over 3 years of experience in building scalable server-side applications. 
+                    My journey in software development started with a deep curiosity about how things work behind the scenes, 
+                    which led me to specialize in backend technologies.
+                </p>
+                <p class="about-text">
+                    With a <strong>Bachelor's in Web Development</strong> and certification in <strong>Full Stack Engineering</strong> from ALX, 
+                    I combine strong theoretical foundations with hands-on experience in modern development practices. 
+                    I specialize in Node.js, Python, and database optimization, always focusing on writing clean, 
+                    efficient, and maintainable code.
+                </p>
                 
-                <div class="experience-grid">
-                    <div class="exp-item">
-                        <div class="exp-number" data-count="800">0</div>
-                        <div class="exp-label">Visitors</div>
-                        <div class="exp-progress"></div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Docker</span>
+                </div>
+                
+                <div class="about-stats">
+                    <div class="stat-item" data-aos="fade-up">
+                        <div class="stat-number" data-count="50">0</div>
+                        <div class="stat-label">Projects Completed</div>
                     </div>
-                    <div class="exp-item">
-                        <div class="exp-number" data-count="250">0</div>
-                        <div class="exp-label">CV Views</div>
-                        <div class="exp-progress"></div>
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-number" data-count="15">0</div>
+                        <div class="stat-label">Happy Clients</div>
                     </div>
                 </div>
                 
                 <div class="about-cta">
-                    <a href="./assets/OussamaHattanResume(ENG).pdf" class="cta-button download-btn" download>
+                    <a href="../assets/OussamaHattanResume(ENG).pdf" class="cta-button download-btn" download>
                         <i class="fas fa-download"></i>
                         <span>Download CV</span>
                     </a>
-                    <a href="./assets/OussamaHattanResume(ENG).pdf" class="cta-button view-btn">
+                    <a href="../assets/OussamaHattanResume(ENG).pdf" class="cta-button view-btn" target="_blank">
                         <i class="fas fa-eye"></i>
                         <span>View CV</span>
                     </a>
@@ -457,28 +642,62 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Hattan Oussama</h3>
-                <p>&copy; <span id="current-year">2024</span> @H_Oussama. All rights reserved.</p>
+                <h3>About Me</h3>
+                <p>Backend developer specializing in building robust and scalable server-side applications. Passionate about creating efficient solutions and learning new technologies.</p>
+                <div class="social-links">
+                    <a href="https://github.com/ossama21" class="github" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/h-oussama/" class="linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://x.com/H_Oussama77" class="twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter Profile">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="mailto:contact@yourdomain.com" class="email" aria-label="Email Contact">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
             </div>
+            
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#timeline">Experience</a></li>
-                    <li><a href="#technologies">Technologies</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#projects"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                    <li><a href="#technologies"><i class="fas fa-chevron-right"></i> Technologies</a></li>
+                    <li><a href="#education"><i class="fas fa-chevron-right"></i> Education</a></li>
+                    <li><a href="#about"><i class="fas fa-chevron-right"></i> About</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                 </ul>
             </div>
+            
             <div class="footer-section">
-                <h3>Follow Me</h3>
-                <div class="social-links">
-                    <a href="https://github.com/ossama21"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/h-oussama/"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://x.com/H_Oussama77"><i class="fab fa-twitter"></i></a>
-                </div>
+                <h3>Contact Info</h3>
+                <ul>
+                    <li>
+                        <a href="mailto:contact@yourdomain.com">
+                            <i class="fas fa-envelope"></i>
+                            contact@yourdomain.com
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/ossama21" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                            @ossama21
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/h-oussama/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin-in"></i>
+                            h-oussama
+                        </a>
+                    </li>
+                </ul>
             </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="current-year">2024</span> Hattan Oussama. All rights reserved.</p>
         </div>
     </footer>
 
