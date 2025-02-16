@@ -646,32 +646,27 @@ document.querySelectorAll('.hero-content > *').forEach(element => {
 // Navigation behavior
 document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('nav');
-    const logo = document.querySelector('.logo-container');
-    const themeToggle = document.querySelector('.theme-toggle');
     const navLinks = document.querySelectorAll('.nav-links a');
     
     // Scroll handling
-    window.addEventListener('scroll', () => {
+    function updateNavigation() {
         const scrollPosition = window.scrollY;
         
-        if (scrollPosition > 100) {
+        // Nav shrink effect
+        if (scrollPosition > 50) {
             nav.classList.add('nav-shrink');
-            logo.classList.add('nav-shrink');
-            themeToggle.classList.add('nav-shrink');
         } else {
             nav.classList.remove('nav-shrink');
-            logo.classList.remove('nav-shrink');
-            themeToggle.classList.remove('nav-shrink');
         }
 
         // Active section tracking
         const sections = document.querySelectorAll('section[id]');
         sections.forEach(section => {
             const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.offsetHeight;
+            const sectionBottom = sectionTop + section.offsetHeight;
             const sectionId = section.getAttribute('id');
             
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
                 navLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${sectionId}`) {
@@ -680,6 +675,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
+    }
+
+    // Initialize and update on events
+    updateNavigation();
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(updateNavigation);
     });
 
     // Smooth scrolling with offset
@@ -700,46 +701,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-    });
-
-    // Interactive hover effect for logo
-    const logoElement = document.querySelector('.logo');
-    logoElement.addEventListener('mousemove', (e) => {
-        const { left, top, width, height } = logoElement.getBoundingClientRect();
-        const x = (e.clientX - left) / width;
-        const y = (e.clientY - top) / height;
-        
-        const xOffset = (x - 0.5) * 20;
-        const yOffset = (y - 0.5) * 20;
-        
-        logoElement.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-    });
-
-    logoElement.addEventListener('mouseleave', () => {
-        logoElement.style.transform = 'translate(0, 0)';
-    });
-
-    // Floating effect for navigation
-    let isHovering = false;
-    nav.addEventListener('mousemove', (e) => {
-        if (!isHovering) return;
-        const { left, top, width, height } = nav.getBoundingClientRect();
-        const x = (e.clientX - left) / width;
-        const y = (e.clientY - top) / height;
-        
-        const xOffset = (x - 0.5) * 10;
-        const yOffset = (y - 0.5) * 10;
-        
-        nav.style.transform = `translate(-50%, 0) translate(${xOffset}px, ${yOffset}px)`;
-    });
-
-    nav.addEventListener('mouseenter', () => {
-        isHovering = true;
-    });
-
-    nav.addEventListener('mouseleave', () => {
-        isHovering = false;
-        nav.style.transform = 'translate(-50%, 0)';
     });
 });
 
@@ -887,113 +848,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setTheme(theme) {
         const root = document.documentElement;
-        const winterParticles = document.getElementById('winter-particles');
+        const overlay = document.querySelector('.theme-transition-overlay');
+
+        // Show loading overlay
+        overlay.classList.add('active');
 
         // Add transition class
         root.classList.add('theme-transition');
         
-        // Update theme attribute and localStorage
-        root.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-
-        // Update theme toggle icon
-        const themeToggle = document.querySelector('.theme-toggle');
-        const icon = themeToggle.querySelector('i');
-        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-        // Load winter theme assets for light mode
-        if (theme === 'light') {
-            // Load winter CSS if not already loaded
-            if (!document.querySelector('link[href*="winter-animations.css"]')) {
-                const winterStyles = document.createElement('link');
-                winterStyles.rel = 'stylesheet';
-                winterStyles.href = './styles/winter-animations.css';
-                document.head.appendChild(winterStyles);
-            }
-
-            // Initialize snow effect
-            if (window.particlesJS && winterParticles) {
-                winterParticles.style.display = 'block';
-                particlesJS('winter-particles', {
-                    particles: {
-                        number: {
-                            value: 100,
-                            density: { enable: true, value_area: 800 }
-                        },
-                        color: { value: "#ffffff" },
-                        shape: { type: "circle" },
-                        opacity: {
-                            value: 0.7,
-                            random: true,
-                            animation: {
-                                enable: true,
-                                speed: 0.5,
-                                minimumValue: 0.1,
-                                sync: false
-                            }
-                        },
-                        size: {
-                            value: 3,
-                            random: true,
-                            animation: {
-                                enable: true,
-                                speed: 1,
-                                minimumValue: 0.5,
-                                sync: false
-                            }
-                        },
-                        move: {
-                            enable: true,
-                            speed: 2,
-                            direction: "bottom",
-                            random: true,
-                            straight: false,
-                            outMode: "out",
-                            bounce: false,
-                        }
-                    },
-                    interactivity: {
-                        detectsOn: "canvas",
-                        events: {
-                            onhover: { enable: true, mode: "repulse" },
-                            onclick: { enable: true, mode: "push" },
-                            resize: true
-                        },
-                        modes: {
-                            repulse: {
-                                distance: 100,
-                                duration: 0.4
-                            },
-                            push: { particles_nb: 4 }
-                        }
-                    },
-                    retina_detect: true
-                });
-            }
-        } else {
-            // Clean up winter effects for dark mode
-            if (window.pJSDom && window.pJSDom[0]) {
-                window.pJSDom[0].pJS.fn.vendors.destroyParticles();
-                window.pJSDom = [];
-            }
-            if (winterParticles) {
-                winterParticles.style.display = 'none';
-            }
-        }
-
-        // Remove transition class after animation
+        // Wait for overlay animation
         setTimeout(() => {
-            root.classList.remove('theme-transition');
-        }, 500);
-    }
+            // Update theme
+            root.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
 
-    // Track mouse position for interactive effects
-    document.addEventListener('mousemove', (e) => {
-        if (root.getAttribute('data-theme') === 'light') {
-            root.style.setProperty('--mouse-x', `${e.clientX}px`);
-            root.style.setProperty('--mouse-y', `${e.clientY}px`);
-        }
-    });
+            // Update theme toggle icon
+            const themeToggle = document.querySelector('.theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+            if (theme === 'light') {
+                // Initialize winter effects
+                if (!document.querySelector('link[href*="winter-animations.css"]')) {
+                    const winterStyles = document.createElement('link');
+                    winterStyles.rel = 'stylesheet';
+                    winterStyles.href = './styles/winter-animations.css';
+                    document.head.appendChild(winterStyles);
+                }
+
+                initSnowEffect();
+            } else {
+                removeWinterEffects();
+            }
+
+            // Hide loading overlay after theme is loaded
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                root.classList.remove('theme-transition');
+            }, 500);
+        }, 300);
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1072,4 +966,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ripple.addEventListener('animationend', () => ripple.remove());
     }
+});
+
+// Add scroll progress tracking
+function updateNavbarProgress() {
+    if (document.documentElement.getAttribute('data-theme') === 'light') {
+        const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = Math.min((window.scrollY / windowHeight) * 100, 100);
+        document.documentElement.style.setProperty('--scroll-percentage', `${scrolled}%`);
+    }
+}
+
+// Add scroll event listener for progress bar
+window.addEventListener('scroll', updateNavbarProgress);
+window.addEventListener('resize', updateNavbarProgress);
+window.addEventListener('load', updateNavbarProgress);
+
+// Update progress when theme changes
+document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+    setTimeout(updateNavbarProgress, 100);
 });
