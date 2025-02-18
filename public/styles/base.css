@@ -96,10 +96,10 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.75rem 2rem;
     position: fixed;
     width: 100%;
-    top: 0;
+    top: 1rem;
     z-index: 1000;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
@@ -1156,10 +1156,10 @@ body[data-theme="light"] {
 }
 
 [data-theme="dark"] .frosted-card {
-    background: rgba(26, 26, 26, 0.8);
+    /* background: rgba(26, 26, 26, 0.8); */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    /* border: 1px solid rgba(212, 175, 55, 0.2); */
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1167,36 +1167,28 @@ body[data-theme="light"] {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
+    /* background: linear-gradient(
         125deg,
         rgba(212, 175, 55, 0.15),
         transparent 60%
-    );
+    ); */
     border-radius: inherit;
     opacity: 0;
     transition: opacity 0.5s ease;
 }
 
-[data-theme="dark"] .frosted-card:hover::before {
-    opacity: 1;
-}
-
 [data-theme="dark"] .ice-crystal {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
+    /* background: radial-gradient(
         circle at 30% 30%,
         rgba(212, 175, 55, 0.1),
         transparent 60%
-    );
+    ); */
     opacity: 0;
     transition: opacity 0.5s ease;
     pointer-events: none;
     mix-blend-mode: screen;
-}
-
-[data-theme="dark"] .frosted-card:hover .ice-crystal {
-    opacity: 1;
 }
 
 @keyframes shimmer {

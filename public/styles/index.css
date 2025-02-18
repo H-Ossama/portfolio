@@ -51,6 +51,7 @@ a, button, .btn, .contact-btn, .project-links a {
     align-items: center;
     gap: 1rem;
     margin-bottom: 0.5rem;
+    margin-top: 2rem;
 }
 
 .greeting-emoji {
@@ -195,53 +196,28 @@ a, button, .btn, .contact-btn, .project-links a {
 
 /* Tech Stack */
 .tech-stack-wrapper {
-    margin-top: 2rem;
+    margin-top: 1rem;
     opacity: 0;
     animation: fadeInUp 0.5s ease forwards 0.8s;
 }
 
 .tech-stack {
     display: flex;
-    gap: 2rem;
+    gap: 0.75rem;
     align-items: center;
 }
 
-.tech-item {
-    position: relative;
-    cursor: pointer;
-}
-
-.tech-item i {
-    font-size: 2.5rem;
+.tech-stack i {
+    font-size: 1.2rem;
     color: var(--secondary-gold);
     transition: all 0.3s ease;
+    user-select: none;
+    cursor: default;
 }
 
-.tech-item::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0.5rem 1rem;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.tech-item:hover::before {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(-10px);
-}
-
-.tech-item:hover i {
+.tech-stack i:hover {
     color: var(--primary-gold);
-    transform: translateY(-5px);
+    transform: scale(1.1);
 }
 
 /* Profile Section */
@@ -705,10 +681,11 @@ a, button, .btn, .contact-btn, .project-links a {
 }
 
 .tech-stack i {
-    font-size: 2.5rem;
-    margin: 0 1rem;
+    font-size: 1.5rem;  /* Reduced from 2.5rem */
+    margin: 0 0.5rem;   /* Reduced margins */
     color: var(--secondary-gold);
     transition: all 0.3s ease;
+    user-select: none;  /* Prevent text selection */
 }
 
 .tech-stack i:hover {
@@ -2543,9 +2520,10 @@ font-weight: 600;
     z-index: 1000;
 }
 
+/* Updated logo styling */
 .logo {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: var(--primary-gold);
     text-decoration: none;
     display: flex;
@@ -2557,15 +2535,38 @@ font-weight: 600;
     border-radius: 20px;
     border: 1px solid rgba(212, 175, 55, 0.2);
     transition: all 0.3s ease;
+    user-select: none;
+    top: -0.5rem;
 }
 
 .logo:hover {
     transform: translateY(-2px);
     border-color: var(--primary-gold);
+    background: rgba(212, 175, 55, 0.1);
 }
 
 .logo i {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    margin-right: 0.25rem;
+}
+
+.logo-text {
+    background: linear-gradient(to right, #ffffff, var(--primary-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+}
+
+/* Portfolio identifier styling */
+.portfolio-tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--primary-gold);
+    border-radius: 12px;
+    color: var(--primary-gold);
+    margin-left: 0.5rem;
 }
 
 nav {
@@ -3025,7 +3026,7 @@ nav.nav-shrink {
 
     .tech-tag {
         background: rgba(176, 134, 41, 0.1);
-        color: var(--text-white);
+        color: var (--text-white);
     }
 
     /* Navigation interactions */
