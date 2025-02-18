@@ -726,8 +726,9 @@ a, button, .btn, .contact-btn, .project-links a {
 
 .tech-category {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 15px;
     padding: 2rem;
+    border: 1px solid rgba(212, 175, 55, 0.1);
     transition: transform 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -1999,83 +2000,83 @@ a, button, .btn, .contact-btn, .project-links a {
 }
 
 .tech-icon-wrapper i {
-    font-size: 2rem;
-    color: var(--primary-gold);
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+font-size: 2rem;
+color: var(--primary-gold);
+transition: transform 0.3s ease;
+filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
 }
 
 .tech-item:hover .tech-icon-wrapper i {
-    transform: scale(1.1);
+transform: scale(1.1);
 }
 
 .skill-level {
-    flex: 1;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    overflow: hidden;
-    position: relative;
-    overflow: hidden;
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid rgba(212, 175, 55, 0.1);
+flex: 1;
+height: 6px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 3px;
+overflow: hidden;
+position: relative;
+overflow: hidden;
+background: rgba(212, 175, 55, 0.05);
+border: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 .skill-bar {
-    height: 100%;
-    background: var(--primary-gold);
-    border-radius: 3px;
-    width: var(--skill-level);
-    transform-origin: left;
-    animation: skillGrow 1.5s ease-out forwards;
-    position: relative;
-    background: linear-gradient(90deg, var(--primary-gold), #b08629);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+height: 100%;
+background: var(--primary-gold);
+border-radius: 3px;
+width: var(--skill-level);
+transform-origin: left;
+animation: skillGrow 1.5s ease-out forwards;
+position: relative;
+background: linear-gradient(90deg, var(--primary-gold), #b08629);
+box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
 
 .skill-bar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 30px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    animation: skillBarShine 2s infinite;
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+width: 30px;
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+animation: skillBarShine 2s infinite;
 }
 
 .tech-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
 .tech-details h4 {
-    color: #fff;
-    font-size: 1.1rem;
-    margin: 0;
+color: #fff;
+font-size: 1.1rem;
+margin: 0;
 }
 
 .tech-level {
-    color: var(--primary-gold);
-    font-size: 0.9rem;
-    font-weight: 500;
-    background: linear-gradient(45deg, var(--primary-gold), #b08629);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 600;
+color: var(--primary-gold);
+font-size: 0.9rem;
+font-weight: 500;
+background: linear-gradient(45deg, var(--primary-gold), #b08629);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+font-weight: 600;
 }
 
 /* Animations */
 @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
 }
 
 @keyframes skillGrow {
-    0% { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
+0% { transform: scaleX(0); }
+100% { transform: scaleX(1); }
 }
 
 /* Education Section */

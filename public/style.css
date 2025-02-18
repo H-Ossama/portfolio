@@ -1,4 +1,4 @@
-/* Base cursor styles */
+/* Base cursor styles
 body {
     cursor: url('../assets/images/cursur-default.png'), auto;
 }
@@ -9,4 +9,4 @@ body {
 
 .projects, .about, .education {
     cursor: url('../assets/images/cursur-default.png'), auto;
-}
+} */

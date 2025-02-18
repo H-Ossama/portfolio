@@ -365,6 +365,18 @@ body[data-theme="light"] .section-bg-overlay {
     filter: blur(0.5px);
 }
 
+[data-theme="light"] #winter-particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.8;
+    mix-blend-mode: screen;
+}
+
 [data-theme="light"] #winter-particles canvas {
     filter: brightness(1.8) drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
     animation: snowGlow 4s ease-in-out infinite;
@@ -379,6 +391,7 @@ body[data-theme="light"] .section-bg-overlay {
 [data-theme="light"] .particles-js-canvas-el {
     opacity: 0.9 !important;
     mix-blend-mode: screen;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
 }
 
 /* Add glowing effect to sections */
@@ -421,6 +434,20 @@ body[data-theme="light"] .section-bg-overlay {
     overflow: hidden;
 }
 
+[data-theme="light"] .hero,
+[data-theme="light"] .projects,
+[data-theme="light"] .education,
+[data-theme="light"] .technologies,
+[data-theme="light"] .about {
+    position: relative;
+    z-index: 2;
+    background: var(--winter-bg);
+    overflow: visible;
+    box-shadow: 
+        0 5px 15px rgba(52, 152, 219, 0.05),
+        inset 0 0 30px rgba(52, 152, 219, 0.03);
+}
+
 [data-theme="light"] .hero::before,
 [data-theme="light"] .projects::before,
 [data-theme="light"] .education::before,
@@ -442,6 +469,13 @@ body[data-theme="light"] .section-bg-overlay {
         rgba(26, 27, 46, 0.7),
         rgba(36, 38, 68, 0.7)
     );
+}
+
+[data-theme="light"] .section-bg-overlay {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
 }
 
 /* Gradient Overlays for Sections */

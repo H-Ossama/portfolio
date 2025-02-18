@@ -10,7 +10,29 @@
                 color 0.3s ease,
                 border-color 0.3s ease,
                 box-shadow 0.3s ease,
-                transform 0.3s ease !important;
+                transform 0.3s ease,
+                opacity 0.3s ease !important;
+}
+
+/* Ensure content stays visible during theme transition */
+.theme-transition .tech-item,
+.theme-transition .project-card,
+.theme-transition .edu-card-inner,
+.theme-transition .profile-card {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Maintain particle visibility during transition */
+.theme-transition #winter-particles,
+.theme-transition .particles-container {
+    transition: opacity 0.5s ease;
+}
+
+/* Prevent section content from disappearing */
+.theme-transition section {
+    min-height: 100vh;
+    overflow: visible !important;
 }
 
 .theme-transition::after {
