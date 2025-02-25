@@ -1,1 +1,51 @@
-[]
+[
+  {
+    "year": 2025,
+    "title": "European (EFED) Bachelor in Web Development",
+    "institution": "MULTIHEXA Meknes",
+    "isCurrent": true,
+    "highlights": [
+      "Advanced web development studies with European standards",
+      "Modern web technologies and frameworks",
+      "Full-stack development practices",
+      "Currently pursuing (2024-2025)"
+    ],
+    "skills": ["Full-Stack Development", "European Standards", "Web Technologies"]
+  },
+  {
+    "year": 2024,
+    "title": "Computer Networks and Network Security",
+    "institution": "Coursera",
+    "highlights": [
+      "Network security fundamentals",
+      "Computer networking principles",
+      "Security protocols and best practices",
+      "Professional certification"
+    ],
+    "skills": ["Network Security", "Computer Networks", "Security Protocols"]
+  },
+  {
+    "year": 2024,
+    "title": "Software Engineering Bootcamp",
+    "institution": "ALX AFRICA",
+    "highlights": [
+      "Intensive software engineering training",
+      "Modern development practices",
+      "Full-stack application development",
+      "Project-based learning"
+    ],
+    "skills": ["Software Engineering", "Full-Stack Development", "Modern Practices"]
+  },
+  {
+    "year": 2023,
+    "title": "Technicien Spécialisé en Système et Réseau Informatique",
+    "institution": "EFET (Ecole Française D'enseignement Technique)",
+    "highlights": [
+      "IT systems administration",
+      "Network infrastructure management",
+      "Hardware and software integration",
+      "Technical specialization (2021-2023)"
+    ],
+    "skills": ["IT Systems", "Network Administration", "System Integration"]
+  }
+]

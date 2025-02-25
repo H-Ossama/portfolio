@@ -1,0 +1,177 @@
+.theme-loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.theme-loading-screen.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.theme-transition-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    transition: background-color 2s ease;
+}
+
+/* Sun animation */
+.theme-transition-sun {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    left: -60px;  /* Start off-screen */
+    bottom: -60px; /* Start off-screen */
+    background: radial-gradient(circle at center,
+        #ffffff 0%,
+        #ffd700 50%,
+        #ff8f00 100%
+    );
+    border-radius: 50%;
+    box-shadow: 
+        0 0 60px #ff8f00,
+        0 0 100px rgba(255, 143, 0, 0.6);
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+    transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Moon animation */
+.theme-transition-moon {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    right: -50px;  /* Start off-screen */
+    top: -50px;    /* Start off-screen */
+    background: radial-gradient(circle at 35% 35%,
+        #ffffff 0%,
+        #f5f5f5 60%,
+        #e0e0e0 100%
+    );
+    border-radius: 50%;
+    box-shadow: 
+        inset -8px -8px 20px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+    transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme transitions */
+.theme-loading-screen[data-transition="to-light"] .theme-transition-elements {
+    background-color: #ffffff;
+}
+
+.theme-loading-screen[data-transition="to-light"] .theme-transition-sun {
+    opacity: 1;
+    transform: translate(calc(100vw - 60px), calc(-100vh + 60px)) scale(1);
+}
+
+.theme-loading-screen[data-transition="to-dark"] .theme-transition-elements {
+    background-color: #000000;
+}
+
+.theme-loading-screen[data-transition="to-dark"] .theme-transition-moon {
+    opacity: 1;
+    transform: translate(calc(-100vw + 50px), calc(100vh - 50px)) scale(0);
+}
+
+@keyframes lightTransition {
+    0% {
+        filter: brightness(0.2);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+
+@keyframes darkTransition {
+    0% {
+        filter: brightness(1);
+    }
+    100% {
+        filter: brightness(0.2);
+    }
+}
+
+/* Winter Theme Warning Popup */
+.theme-warning-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid #ffffff;
+    padding: 2rem;
+    border-radius: 15px;
+    z-index: 10001;
+    width: 90%;
+    max-width: 400px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.theme-warning-popup.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup-content {
+    text-align: center;
+    color: #ffffff;
+}
+
+.popup-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.popup-button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.popup-preview {
+    background: #ffffff;
+    color: #000000;
+}
+
+.popup-close {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+.popup-button:hover {
+    transform: translateY(-2px);
+}
+
+.popup-preview:hover {
+    background: #f5f5f5;
+}
+
+.popup-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}

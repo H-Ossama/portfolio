@@ -56,7 +56,7 @@ html {
 
 /* Base Styles */
 body {
-    background-color: var(--bg-dark);
+    background-color: #050505;
     color: var(--text-white);
     line-height: 1.6;
     overflow-x: hidden;
@@ -585,8 +585,15 @@ footer::before {
 }
 
 .social-links a.twitter:hover {
-    background: #000;
-    border-color: #000;
+    background: #000000;
+    border-color: #ffffff;
+    outline: 1px solid #ffffff;
+}
+
+.social-links a.twitter:hover i {
+    color: #ffffff;
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 .social-links a.email:hover {

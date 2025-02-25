@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalForm = document.getElementById('pro-user-form');
     const modalCloseBtn = modal ? modal.querySelector('.close-btn') : null;
 
+    // Load education data
+    loadEducationData();
+
     // Add loading state
     const loading = document.createElement('div');
     loading.className = 'loading';
@@ -113,6 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
     document.head.appendChild(style);
+
+    initExpertiseAnimations();
+
+    // Initialize particles with current theme
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    updateParticlesColors(currentTheme);
+
+    initParticleControls();
 });
 
 // Helper Functions
@@ -724,19 +735,108 @@ function initThemeParticles() {
     }
 }
 
-// Update the theme toggle function
-const originalThemeToggle = initThemeToggle;
-initThemeToggle = function() {
-    originalThemeToggle();
-    initThemeParticles();
-    
-    // Add particle switch on theme toggle
+// Update particles colors based on theme
+function updateParticlesColors(theme) {
+    if (window.pJSDom && window.pJSDom[0]) {
+        const color = theme === 'dark' ? '#D4AF37' : '#3498db';
+        const particles = window.pJSDom[0].pJS.particles;
+        
+        // Update particle colors
+        particles.array.forEach(p => {
+            p.color.value = color;
+        });
+        
+        // Update line linking colors
+        particles.line_linked.color = color;
+    }
+}
+
+// Enhanced theme toggle function
+function initThemeToggle() {
     const themeToggle = document.querySelector('.theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            setTimeout(initThemeParticles, 100);
+    if (!themeToggle) return;
+
+    function loadWinterThemeCSS() {
+        if (!document.getElementById('winter-theme-css')) {
+            const link = document.createElement('link');
+            link.id = 'winter-theme-css';
+            link.rel = 'stylesheet';
+            link.href = './styles/winter-theme.css';
+            document.head.appendChild(link);
+        }
+    }
+
+    function initSnowEffect() {
+        const particlesContainer = document.getElementById('winter-particles');
+        if (!particlesContainer) {
+            const container = document.createElement('div');
+            container.id = 'winter-particles';
+            document.body.insertBefore(container, document.body.firstChild);
+        }
+        
+        if (window.particlesJS) {
+            window.particlesJS('winter-particles', winterParticlesConfig);
+        }
+
+        // Add section overlays for better snow visibility
+        document.querySelectorAll('section').forEach(section => {
+            if (!section.querySelector('.section-bg-overlay')) {
+                const overlay = document.createElement('div');
+                overlay.className = 'section-bg-overlay';
+                section.insertBefore(overlay, section.firstChild);
+            }
         });
     }
+
+    function removeSnowEffect() {
+        const particlesContainer = document.getElementById('winter-particles');
+        if (particlesContainer) {
+            if (window.pJSDom && window.pJSDom[0]) {
+                window.pJSDom[0].pJS.fn.vendors.destroyParticles();
+                window.pJSDom = [];
+            }
+            particlesContainer.style.display = 'none';
+        }
+
+        // Remove section overlays
+        document.querySelectorAll('.section-bg-overlay').forEach(overlay => {
+            overlay.remove();
+        });
+    }
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        loadWinterThemeCSS();
+        setTimeout(initSnowEffect, 100);
+    }
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.classList.add('theme-transition');
+        
+        if (newTheme === 'light') {
+            loadWinterThemeCSS();
+            setTimeout(initSnowEffect, 100);
+        } else {
+            removeSnowEffect();
+        }
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+
+        // Update particles colors when theme changes
+        updateParticlesColors(newTheme);
+
+        setTimeout(() => {
+            document.documentElement.classList.remove('theme-transition');
+        }, 300);
+    });
 }
 
 // Add winter particles styles
@@ -986,3 +1086,556 @@ window.addEventListener('load', updateNavbarProgress);
 document.querySelector('.theme-toggle')?.addEventListener('click', () => {
     setTimeout(updateNavbarProgress, 100);
 });
+
+function initThemeTransitions() {
+    const loadingScreen = document.querySelector('.theme-loading-screen');
+    const backdrop = document.querySelector('.theme-transition-backdrop');
+    const rays = document.querySelector('.theme-rays');
+    const sun = document.querySelector('.theme-transition-sun');
+    const moon = document.querySelector('.theme-transition-moon');
+    let isTransitioning = false;
+
+    async function handleThemeTransition(fromTheme, toTheme) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        loadingScreen.classList.add('active');
+        backdrop.classList.remove('sunrise', 'sunset');
+        rays.style.opacity = '0';
+        
+        // Small delay to ensure animations reset
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        if (fromTheme === 'dark' && toTheme === 'light') {
+            backdrop.classList.add('sunrise');
+            sun.style.display = 'block';
+            moon.style.display = 'none';
+            rays.style.opacity = '1';
+        } else {
+            backdrop.classList.add('sunset');
+            moon.style.display = 'block';
+            sun.style.display = 'none';
+        }
+
+        // Wait for animations to start
+        await new Promise(resolve => setTimeout(resolve, 100));
+        setTheme(toTheme);
+
+        // Complete transition
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        loadingScreen.classList.remove('active');
+        backdrop.classList.remove('sunrise', 'sunset');
+        sun.style.display = 'none';
+        moon.style.display = 'none';
+        rays.style.opacity = '0';
+        isTransitioning = false;
+    }
+
+    document.querySelector('.theme-toggle').addEventListener('click', async () => {
+        if (isTransitioning) return;
+        
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        
+        if (currentTheme === 'dark') {
+            const shouldSwitch = await showWinterThemeWarning();
+            if (shouldSwitch) {
+                await handleThemeTransition('dark', 'light');
+            }
+        } else {
+            await handleThemeTransition('light', 'dark');
+        }
+    });
+}
+
+// Initialize theme transitions
+document.addEventListener('DOMContentLoaded', initThemeTransitions);
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize theme transition manager
+    const themeManager = new ThemeTransitionManager();
+    const themeToggle = document.querySelector('.theme-toggle');
+    const root = document.documentElement;
+    
+    // Set initial theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    root.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', async () => {
+        const currentTheme = root.getAttribute('data-theme');
+        
+        if (currentTheme === 'dark') {
+            const shouldSwitchToWinter = await themeManager.showWinterWarning();
+            if (shouldSwitchToWinter) {
+                await themeManager.transitionToLight();
+                updateThemeIcon('light');
+                localStorage.setItem('theme', 'light');
+            }
+        } else {
+            await themeManager.transitionToDark();
+            updateThemeIcon('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+
+    function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'dark') {
+            icon.className = 'fas fa-sun';
+            themeToggle.setAttribute('data-tooltip', 'Switch to Winter Theme');
+        } else {
+            icon.className = 'fas fa-moon';
+            themeToggle.setAttribute('data-tooltip', 'Switch to Dark Theme');
+        }
+    }
+});
+
+// Initialize theme system
+let themeManager = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    themeManager = new ThemeTransitionManager();
+    const themeToggle = document.querySelector('.theme-toggle');
+    const root = document.documentElement;
+    
+    // Set initial theme without animation
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    root.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    // Theme toggle click handler
+    themeToggle.addEventListener('click', async () => {
+        if (themeManager.isTransitioning) return;
+        
+        const currentTheme = root.getAttribute('data-theme');
+        
+        if (currentTheme === 'dark') {
+            const shouldSwitch = await themeManager.showWinterWarning();
+            if (shouldSwitch) {
+                themeToggle.style.pointerEvents = 'none';
+                await themeManager.transitionToLight();
+                updateThemeIcon('light');
+                localStorage.setItem('theme', 'light');
+                themeToggle.style.pointerEvents = 'auto';
+            }
+        } else {
+            themeToggle.style.pointerEvents = 'none';
+            await themeManager.transitionToDark();
+            updateThemeIcon('dark');
+            localStorage.setItem('theme', 'dark');
+            themeToggle.style.pointerEvents = 'auto';
+        }
+    });
+});
+
+function updateThemeIcon(theme) {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const icon = themeToggle.querySelector('i');
+    
+    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    themeToggle.setAttribute('data-tooltip', 
+        theme === 'dark' ? 'Switch to Winter Theme' : 'Switch to Dark Theme'
+    );
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const root = document.documentElement;
+    const themeManager = new ThemeTransitionManager();
+
+    // Remove any existing click listeners
+    themeToggle.replaceWith(themeToggle.cloneNode(true));
+    const newThemeToggle = document.querySelector('.theme-toggle');
+
+    // Add new click handler
+    newThemeToggle.addEventListener('click', async (e) => {
+        e.preventDefault();
+        if (themeManager.isTransitioning) return;
+        
+        const currentTheme = root.getAttribute('data-theme');
+        
+        if (currentTheme === 'dark') {
+            // Always show popup first
+            const shouldSwitchToWinter = await themeManager.showWinterWarning();
+            if (shouldSwitchToWinter) {
+                // Only switch theme if user confirms
+                await themeManager.transitionToLight();
+                updateThemeIcon('light');
+            }
+        } else {
+            await themeManager.transitionToDark();
+            updateThemeIcon('dark');
+        }
+    });
+
+    function updateThemeIcon(theme) {
+        const icon = newThemeToggle.querySelector('i');
+        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        newThemeToggle.setAttribute('data-tooltip', 
+            theme === 'dark' ? 'Switch to Winter Theme' : 'Switch to Dark Theme'
+        );
+    }
+
+    // Set initial theme and icon
+    root.setAttribute('data-theme', 'dark');
+    updateThemeIcon('dark');
+});
+
+// Load education data directly from the JSON file
+async function loadEducationData() {
+    try {
+        const response = await fetch('/data/education.json');
+        if (!response.ok) throw new Error('Failed to load education data');
+        const educationData = await response.json();
+        renderEducationData(educationData);
+    } catch (error) {
+        console.error('Failed to load education data:', error);
+        showEducationError();
+    }
+}
+
+function renderEducationData(educationData) {
+    const container = document.querySelector('.edu-cards-container');
+    if (!container) return;
+
+    container.innerHTML = educationData.map((edu, index) => {
+        const isCurrentYear = String(edu.year) === '2025';
+        return `
+            <div class="edu-card winter-card frosted-card" data-aos="fade-up" data-aos-delay="${index * 100}">
+                <div class="edu-year-badge ${isCurrentYear ? 'current' : ''}">${isCurrentYear ? `${edu.year} • Current` : edu.year}</div>
+                <div class="edu-content">
+                    <div class="edu-header">
+                        <h3>${edu.title}</h3>
+                        <div class="edu-institution">${edu.institution}</div>
+                    </div>
+                    <ul class="edu-highlights">
+                        ${edu.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                    </ul>
+                    <div class="edu-skills">
+                        ${edu.skills.map(skill => `<span class="edu-skill-tag">${skill}</span>`).join('')}
+                    </div>
+                    ${isCurrentYear ? `
+                        <button class="certificate-btn in-progress" disabled>
+                            <i class="fas fa-hourglass-half"></i>
+                            In Progress
+                        </button>
+                    ` : `
+                        <button class="certificate-btn" data-certificate-id="${edu.id}">
+                            <i class="fas fa-certificate"></i>
+                            View Certificate
+                        </button>
+                    `}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Add certificate click handlers
+    container.querySelectorAll('.certificate-btn:not(.in-progress)').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const certId = btn.dataset.certificateId;
+            const imgPath = `../../assets/images/certifications/${certId}.jpg`;
+            
+            try {
+                // Check if image exists
+                const response = await fetch(imgPath);
+                if (!response.ok) throw new Error('Certificate not found');
+                
+                // If image exists, open in new tab
+                window.open(imgPath, '_blank');
+            } catch (error) {
+                // Handle error
+                btn.classList.add('error');
+                btn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Certificate Unavailable';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    btn.classList.remove('error');
+                    btn.innerHTML = '<i class="fas fa-certificate"></i> View Certificate';
+                }, 3000);
+            }
+        });
+    });
+
+    // Initialize AOS for new elements
+    if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+    }
+}
+
+function showEducationError() {
+    const container = document.querySelector('.edu-cards-container');
+    if (container) {
+        container.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load education data. Please try again later.</p>
+                <button onclick="loadEducationData()" class="retry-btn">
+                    <i class="fas fa-redo"></i> Retry
+                </button>
+            </div>
+        `;
+    }
+}
+
+// Initialize education section when document loads
+document.addEventListener('DOMContentLoaded', loadEducationData);
+
+// Animate expertise bars when they come into view
+function initExpertiseAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bars = entry.target.querySelectorAll('.expertise-level');
+                bars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.expertise-category').forEach(category => {
+        observer.observe(category);
+    });
+}
+
+// Particle Controls
+function initParticleControls() {
+    const toggle = document.querySelector('.particle-controls-toggle');
+    const panel = document.querySelector('.control-panel');
+    
+    if (!toggle || !panel) return;
+
+    const controls = {
+        amount: document.getElementById('particleAmount'),
+        speed: document.getElementById('particleSpeed'),
+        size: document.getElementById('particleSize'),
+        glow: document.getElementById('particleGlow')
+    };
+
+    // Toggle control panel
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.toggle('active');
+    });
+
+    // Update value displays and particles
+    Object.keys(controls).forEach(key => {
+        const input = controls[key];
+        if (!input) return;
+        
+        const display = input.parentElement.querySelector('.value-display');
+        input.addEventListener('input', () => {
+            display.textContent = input.value;
+            updateParticles();
+        });
+    });
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.particle-controls')) {
+            panel.classList.remove('active');
+        }
+    });
+
+    function updateParticles() {
+        if (!window.pJSDom || !window.pJSDom[0]) return;
+        
+        const pJS = window.pJSDom[0].pJS;
+        
+        // Update particle settings
+        pJS.particles.number.value = parseInt(controls.amount.value);
+        pJS.particles.size.value = parseFloat(controls.size.value);
+        pJS.particles.move.speed = parseFloat(controls.speed.value);
+        pJS.particles.opacity.value = parseFloat(controls.glow.value);
+
+        // Destroy and reinitialize particles
+        pJS.fn.particlesEmpty();
+        pJS.fn.particlesCreate();
+        pJS.fn.particlesDraw();
+
+        // Save settings to localStorage
+        const settings = {};
+        Object.keys(controls).forEach(key => {
+            settings[key] = controls[key].value;
+        });
+        localStorage.setItem('particleSettings', JSON.stringify(settings));
+    }
+
+    // Load saved settings
+    const savedSettings = localStorage.getItem('particleSettings');
+    if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        Object.keys(settings).forEach(key => {
+            if (controls[key]) {
+                controls[key].value = settings[key];
+                const display = controls[key].parentElement.querySelector('.value-display');
+                if (display) {
+                    display.textContent = settings[key];
+                }
+            }
+        });
+        updateParticles();
+    }
+}
+
+// Initialize all animations and interactions
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize UI Elements
+    const canvas = document.getElementById('background-canvas');
+    const typingText = document.querySelector('.typing-text');
+    const contactForm = document.getElementById('contact-form');
+    const themeToggle = document.querySelector('.theme-toggle');
+    const projectCards = document.querySelectorAll('.project-card');
+    const counters = document.querySelectorAll('.counter');
+    const yearElement = document.getElementById('current-year');
+    const modal = document.getElementById('pro-user-modal');
+    const modalForm = document.getElementById('pro-user-form');
+    const modalCloseBtn = modal ? modal.querySelector('.close-btn') : null;
+
+    // Load education data
+    loadEducationData();
+
+    // Add loading state
+    const loading = document.createElement('div');
+    loading.className = 'loading';
+    document.body.appendChild(loading);
+
+    // Ensure all assets are loaded
+    window.addEventListener('load', () => {
+        loading.style.opacity = '0';
+        setTimeout(() => {
+            loading.remove();
+            document.body.style.overflow = 'visible';
+        }, 500);
+    });
+
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+
+    // Background Canvas Animation
+    if (canvas) {
+        initCanvas(canvas);
+    }
+
+    // Pro User Modal Functionality
+    if (modal && modalForm && modalCloseBtn) {
+        initializeModal(modal, modalForm, modalCloseBtn);
+    }
+
+    // Typing Animation
+    if (typingText) {
+        initTypingAnimation(typingText);
+    }
+
+    // Contact Form
+    if (contactForm) {
+        initContactForm(contactForm);
+    }
+
+    // Theme Toggle
+    initThemeToggle();
+
+    // Project Cards
+    if (projectCards.length > 0) {
+        initProjectCards(projectCards);
+    }
+
+    // Counters
+    if (counters.length > 0) {
+        initCounters(counters);
+    }
+
+    // Copyright Year
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+
+    // Smooth Scroll
+    initSmoothScroll();
+
+    // About Section Animations
+    initAboutSection();
+
+    // Smooth reveal of project tech stack
+    const techStacks = document.querySelectorAll('.project-tech-stack');
+    techStacks.forEach(stack => {
+        const tags = stack.querySelectorAll('.tech-tag');
+        tags.forEach((tag, index) => {
+            tag.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+
+    // Add mouse interaction with floating elements
+    initFloatingElements();
+
+    // Add parallax scrolling effect
+    initParallaxEffect();
+
+    // Add theme transition styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .theme-transition * {
+            transition: background-color 0.3s ease,
+                        color 0.3s ease,
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease,
+                        transform 0.3s ease !important;
+        }
+        
+        .theme-toggle-spin {
+            animation: spin 0.3s ease-in-out;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    initExpertiseAnimations();
+
+    // Initialize particles with current theme
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    updateParticlesColors(currentTheme);
+
+    initParticleControls();
+});
+
+// After DOMContentLoaded, initialize particle controls separately
+document.addEventListener('DOMContentLoaded', () => {
+    // ...existing code...
+
+    // Initialize particle controls after a short delay to ensure particles.js is loaded
+    setTimeout(() => {
+        const toggle = document.querySelector('.particle-controls-toggle');
+        const panel = document.querySelector('.control-panel');
+        
+        if (toggle && panel) {
+            // Toggle control panel
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                panel.classList.toggle('active');
+            });
+
+            // Close panel when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.particle-controls')) {
+                    panel.classList.remove('active');
+                }
+            });
+        }
+    }, 1000);
+});
+
+// ...existing code...

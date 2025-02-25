@@ -52,8 +52,8 @@
                     <span>Education</span>
                 </a>
                 <a href="#technologies" class="nav-item" data-section="technologies">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>Technologies</span>
+                    <i class="fas fa-code"></i>
+                    <span>Skills</span>
                 </a>
                 <a href="#about" class="nav-item" data-section="about">
                     <i class="fas fa-user"></i>
@@ -101,6 +101,134 @@
                 </div>
                 <button type="submit" class="submit-btn">
                     <i class="fas fa-save"></i> Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Technology Modal -->
+    <div id="technology-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-laptop-code"></i> Add Technology</h2>
+                <button class="close-btn" onclick="closeModal('technology-modal')">&times;</button>
+            </div>
+            <form id="technology-form">
+                <div class="form-group">
+                    <label for="tech-category">
+                        <i class="fas fa-layer-group"></i> Category
+                    </label>
+                    <select id="tech-category" name="category" required>
+                        <option value="">Select category</option>
+                        <option value="Backend">Backend</option>
+                        <option value="Frontend">Frontend</option>
+                        <option value="Database">Database</option>
+                        <option value="DevOps">DevOps</option>
+                        <option value="Tools & Frameworks">Tools & Frameworks</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tech-name">
+                        <i class="fas fa-code"></i> Technology Name
+                    </label>
+                    <input type="text" id="tech-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="tech-icon">
+                        <i class="fas fa-icons"></i> Icon Class
+                    </label>
+                    <input type="text" id="tech-icon" name="icon" required placeholder="e.g., fab fa-node-js">
+                    <small>Use Font Awesome classes. <a href="https://fontawesome.com/icons" target="_blank">Browse icons</a></small>
+                </div>
+                <div class="form-group">
+                    <label for="tech-level">
+                        <i class="fas fa-chart-bar"></i> Proficiency Level (0-100)
+                    </label>
+                    <input type="range" id="tech-level" name="level" min="0" max="100" value="50" oninput="this.nextElementSibling.value = this.value">
+                    <output>50</output>
+                </div>
+                <div class="form-group">
+                    <label for="tech-experience">
+                        <i class="fas fa-clock"></i> Experience
+                    </label>
+                    <input type="text" id="tech-experience" name="experience" required placeholder="e.g., 3+ years">
+                </div>
+                <div class="form-group">
+                    <label for="tech-description">
+                        <i class="fas fa-align-left"></i> Description
+                    </label>
+                    <textarea id="tech-description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tech-features">
+                        <i class="fas fa-list"></i> Key Features
+                    </label>
+                    <textarea id="tech-features" name="keyFeatures" rows="3" placeholder="Enter features, one per line"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save"></i> Save Technology
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add this section for skills management -->
+    <div class="modal" id="technology-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fas fa-plus"></i> Add New Skill</h2>
+            <form id="technology-form">
+                <div class="form-group">
+                    <label for="tech-name">
+                        <i class="fas fa-tag"></i> Skill Name
+                    </label>
+                    <input type="text" id="tech-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="tech-category">
+                        <i class="fas fa-folder"></i> Category
+                    </label>
+                    <select id="tech-category" name="category" required>
+                        <option value="backend">Backend</option>
+                        <option value="database">Database</option>
+                        <option value="devops">DevOps</option>
+                        <option value="tools">Tools</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tech-icon">
+                        <i class="fas fa-icons"></i> Icon Class
+                    </label>
+                    <input type="text" id="tech-icon" name="icon" required placeholder="e.g., fab fa-node-js">
+                    <small>Use Font Awesome classes. <a href="https://fontawesome.com/icons" target="_blank">Browse icons</a></small>
+                </div>
+                <div class="form-group">
+                    <label for="tech-level">
+                        <i class="fas fa-chart-bar"></i> Proficiency Level (0-100)
+                    </label>
+                    <input type="range" id="tech-level" name="level" min="0" max="100" value="50" oninput="this.nextElementSibling.value = this.value">
+                    <output>50</output>
+                </div>
+                <div class="form-group">
+                    <label for="tech-tags">
+                        <i class="fas fa-tags"></i> Tags (comma separated)
+                    </label>
+                    <input type="text" id="tech-tags" name="tags" required placeholder="e.g., Express.js, REST APIs, WebSocket">
+                </div>
+                <div class="form-group">
+                    <label for="tech-description">
+                        <i class="fas fa-align-left"></i> Description
+                    </label>
+                    <textarea id="tech-description" name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tech-features">
+                        <i class="fas fa-list"></i> Key Features (one per line)
+                    </label>
+                    <textarea id="tech-features" name="features" rows="3" required placeholder="Enter features, one per line"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save"></i> Save Skill
                 </button>
             </form>
         </div>

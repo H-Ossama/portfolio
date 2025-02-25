@@ -4,27 +4,41 @@ let education = [];
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', async () => {
-    initializeParticleBackground();
-    await initializeDashboard();
-    setupSidebarNavigation();
-    setupFormHandlers();
-    setupImagePreviews();
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        initializeParticleBackground();
+        await initializeDashboard();
+        setupSidebarNavigation();
+        setupFormHandlers();
+        setupImagePreviews();
+    } catch (error) {
+        showMessage('Error connecting to server. Please ensure the server is running and MongoDB is installed.', 'error');
+        console.error('Dashboard initialization error:', error);
+    }
 });
 
 // Initialize dashboard data and counters
 async function initializeDashboard() {
     try {
-        const [projects, education] = await Promise.all([
+        const [projects, education, technologies] = await Promise.all([
             loadProjects(),
-            loadEducation()
+            loadEducation(),
+            fetch('/api/technologies').then(r => r.json())
         ]);
         
         // Update sidebar counters
         updateSidebarCounter('projects', projects.length);
         updateSidebarCounter('education', education.length);
+        updateSidebarCounter('technologies', technologies.length);
         
-        // Show initial section
-        showSection('projects');
+        // Show technologies section by default
+        showSection('technologies');
+        loadDashboardContent('technologies');
     } catch (error) {
         console.error('Error initializing dashboard:', error);
         showMessage('Failed to load dashboard data', 'error');
@@ -660,34 +674,41 @@ function renderEducation(education) {
     `;
 }
 
-function renderTechnologies(technologies) {
+function renderTechnologies(skills) {
     return `
         <div class="section-header">
-            <h2>Technologies</h2>
+            <h2>Skills & Technologies</h2>
             <button class="add-btn" onclick="openModal('technology-modal')">
-                <i class="fas fa-plus"></i> Add Technology
+                <i class="fas fa-plus"></i> Add Skill
             </button>
         </div>
         <div class="tech-grid">
-            ${technologies.map(tech => `
-                <div class="tech-card" data-id="${tech._id}">
-                    <i class="${tech.icon}"></i>
-                    <h3>${tech.name}</h3>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: ${tech.level}%"></div>
+            ${skills.map(skill => `
+                <div class="tech-card" data-id="${skill.id}">
+                    <div class="tech-header">
+                        <i class="${skill.icon}"></i>
+                        <h3>${skill.name}</h3>
                     </div>
-                    <div class="actions">
-                        <button onclick="editTechnology('${tech._id}')">
+                    <div class="skill-level">
+                        <span class="level-label">Proficiency: ${skill.level}%</span>
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: ${skill.level}%"></div>
+                        </div>
+                    </div>
+                    <div class="tech-tags">
+                        ${skill.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="tech-actions">
+                        <button onclick="editSkill('${skill.id}')" class="edit-btn">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button onclick="deleteTechnology('${tech._id}')">
+                        <button onclick="deleteSkill('${skill.id}')" class="delete-btn">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
                 </div>
             `).join('')}
-        </div>
-    `;
+        </div>`;
 }
 
 function renderAbout(about) {
@@ -728,4 +749,227 @@ document.addEventListener('click', (e) => {
     if (!e.target.closest('.user-profile')) {
         document.getElementById('userMenu').classList.remove('show');
     }
+});
+
+// Technology Management
+async function saveTechnology(formData) {
+    try {
+        const response = await fetch('/api/technologies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                ...formData,
+                keyFeatures: formData.keyFeatures.split('\n').filter(f => f.trim()),
+                level: parseInt(formData.level)
+            })
+        });
+
+        if (!response.ok) throw new Error('Failed to save technology');
+        
+        const result = await response.json();
+        showMessage('Technology added successfully', 'success');
+        return result;
+    } catch (error) {
+        showMessage(error.message, 'error');
+        throw error;
+    }
+}
+
+async function editTechnology(id) {
+    try {
+        const tech = await fetch(`/api/technologies/${id}`).then(r => r.json());
+        
+        // Populate form
+        document.getElementById('tech-category').value = tech.category;
+        document.getElementById('tech-name').value = tech.name;
+        document.getElementById('tech-icon').value = tech.icon;
+        document.getElementById('tech-level').value = tech.level;
+        document.getElementById('tech-level').nextElementSibling.value = tech.level;
+        document.getElementById('tech-experience').value = tech.experience;
+        document.getElementById('tech-description').value = tech.description || '';
+        document.getElementById('tech-features').value = (tech.keyFeatures || []).join('\n');
+        
+        // Update form for edit mode
+        const form = document.getElementById('technology-form');
+        form.dataset.editId = id;
+        document.querySelector('#technology-modal h2').innerHTML = '<i class="fas fa-edit"></i> Edit Technology';
+        
+        openModal('technology-modal');
+    } catch (error) {
+        showMessage('Failed to load technology details', 'error');
+    }
+}
+
+async function deleteTechnology(id) {
+    if (!confirm('Are you sure you want to delete this technology?')) return;
+    
+    try {
+        const response = await fetch(`/api/technologies/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (!response.ok) throw new Error('Failed to delete technology');
+        
+        showMessage('Technology deleted successfully', 'success');
+        await loadDashboardContent('technologies');
+    } catch (error) {
+        showMessage(error.message, 'error');
+    }
+}
+
+// Update form submission handler
+document.getElementById('technology-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const editId = e.target.dataset.editId;
+    
+    try {
+        if (editId) {
+            await fetch(`/api/technologies/${editId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    keyFeatures: formData.keyFeatures.split('\n').filter(f => f.trim()),
+                    level: parseInt(formData.level)
+                })
+            });
+        } else {
+            await saveTechnology(formData);
+        }
+        
+        closeModal('technology-modal');
+        e.target.reset();
+        delete e.target.dataset.editId;
+        await loadDashboardContent('technologies');
+    } catch (error) {
+        console.error('Error saving technology:', error);
+    }
+});
+
+document.getElementById('technology-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const editId = e.target.dataset.editId;
+    
+    try {
+        if (editId) {
+            await fetch(`/api/technologies/${editId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    keyFeatures: formData.keyFeatures.split('\n').filter(f => f.trim()),
+                    level: parseInt(formData.level)
+                })
+            });
+        } else {
+            await saveTechnology(formData);
+        }
+        
+        closeModal('technology-modal');
+        e.target.reset();
+        delete e.target.dataset.editId;
+        await loadDashboardContent('technologies');
+    } catch (error) {
+        console.error('Error saving technology:', error);
+    }
+});
+
+async function saveSkill(formData) {
+    try {
+        const tags = formData.tags.split(',').map(t => t.trim());
+        const features = formData.features.split('\n').filter(f => f.trim());
+        
+        const skillData = {
+            ...formData,
+            tags,
+            features,
+            level: parseInt(formData.level)
+        };
+
+        const method = formData.id ? 'PUT' : 'POST';
+        const url = formData.id ? `/api/skills/${formData.id}` : '/api/skills';
+
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(skillData)
+        });
+
+        if (!response.ok) throw new Error('Failed to save skill');
+        
+        showMessage('Skill saved successfully', 'success');
+        closeModal('technology-modal');
+        await loadDashboardContent('technologies');
+    } catch (error) {
+        showMessage(error.message, 'error');
+    }
+}
+
+async function editSkill(id) {
+    try {
+        const skill = await fetch(`/api/skills/${id}`).then(r => r.json());
+        
+        // Populate form
+        document.getElementById('tech-name').value = skill.name;
+        document.getElementById('tech-category').value = skill.category;
+        document.getElementById('tech-icon').value = skill.icon;
+        document.getElementById('tech-level').value = skill.level;
+        document.getElementById('tech-level').nextElementSibling.value = skill.level;
+        document.getElementById('tech-tags').value = skill.tags.join(', ');
+        document.getElementById('tech-description').value = skill.description;
+        document.getElementById('tech-features').value = skill.features.join('\n');
+        
+        // Update form for edit mode
+        const form = document.getElementById('technology-form');
+        form.dataset.id = id;
+        document.querySelector('#technology-modal h2').innerHTML = '<i class="fas fa-edit"></i> Edit Skill';
+        
+        openModal('technology-modal');
+    } catch (error) {
+        showMessage('Failed to load skill details', 'error');
+    }
+}
+
+async function deleteSkill(id) {
+    if (!confirm('Are you sure you want to delete this skill?')) return;
+    
+    try {
+        const response = await fetch(`/api/skills/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (!response.ok) throw new Error('Failed to delete skill');
+        
+        showMessage('Skill deleted successfully', 'success');
+        await loadDashboardContent('technologies');
+    } catch (error) {
+        showMessage(error.message, 'error');
+    }
+}
+
+// Add event listener for skill form submission
+document.getElementById('technology-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    await saveSkill(formData);
 });

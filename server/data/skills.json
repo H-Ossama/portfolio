@@ -1,0 +1,116 @@
+{
+  "skills": [
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "backend",
+      "icon": "fab fa-node-js",
+      "level": 90,
+      "tags": ["Express.js", "REST APIs", "WebSocket"],
+      "description": "Advanced proficiency in building scalable backend services and real-time applications.",
+      "features": [
+        "RESTful API Development",
+        "Microservices Architecture",
+        "Real-time Systems"
+      ]
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "category": "backend",
+      "icon": "fab fa-python",
+      "level": 85,
+      "tags": ["Django", "Flask", "FastAPI"],
+      "description": "Strong experience in Python-based web frameworks and data processing.",
+      "features": [
+        "Web Development",
+        "Data Processing",
+        "API Integration"
+      ]
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "category": "database",
+      "icon": "fas fa-database",
+      "level": 88,
+      "tags": ["Aggregation", "Indexing", "Atlas"],
+      "description": "Extensive experience in MongoDB database design and optimization.",
+      "features": [
+        "Schema Design",
+        "Performance Tuning",
+        "Data Modeling"
+      ]
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "category": "database",
+      "icon": "fas fa-database",
+      "level": 82,
+      "tags": ["SQL", "PL/pgSQL", "Indexing"],
+      "description": "Advanced knowledge of PostgreSQL database management and optimization.",
+      "features": [
+        "Complex Queries",
+        "Performance Optimization",
+        "Database Design"
+      ]
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "category": "devops",
+      "icon": "fab fa-docker",
+      "level": 85,
+      "tags": ["Containers", "Compose", "Swarm"],
+      "description": "Proficient in containerization and orchestration technologies.",
+      "features": [
+        "Container Management",
+        "Multi-container Apps",
+        "CI/CD Integration"
+      ]
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "category": "devops",
+      "icon": "fab fa-aws",
+      "level": 80,
+      "tags": ["EC2", "S3", "Lambda"],
+      "description": "Experience with AWS cloud services and infrastructure.",
+      "features": [
+        "Cloud Infrastructure",
+        "Serverless Computing",
+        "Cloud Storage"
+      ]
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "category": "tools",
+      "icon": "fab fa-git-alt",
+      "level": 92,
+      "tags": ["Version Control", "GitHub", "GitFlow"],
+      "description": "Expert in version control and collaborative development workflows.",
+      "features": [
+        "Branch Management",
+        "Code Review",
+        "Release Management"
+      ]
+    },
+    {
+      "id": "linux",
+      "name": "Linux",
+      "category": "tools",
+      "icon": "fab fa-linux",
+      "level": 85,
+      "tags": ["Shell Scripting", "System Admin", "Security"],
+      "description": "Strong command of Linux systems and server administration.",
+      "features": [
+        "Server Management",
+        "Security Hardening",
+        "Performance Tuning"
+      ]
+    }
+  ]
+}

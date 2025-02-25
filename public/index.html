@@ -39,12 +39,16 @@
         <!-- Winter theme CSS will be loaded dynamically -->
         <link rel="preload" href="./styles/winter-theme.css" as="style">
         
+        <!-- Skills Section Styles -->
+        <link rel="stylesheet" href="./styles/skills.css">
+        
         <!-- Preload winter animations for faster switching -->
         <link rel="preload" href="./styles/winter-animations.css" as="style">
         
         <!-- Particles.js for snow effect -->
         <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script src="./scripts/winterParticles.js"></script>
+        <script src="./scripts/skills.js" defer></script>
         
         <!-- Main Script -->
         <script src="./script.js" defer></script>
@@ -60,25 +64,56 @@
         <!-- Ensure winter particles script is loaded -->
         <script src="./scripts/winterParticles.js"></script>
         <link rel="stylesheet" href="./styles/loading-screen.css">
+
+        <!-- Theme Styles -->
+        <link rel="stylesheet" href="./styles/theme-transitions.css">
+        
+        <!-- Custom Scripts -->
+        <script src="./scripts/themeTransition.js" defer></script>
+        <script src="./script.js" defer></script>
 </head>
 <body>
-    <!-- Theme Transition Loading Screen -->
-    <div class="theme-loading-screen">
-        <div class="theme-particles">
-            <div class="theme-particle"></div>
-            <div class="theme-particle"></div>
-            <div class="theme-particle"></div>
-            <div class="theme-particle"></div>
-        </div>
-        <div class="theme-loading-content">
-            <div class="theme-icon dark">
-                <i class="fas fa-moon"></i>
+    <!-- SVG Filters -->
+    <svg class="particle-filters">
+        <defs>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Full page particles container -->
+    <div id="particles-js"></div>
+
+    <!-- Particle Controls -->
+    <div class="particle-controls">
+        <button class="particle-controls-toggle">
+            <i class="fas fa-sliders-h"></i>
+        </button>
+        <div class="control-panel">
+            <div class="control-group">
+                <label for="particleAmount">Amount</label>
+                <input type="range" id="particleAmount" min="50" max="1000" value="600" />
+                <span class="value-display">600</span>
             </div>
-            <div class="transition-arrow">
-                <i class="fas fa-arrow-right"></i>
+            <div class="control-group">
+                <label for="particleSpeed">Speed</label>
+                <input type="range" id="particleSpeed" min="0.1" max="5" value="3" step="0.1" />
+                <span class="value-display">3</span>
             </div>
-            <div class="theme-icon light">
-                <i class="fas fa-sun"></i>
+            <div class="control-group">
+                <label for="particleSize">Size</label>
+                <input type="range" id="particleSize" min="0.5" max="5" value="2" step="0.1" />
+                <span class="value-display">2</span>
+            </div>
+            <div class="control-group">
+                <label for="particleGlow">Glow</label>
+                <input type="range" id="particleGlow" min="0.1" max="1" value="0.3" step="0.1" />
+                <span class="value-display">0.3</span>
             </div>
         </div>
     </div>
@@ -86,15 +121,22 @@
     <!-- Theme Warning Popup -->
     <div class="theme-warning-popup">
         <div class="popup-content">
-            <div class="popup-icon">
-                <i class="far fa-snowflake"></i>
-            </div>
-            <h3 class="popup-title">Winter IS Coming!</h3>
-            <p class="popup-message">Our beautiful winter theme is currently under development. We're working hard to bring you a magical winter experience. Stay tuned!</p>
+            <h3 class="popup-title">Switch to Winter Theme?</h3>
+            <p class="popup-message">Experience our magical winter wonderland theme.</p>
             <div class="popup-actions">
-                <button class="popup-button popup-preview">Take a Peek</button>
-                <button class="popup-button popup-close">Got it!</button>
+                <button class="popup-button popup-preview">Try It</button>
+                <button class="popup-button popup-close">Stay Dark</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Theme Loading Screen -->
+    <div class="theme-loading-screen">
+        <div class="theme-transition-backdrop"></div>
+        <div class="theme-transition-elements">
+            <div class="theme-transition-sun"></div>
+            <div class="theme-transition-moon"></div>
+            <div class="theme-rays"></div>
         </div>
     </div>
 
@@ -131,9 +173,6 @@
 
     <!-- Winter particles container (moved to top for proper layering) -->
     <div id="winter-particles"></div>
-
-    <!-- Theme transition overlay -->
-    <div class="theme-transition-overlay"></div>
 
     <!-- Fallback for JavaScript disabled -->
     <noscript>
@@ -215,7 +254,7 @@
                             </span>
                             <span class="button-border"></span>
                         </a>
-                        <a href="/assets/OussamaHattanResume(ENG).pdf" class="cta-button secondary">
+                        <a href="/assets/HATTAN_OUSSAMA.pdf" class="cta-button secondary">
                             <span class="button-content">
                                 <i class="fas fa-file-alt"></i>
                                 <span>View Resume</span>
@@ -447,197 +486,54 @@
     <div class="section-ambient-light"></div>
     <div class="education-container">
         <div class="section-header">
+            <h2 class="section-title">Education Journey</h2>
+            <p class="section-subtitle">My academic and professional qualifications</p>
         </div>
 
         <div class="education-timeline">
-            <!-- 2023 Entry -->
-            <div class="edu-card winter-card frosted-card" data-aos="fade-up">
-                <div class="edu-card-inner">
-                    <div class="edu-year-badge">2023</div>
-                    <div class="edu-content">
-                        <div class="edu-header">
-                            <div class="edu-icon">
-                                <i class="fas fa-award"></i>
-                            </div>
-                            <div class="edu-title">
-                                <h3>Full Stack Engineering Certificate</h3>
-                                <span class="edu-institution">ALX Africa</span>
-                            </div>
-                        </div>
-                        <div class="edu-details">
-                            <ul class="edu-highlights">
-                                <li>Advanced Web Development</li>
-                                <li>Database Management</li>
-                                <li>System Architecture</li>
-                            </ul>
-                            <div class="edu-skills">
-                                <span>React</span>
-                                <span>Node.js</span>
-                                <span>MongoDB</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="edu-cards-container">
+                <div class="education-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading education details...</p>
                 </div>
-                <div class="ice-crystal"></div>
-            </div>
-
-            <!-- 2022 Entry -->
-            <div class="edu-card winter-card frosted-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="edu-card-inner">
-                    <div class="edu-year-badge">2022</div>
-                    <div class="edu-content">
-                        <div class="edu-header">
-                            <div class="edu-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div class="edu-title">
-                                <h3>Bachelor's in Web Development</h3>
-                                <span class="edu-institution">University Name</span>
-                            </div>
-                        </div>
-                        <div class="edu-details">
-                            <ul class="edu-highlights">
-                                <li>Software Engineering Fundamentals</li>
-                                <li>Web Technologies</li>
-                                <li>Project Management</li>
-                            </ul>
-                            <div class="edu-skills">
-                                <span>Java</span>
-                                <span>Python</span>
-                                <span>SQL</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
             </div>
         </div>
     </div>
+    <div class="snow-particles"></div>
 </section>
 
-<!-- Technologies Section -->
-<section class="technologies snowfall-parallax" id="technologies">
-    <div class="tech-container">
-        <div class="section-header">
-            <h2 class="section-title">Technologies & Skills</h2>
-            <p class="section-subtitle">My technical toolkit</p>
-        </div>
+<!-- Skills Section -->
+<section id="technologies" class="skills-section snowfall-parallax">
+    <div class="section-ambient-light"></div>
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-down">Technical Expertise</h2>
+        <p class="section-subtitle" data-aos="fade-up">Specialized in building robust backend solutions with cutting-edge technologies</p>
         
-        <div class="tech-grid">
-            <!-- Backend Technologies -->
-            <div class="tech-category winter-card frosted-card">
-                <h3 class="category-title">Backend Development</h3>
-                <div class="tech-items">
-                    <div class="tech-item" data-aos="zoom-in">
-                        <div class="tech-icon-wrapper">
-                            <i class="fab fa-python"></i>
-                            <div class="skill-level">
-                                <div class="skill-bar" style="--skill-level: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-details">
-                            <h4>Python</h4>
-                            <span class="tech-level">Advanced</span>
-                        </div>
-                    </div>
+        <div class="skills-filter" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-globe"></i> All
+            </button>
+            <button class="filter-btn" data-filter="backend">
+                <i class="fas fa-server"></i> Backend
+            </button>
+            <button class="filter-btn" data-filter="database">
+                <i class="fas fa-database"></i> Database
+            </button>
+            <button class="filter-btn" data-filter="devops">
+                <i class="fas fa-cloud"></i> DevOps
+            </button>
+            <button class="filter-btn" data-filter="tools">
+                <i class="fas fa-tools"></i> Tools
+            </button>
+        </div>
 
-                    <div class="tech-item" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="tech-icon-wrapper">
-                            <i class="fab fa-node-js"></i>
-                            <div class="skill-level">
-                                <div class="skill-bar" style="--skill-level: 85%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-details">
-                            <h4>Node.js</h4>
-                            <span class="tech-level">Advanced</span>
-                        </div>
-                    </div>
-
-                    <div class="tech-item" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="tech-icon-wrapper">
-                            <i class="fab fa-java"></i>
-                            <div class="skill-level">
-                                <div class="skill-bar" style="--skill-level: 75%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-details">
-                            <h4>Java</h4>
-                            <span class="tech-level">Intermediate</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
-            </div>
-
-            <!-- Database Technologies -->
-            <div class="tech-category winter-card frosted-card">
-                <h3 class="category-title">Databases</h3>
-                <div class="tech-items">
-                    <div class="tech-item" data-aos="zoom-in">
-                        <div class="tech-icon-wrapper">
-                            <i class="fas fa-database"></i>
-                            <div class="skill-level">
-                                <div class="skill-bar" style="--skill-level: 88%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-details">
-                            <h4>MongoDB</h4>
-                            <span class="tech-level">Advanced</span>
-                        </div>
-                    </div>
-
-                    <div class="tech-item" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="tech-icon-wrapper">
-                            <i class="fas fa-server"></i>
-                            <div class="skill-level">
-                                <div class="skill-bar" style="--skill-level: 82%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-details">
-                            <h4>SQL</h4>
-                            <span class="tech-level">Advanced</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
-            </div>
-
-            <!-- Tools & Others -->
-            <div class="tech-category winter-card frosted-card">
-                <h3 class="category-title">Tools & DevOps</h3>
-                <div class="tech-items">
-                    <div class="tech-item" data-aos="zoom-in">
-                        <div class="tech-icon-wrapper">
-                            <i class="fab fa-git-alt"></i>
-                            <div class="skill-level">
-                                <div class="skill-bar" style="--skill-level: 85%"></div>
-                            </div>
-                        </div>
-                        <div class "tech-details">
-                            <h4>Git</h4>
-                            <span class="tech-level">Advanced</span>
-                        </div>
-                    </div>
-
-                    <div class="tech-item" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="tech-icon-wrapper">
-                            <i class="fab fa-docker"></i>
-                            <div class="skill-level">
-                                <div class="skill-bar" style="--skill-level: 78%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-details">
-                            <h4>Docker</h4>
-                            <span class="tech-level">Intermediate</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
-            </div>
+        <div class="skills-grid">
+            <!-- Skills will be dynamically loaded here -->
         </div>
     </div>
+    <div class="floating-particles"></div>
 </section>
+
 <!-- About Section -->
 <section class="about snowfall-parallax" id="about">
     <div class="about-wrapper">
@@ -678,21 +574,21 @@
                 
                 <div class="about-stats">
                     <div class="stat-item" data-aos="fade-up">
-                        <div class="stat-number" data-count="50">0</div>
+                        <div class="stat-number" data-count="23">0</div>
                         <div class="stat-label">Projects Completed</div>
                     </div>
                     <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
-                        <div class="stat-number" data-count="15">0</div>
+                        <div class="stat-number" data-count="3">0</div>
                         <div class="stat-label">Happy Clients</div>
                     </div>
                 </div>
                 
                 <div class="about-cta">
-                    <a href="../assets/OussamaHattanResume(ENG).pdf" class="cta-button download-btn" download>
+                    <a href="../assets/HATTAN_OUSSAMA.pdf" class="cta-button download-btn" download>
                         <i class="fas fa-download"></i>
                         <span>Download CV</span>
                     </a>
-                    <a href="../assets/OussamaHattanResume(ENG).pdf" class="cta-button view-btn" target="_blank">
+                    <a href="../assets/HATTAN_OUSSAMA.pdf" class="cta-button view-btn" target="_blank">
                         <i class="fas fa-eye"></i>
                         <span>View CV</span>
                     </a>
@@ -752,9 +648,9 @@
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                     <a href="https://x.com/H_Oussama77" class="twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter Profile">
-                        <i class="fab fa-x-twitter"></i>
+                        <i class="fa-brands fa-x-twitter"></i>
                     </a>
-                    <a href="mailto:contact@yourdomain.com" class="email" aria-label="Email Contact">
+                    <a href="mailto:ossamahattan@gmail.com" class="email" aria-label="Email Contact">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
@@ -776,9 +672,9 @@
                 <h3>Contact Info</h3>
                 <ul>
                     <li>
-                        <a href="mailto:contact@yourdomain.com">
+                        <a href="mailto:ossamahattan@gmail.com">
                             <i class="fas fa-envelope"></i>
-                            contact@yourdomain.com
+                            ossamahattan@gmail.com
                         </a>
                     </li>
                     <li>
@@ -805,6 +701,8 @@
     <script src="./script.js"></script>
     <script src="scripts/winterParticles.js"></script>
     <script src="scripts/profileCard.js"></script>
+    <script src="./scripts/particles-config.js"></script>
+    <script src="./scripts/skills.js"></script>
     <script>
         // Loading screen handler
         window.addEventListener('load', () => {

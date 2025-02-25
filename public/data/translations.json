@@ -1,0 +1,194 @@
+{
+  "en": {
+    "nav": {
+      "home": "Home",
+      "projects": "Projects",
+      "education": "Education",
+      "skills": "Skills",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "hero": {
+      "greeting": "Hello, I'm",
+      "title": "Backend Developer",
+      "titles": [
+        "Backend Developer",
+        "API Architect",
+        "Database Expert",
+        "Problem Solver"
+      ]
+    },
+    "about": {
+      "title": "About Me",
+      "subtitle": "Turning Ideas into Efficient Backend Solutions",
+      "description": "Backend developer specializing in building robust and scalable server-side applications. Passionate about creating efficient solutions and learning new technologies."
+    },
+    "projects": {
+      "title": "Featured Projects",
+      "subtitle": "Check out some of my recent work",
+      "viewCode": "View Code",
+      "liveDemo": "Live Demo"
+    },
+    "skills": {
+      "title": "Technical Expertise",
+      "subtitle": "Specialized in building robust backend solutions with cutting-edge technologies",
+      "categories": {
+        "all": "All",
+        "backend": "Backend",
+        "database": "Database",
+        "devops": "DevOps",
+        "tools": "Tools"
+      }
+    },
+    "education": {
+      "title": "Education Journey",
+      "subtitle": "My academic and professional qualifications"
+    },
+    "info": {
+      "expertise": "Expertise",
+      "expertiseValue": "Backend Development",
+      "experience": "Experience",
+      "experienceValue": "3+ Years",
+      "location": "Location",
+      "locationValue": "Azrou, Morocco",
+      "education": "Education",
+      "educationValue": "Computer Science"
+    },
+    "stats": {
+      "projects": "Projects",
+      "technologies": "Technologies"
+    },
+    "cta": {
+      "contactMe": "Contact Me",
+      "downloadCV": "Download CV"
+    }
+  },
+  "fr": {
+    "nav": {
+      "home": "Accueil",
+      "projects": "Projets",
+      "education": "Formation",
+      "skills": "Compétences",
+      "about": "À propos",
+      "contact": "Contact"
+    },
+    "hero": {
+      "greeting": "Bonjour, je suis",
+      "title": "Développeur Backend",
+      "titles": [
+        "Développeur Backend",
+        "Architecte API",
+        "Expert en Base de Données",
+        "Résolveur de Problèmes"
+      ]
+    },
+    "about": {
+      "title": "À Propos de Moi",
+      "subtitle": "Transformer les Idées en Solutions Backend Efficaces",
+      "description": "Développeur backend spécialisé dans la création d'applications serveur robustes et évolutives. Passionné par la création de solutions efficaces et l'apprentissage de nouvelles technologies."
+    },
+    "projects": {
+      "title": "Projets Phares",
+      "subtitle": "Découvrez mes travaux récents",
+      "viewCode": "Voir le Code",
+      "liveDemo": "Démo en Direct"
+    },
+    "skills": {
+      "title": "Expertise Technique",
+      "subtitle": "Spécialisé dans le développement de solutions backend robustes avec des technologies de pointe",
+      "categories": {
+        "all": "Tous",
+        "backend": "Backend",
+        "database": "Base de Données",
+        "devops": "DevOps",
+        "tools": "Outils"
+      }
+    },
+    "education": {
+      "title": "Parcours Éducatif",
+      "subtitle": "Mes qualifications académiques et professionnelles"
+    },
+    "info": {
+      "expertise": "Expertise",
+      "expertiseValue": "Développement Backend",
+      "experience": "Expérience",
+      "experienceValue": "3+ Ans",
+      "location": "Lieu",
+      "locationValue": "Azrou, Maroc",
+      "education": "Formation",
+      "educationValue": "Informatique"
+    },
+    "stats": {
+      "projects": "Projets",
+      "technologies": "Technologies"
+    },
+    "cta": {
+      "contactMe": "Me Contacter",
+      "downloadCV": "Télécharger CV"
+    }
+  },
+  "ar": {
+    "nav": {
+      "home": "الرئيسية",
+      "projects": "المشاريع",
+      "education": "التعليم",
+      "skills": "المهارات",
+      "about": "حولي",
+      "contact": "اتصل بي"
+    },
+    "hero": {
+      "greeting": "مرحباً، أنا",
+      "title": "مطور الخلفية",
+      "titles": [
+        "مطور الخلفية",
+        "مهندس واجهات برمجة",
+        "خبير قواعد البيانات",
+        "حلال المشكلات"
+      ]
+    },
+    "about": {
+      "title": "نبذة عني",
+      "subtitle": "تحويل الأفكار إلى حلول برمجية فعالة",
+      "description": "مطور متخصص في بناء تطبيقات الخادم القوية والقابلة للتطوير. شغوف بإنشاء حلول فعالة وتعلم التقنيات الجديدة."
+    },
+    "projects": {
+      "title": "مشاريع مميزة",
+      "subtitle": "تصفح بعض أعمالي الحديثة",
+      "viewCode": "عرض الكود",
+      "liveDemo": "عرض حي"
+    },
+    "skills": {
+      "title": "الخبرات التقنية",
+      "subtitle": "متخصص في بناء حلول خلفية قوية باستخدام أحدث التقنيات",
+      "categories": {
+        "all": "الكل",
+        "backend": "الواجهة الخلفية",
+        "database": "قواعد البيانات",
+        "devops": "ديف اوبس",
+        "tools": "الأدوات"
+      }
+    },
+    "education": {
+      "title": "المسيرة التعليمية",
+      "subtitle": "مؤهلاتي الأكاديمية والمهنية"
+    },
+    "info": {
+      "expertise": "التخصص",
+      "expertiseValue": "تطوير الخلفية",
+      "experience": "الخبرة",
+      "experienceValue": "+3 سنوات",
+      "location": "الموقع",
+      "locationValue": "أزرو، المغرب",
+      "education": "التعليم",
+      "educationValue": "علوم الحاسوب"
+    },
+    "stats": {
+      "projects": "المشاريع",
+      "technologies": "التقنيات"
+    },
+    "cta": {
+      "contactMe": "اتصل بي",
+      "downloadCV": "تحميل السيرة الذاتية"
+    }
+  }
+}
