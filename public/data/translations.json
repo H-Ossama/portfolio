@@ -4,63 +4,95 @@
       "home": "Home",
       "projects": "Projects",
       "education": "Education",
-      "skills": "Skills",
+      "technologies": "Skills",
       "about": "About",
       "contact": "Contact"
     },
     "hero": {
       "greeting": "Hello, I'm",
-      "title": "Backend Developer",
-      "titles": [
+      "roles": [
         "Backend Developer",
         "API Architect",
         "Database Expert",
         "Problem Solver"
-      ]
+      ],
+      "description": "Crafting robust and scalable backend solutions with a passion for clean code and optimal performance. Specialized in building enterprise-grade applications that drive business success."
     },
-    "about": {
-      "title": "About Me",
-      "subtitle": "Turning Ideas into Efficient Backend Solutions",
-      "description": "Backend developer specializing in building robust and scalable server-side applications. Passionate about creating efficient solutions and learning new technologies."
-    },
-    "projects": {
-      "title": "Featured Projects",
-      "subtitle": "Check out some of my recent work",
-      "viewCode": "View Code",
-      "liveDemo": "Live Demo"
-    },
-    "skills": {
-      "title": "Technical Expertise",
-      "subtitle": "Specialized in building robust backend solutions with cutting-edge technologies",
-      "categories": {
-        "all": "All",
-        "backend": "Backend",
-        "database": "Database",
-        "devops": "DevOps",
-        "tools": "Tools"
+    "sections": {
+      "projects": {
+        "title": "Featured Projects",
+        "subtitle": "A selection of my recent work"
+      },
+      "education": {
+        "title": "Education Journey",
+        "subtitle": "My academic and professional qualifications"
+      },
+      "technologies": {
+        "title": "Technical Expertise",
+        "subtitle": "Specialized in building robust backend solutions with cutting-edge technologies"
+      },
+      "about": {
+        "title": "About Me",
+        "subtitle": "Turning Ideas into Efficient Backend Solutions"
       }
     },
-    "education": {
-      "title": "Education Journey",
-      "subtitle": "My academic and professional qualifications"
+    "profile": {
+      "profession": "Backend Developer",
+      "expertise": {
+        "label": "Expertise",
+        "value": "Backend Development"
+      },
+      "experience": {
+        "label": "Experience",
+        "value": "3+ Years"
+      },
+      "location": {
+        "label": "Location",
+        "value": "Azrou, Morocco"
+      },
+      "education": {
+        "label": "Education",
+        "value": "Computer Science"
+      },
+      "stats": ["Projects", "Technologies"],
+      "contactBtn": "Contact Me"
     },
-    "info": {
-      "expertise": "Expertise",
-      "expertiseValue": "Backend Development",
-      "experience": "Experience",
-      "experienceValue": "3+ Years",
-      "location": "Location",
-      "locationValue": "Azrou, Morocco",
-      "education": "Education",
-      "educationValue": "Computer Science"
+    "buttons": {
+      "cta-button": "Let's Collaborate",
+      "resume-btn": "View Resume",
+      "download-btn": "Download CV",
+      "view-btn": "View CV"
     },
-    "stats": {
-      "projects": "Projects",
-      "technologies": "Technologies"
-    },
-    "cta": {
-      "contactMe": "Contact Me",
-      "downloadCV": "Download CV"
+    "contact": {
+      "title": "Get in Touch",
+      "subtitle": "Let's discuss your project",
+      "form": {
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Enter your name"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "Enter your email"
+        },
+        "subject": {
+          "label": "Subject",
+          "placeholder": "What is this about?"
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Tell me about your project"
+        }
+      },
+      "info": {
+        "title": "Contact Information",
+        "items": [
+          "Azrou, Morocco",
+          "ossamahattan@gmail.com",
+          "@ossama21"
+        ]
+      },
+      "submit": "Send Message"
     }
   },
   "fr": {
@@ -68,63 +100,95 @@
       "home": "Accueil",
       "projects": "Projets",
       "education": "Formation",
-      "skills": "Compétences",
+      "technologies": "Compétences",
       "about": "À propos",
       "contact": "Contact"
     },
     "hero": {
       "greeting": "Bonjour, je suis",
-      "title": "Développeur Backend",
-      "titles": [
+      "roles": [
         "Développeur Backend",
         "Architecte API",
         "Expert en Base de Données",
         "Résolveur de Problèmes"
-      ]
+      ],
+      "description": "Création de solutions backend robustes et évolutives avec une passion pour le code propre et les performances optimales. Spécialisé dans le développement d'applications professionnelles qui favorisent le succès des entreprises."
     },
-    "about": {
-      "title": "À Propos de Moi",
-      "subtitle": "Transformer les Idées en Solutions Backend Efficaces",
-      "description": "Développeur backend spécialisé dans la création d'applications serveur robustes et évolutives. Passionné par la création de solutions efficaces et l'apprentissage de nouvelles technologies."
-    },
-    "projects": {
-      "title": "Projets Phares",
-      "subtitle": "Découvrez mes travaux récents",
-      "viewCode": "Voir le Code",
-      "liveDemo": "Démo en Direct"
-    },
-    "skills": {
-      "title": "Expertise Technique",
-      "subtitle": "Spécialisé dans le développement de solutions backend robustes avec des technologies de pointe",
-      "categories": {
-        "all": "Tous",
-        "backend": "Backend",
-        "database": "Base de Données",
-        "devops": "DevOps",
-        "tools": "Outils"
+    "sections": {
+      "projects": {
+        "title": "Projets Phares",
+        "subtitle": "Une sélection de mes travaux récents"
+      },
+      "education": {
+        "title": "Parcours Éducatif",
+        "subtitle": "Mes qualifications académiques et professionnelles"
+      },
+      "technologies": {
+        "title": "Expertise Technique",
+        "subtitle": "Spécialisé dans la création de solutions backend robustes avec des technologies de pointe"
+      },
+      "about": {
+        "title": "À Propos",
+        "subtitle": "Transformer les Idées en Solutions Backend Efficaces"
       }
     },
-    "education": {
-      "title": "Parcours Éducatif",
-      "subtitle": "Mes qualifications académiques et professionnelles"
+    "profile": {
+      "profession": "Développeur Backend",
+      "expertise": {
+        "label": "Expertise",
+        "value": "Développement Backend"
+      },
+      "experience": {
+        "label": "Expérience",
+        "value": "3+ ans"
+      },
+      "location": {
+        "label": "Localisation",
+        "value": "Azrou, Maroc"
+      },
+      "education": {
+        "label": "Formation",
+        "value": "Informatique"
+      },
+      "stats": ["Projets", "Technologies"],
+      "contactBtn": "Me Contacter"
     },
-    "info": {
-      "expertise": "Expertise",
-      "expertiseValue": "Développement Backend",
-      "experience": "Expérience",
-      "experienceValue": "3+ Ans",
-      "location": "Lieu",
-      "locationValue": "Azrou, Maroc",
-      "education": "Formation",
-      "educationValue": "Informatique"
+    "buttons": {
+      "cta-button": "Collaborons",
+      "resume-btn": "Voir CV",
+      "download-btn": "Télécharger CV",
+      "view-btn": "Voir CV"
     },
-    "stats": {
-      "projects": "Projets",
-      "technologies": "Technologies"
-    },
-    "cta": {
-      "contactMe": "Me Contacter",
-      "downloadCV": "Télécharger CV"
+    "contact": {
+      "title": "Contactez-moi",
+      "subtitle": "Discutons de votre projet",
+      "form": {
+        "name": {
+          "label": "Nom Complet",
+          "placeholder": "Entrez votre nom"
+        },
+        "email": {
+          "label": "Adresse Email",
+          "placeholder": "Entrez votre email"
+        },
+        "subject": {
+          "label": "Sujet",
+          "placeholder": "De quoi s'agit-il?"
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Parlez-moi de votre projet"
+        }
+      },
+      "info": {
+        "title": "Informations de Contact",
+        "items": [
+          "Azrou, Maroc",
+          "ossamahattan@gmail.com",
+          "@ossama21"
+        ]
+      },
+      "submit": "Envoyer le Message"
     }
   },
   "ar": {
@@ -132,63 +196,95 @@
       "home": "الرئيسية",
       "projects": "المشاريع",
       "education": "التعليم",
-      "skills": "المهارات",
-      "about": "حولي",
+      "technologies": "المهارات",
+      "about": "نبذة عني",
       "contact": "اتصل بي"
     },
     "hero": {
       "greeting": "مرحباً، أنا",
-      "title": "مطور الخلفية",
-      "titles": [
-        "مطور الخلفية",
-        "مهندس واجهات برمجة",
+      "roles": [
+        "مطور خلفية",
+        "مهندس واجهات برمجية",
         "خبير قواعد البيانات",
-        "حلال المشكلات"
-      ]
+        "محلل مشاكل"
+      ],
+      "description": "تطوير حلول خلفية قوية وقابلة للتطوير مع شغف بالكود النظيف والأداء الأمثل. متخصص في بناء تطبيقات المؤسسات التي تدفع النجاح التجاري."
     },
-    "about": {
-      "title": "نبذة عني",
-      "subtitle": "تحويل الأفكار إلى حلول برمجية فعالة",
-      "description": "مطور متخصص في بناء تطبيقات الخادم القوية والقابلة للتطوير. شغوف بإنشاء حلول فعالة وتعلم التقنيات الجديدة."
-    },
-    "projects": {
-      "title": "مشاريع مميزة",
-      "subtitle": "تصفح بعض أعمالي الحديثة",
-      "viewCode": "عرض الكود",
-      "liveDemo": "عرض حي"
-    },
-    "skills": {
-      "title": "الخبرات التقنية",
-      "subtitle": "متخصص في بناء حلول خلفية قوية باستخدام أحدث التقنيات",
-      "categories": {
-        "all": "الكل",
-        "backend": "الواجهة الخلفية",
-        "database": "قواعد البيانات",
-        "devops": "ديف اوبس",
-        "tools": "الأدوات"
+    "sections": {
+      "projects": {
+        "title": "المشاريع المميزة",
+        "subtitle": "مجموعة مختارة من أحدث أعمالي"
+      },
+      "education": {
+        "title": "المسيرة التعليمية",
+        "subtitle": "مؤهلاتي الأكاديمية والمهنية"
+      },
+      "technologies": {
+        "title": "الخبرة التقنية",
+        "subtitle": "متخصص في بناء حلول خلفية قوية باستخدام أحدث التقنيات"
+      },
+      "about": {
+        "title": "نبذة عني",
+        "subtitle": "تحويل الأفكار إلى حلول خلفية فعالة"
       }
     },
-    "education": {
-      "title": "المسيرة التعليمية",
-      "subtitle": "مؤهلاتي الأكاديمية والمهنية"
+    "profile": {
+      "profession": "مطور خلفية",
+      "expertise": {
+        "label": "التخصص",
+        "value": "تطوير الخلفية"
+      },
+      "experience": {
+        "label": "الخبرة",
+        "value": "+3 سنوات"
+      },
+      "location": {
+        "label": "الموقع",
+        "value": "أزرو، المغرب"
+      },
+      "education": {
+        "label": "التعليم",
+        "value": "علوم الحاسوب"
+      },
+      "stats": ["المشاريع", "التقنيات"],
+      "contactBtn": "اتصل بي"
     },
-    "info": {
-      "expertise": "التخصص",
-      "expertiseValue": "تطوير الخلفية",
-      "experience": "الخبرة",
-      "experienceValue": "+3 سنوات",
-      "location": "الموقع",
-      "locationValue": "أزرو، المغرب",
-      "education": "التعليم",
-      "educationValue": "علوم الحاسوب"
+    "buttons": {
+      "cta-button": "لنتعاون",
+      "resume-btn": "عرض السيرة",
+      "download-btn": "تحميل السيرة",
+      "view-btn": "عرض السيرة"
     },
-    "stats": {
-      "projects": "المشاريع",
-      "technologies": "التقنيات"
-    },
-    "cta": {
-      "contactMe": "اتصل بي",
-      "downloadCV": "تحميل السيرة الذاتية"
+    "contact": {
+      "title": "تواصل معي",
+      "subtitle": "دعنا نناقش مشروعك",
+      "form": {
+        "name": {
+          "label": "الاسم الكامل",
+          "placeholder": "أدخل اسمك"
+        },
+        "email": {
+          "label": "البريد الإلكتروني",
+          "placeholder": "أدخل بريدك الإلكتروني"
+        },
+        "subject": {
+          "label": "الموضوع",
+          "placeholder": "ما هو موضوع الرسالة؟"
+        },
+        "message": {
+          "label": "الرسالة",
+          "placeholder": "أخبرني عن مشروعك"
+        }
+      },
+      "info": {
+        "title": "معلومات الاتصال",
+        "items": [
+          "أزرو، المغرب",
+          "ossamahattan@gmail.com",
+          "@ossama21"
+        ]
+      },
+      "submit": "إرسال الرسالة"
     }
   }
 }

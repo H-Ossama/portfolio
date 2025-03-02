@@ -15,9 +15,24 @@
     <!-- Top Navigation -->
     <nav class="dashboard-nav">
         <div class="nav-left">
-            <a href="index.html" class="logo">Backend Dev</a>
+            <a href="index.html" class="logo">
+                <i class="fas fa-code-branch"></i>
+                <span class="logo-text">Oussama.dev</span>
+                <span class="portfolio-tag">Portfolio</span>
+            </a>
         </div>
         <div class="nav-right">
+            <div class="lang-switch">
+                <button class="lang-switch-btn">
+                    <i class="fas fa-globe"></i>
+                    <span class="current-lang">EN</span>
+                </button>
+                <div class="lang-options">
+                    <button class="lang-option active" data-lang="en">English</button>
+                    <button class="lang-option" data-lang="fr">Français</button>
+                    <button class="lang-option" data-lang="ar">العربية</button>
+                </div>
+            </div>
             <div class="user-profile" onclick="toggleUserMenu()">
                 <img src="/assets/images/profile-pic-2.png" alt="Profile" class="nav-profile-pic">
                 <span class="username">H_Oussama</span>
@@ -235,5 +250,6 @@
     </div>
 
     <script src="./dashboard.js"></script>
+    <script src="./scripts/language.js"></script>
 </body>
 </html>

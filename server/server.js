@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -5,6 +6,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs').promises;
+const nodemailer = require('nodemailer');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Changed port to 3000
@@ -18,6 +21,15 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Serve data files directly
 app.use('/data', express.static(path.join(__dirname, 'data')));
+
+// Rate limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5 // limit each IP to 5 requests per windowMs
+});
+
+// Apply rate limiting to contact endpoint
+app.use('/api/contact', limiter);
 
 // MongoDB Connection
 mongoose.connect('mongodb://localhost:27017/portfolio', {
@@ -136,6 +148,15 @@ async function initializeDefaultUser() {
         console.error('Error creating default user:', error);
     }
 }
+
+// Email transporter
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'ossamahattan@gmail.com',
+        pass: process.env.EMAIL_PASSWORD // Add your app password here
+    }
+});
 
 // Routes
 app.post('/api/login', async (req, res) => {
@@ -370,6 +391,38 @@ app.delete('/api/skills/:id', auth, async (req, res) => {
         res.json({ message: 'Skill deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Error deleting skill' });
+    }
+});
+
+// Contact form endpoint
+app.post('/api/contact', async (req, res) => {
+    try {
+        const { name, email, company, projectType, projectPriority, requirements, message } = req.body;
+
+        // Create email content
+        const mailOptions = {
+            from: 'ossamahattan@gmail.com',
+            to: 'ossamahattan@gmail.com',
+            subject: `[IMPORTANT] New Project Inquiry from ${name}`,
+            html: `
+                <h2>New Project Inquiry</h2>
+                <p><strong>From:</strong> ${name} (${email})</p>
+                <p><strong>Company:</strong> ${company || 'Not specified'}</p>
+                <p><strong>Project Type:</strong> ${projectType}</p>
+                <p><strong>Priority:</strong> ${projectPriority}</p>
+                <p><strong>Requirements:</strong> ${requirements.join(', ')}</p>
+                <h3>Message:</h3>
+                <p>${message}</p>
+            `
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({ message: 'Message sent successfully!' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ error: 'Failed to send message. Please try again.' });
     }
 });
 

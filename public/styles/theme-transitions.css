@@ -175,3 +175,156 @@
 .popup-close:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+
+/* Theme Transition Effects */
+.theme-transition * {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    background: rgba(18, 18, 18, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle i {
+    font-size: 1.4rem;
+    color: var(--primary-gold);
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-gold);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.theme-toggle:active {
+    transform: translateY(0);
+}
+
+.theme-toggle-spin {
+    animation: spin 0.3s ease-in-out;
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(52, 152, 219, 0.2);
+    box-shadow: 0 8px 32px rgba(52, 152, 219, 0.15);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    border-color: var(--winter-accent);
+    background: rgba(52, 152, 219, 0.1);
+}
+
+[data-theme="light"] .theme-toggle i {
+    color: var(--winter-primary);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Theme Transition Loading Screen */
+.theme-loading-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-loading-screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Theme Transition Elements */
+.theme-transition-elements {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.theme-transition-sun,
+.theme-transition-moon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: none;
+}
+
+.theme-transition-sun {
+    background: #FFD700;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+}
+
+.theme-transition-moon {
+    background: #C4C9CE;
+    box-shadow: 0 0 50px rgba(196, 201, 206, 0.5);
+}
+
+.theme-rays {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theme-rays::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent 70%);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .theme-toggle i {
+        font-size: 1.2rem;
+    }
+}

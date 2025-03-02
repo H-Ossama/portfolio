@@ -1639,3 +1639,117 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ...existing code...
+
+class ThemeManager {
+    constructor() {
+        this.root = document.documentElement;
+        this.themeToggle = document.querySelector('.theme-toggle');
+        this.isTransitioning = false;
+        this.init();
+    }
+
+    init() {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        this.setTheme(savedTheme, false);
+        
+        this.themeToggle.addEventListener('click', async () => {
+            if (this.isTransitioning) return;
+            
+            const currentTheme = this.root.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                await this.switchToLight();
+            } else {
+                await this.switchToDark();
+            }
+        });
+    }
+
+    async switchToLight() {
+        this.isTransitioning = true;
+        this.themeToggle.style.pointerEvents = 'none';
+        
+        this.root.classList.add('theme-transition');
+        this.root.setAttribute('data-theme', 'light');
+        this.updateThemeIcon('light');
+        localStorage.setItem('theme', 'light');
+        
+        await this.loadWinterTheme();
+        
+        setTimeout(() => {
+            this.root.classList.remove('theme-transition');
+            this.themeToggle.style.pointerEvents = 'auto';
+            this.isTransitioning = false;
+        }, 500);
+    }
+
+    async switchToDark() {
+        this.isTransitioning = true;
+        this.themeToggle.style.pointerEvents = 'none';
+        
+        this.root.classList.add('theme-transition');
+        this.root.setAttribute('data-theme', 'dark');
+        this.updateThemeIcon('dark');
+        localStorage.setItem('theme', 'dark');
+        
+        this.removeWinterEffects();
+        
+        setTimeout(() => {
+            this.root.classList.remove('theme-transition');
+            this.themeToggle.style.pointerEvents = 'auto';
+            this.isTransitioning = false;
+        }, 500);
+    }
+
+    setTheme(theme, animate = true) {
+        if (animate) {
+            this.root.classList.add('theme-transition');
+        }
+        
+        this.root.setAttribute('data-theme', theme);
+        this.updateThemeIcon(theme);
+        
+        if (theme === 'light') {
+            this.loadWinterTheme();
+        } else {
+            this.removeWinterEffects();
+        }
+        
+        if (animate) {
+            setTimeout(() => {
+                this.root.classList.remove('theme-transition');
+            }, 500);
+        }
+    }
+
+    updateThemeIcon(theme) {
+        const icon = this.themeToggle.querySelector('i');
+        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        this.themeToggle.classList.add('theme-toggle-spin');
+        setTimeout(() => {
+            this.themeToggle.classList.remove('theme-toggle-spin');
+        }, 300);
+    }
+
+    async loadWinterTheme() {
+        ['winter-theme.css', 'winter-animations.css'].forEach(file => {
+            if (!document.querySelector(`link[href*="${file}"]`)) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = `./styles/${file}`;
+                document.head.appendChild(link);
+            }
+        });
+    }
+
+    removeWinterEffects() {
+        const winterStyles = document.querySelectorAll('link[href*="winter-"]');
+        winterStyles.forEach(style => style.remove());
+    }
+}
+
+// Initialize theme manager when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new ThemeManager();
+});
+
+// ...existing code...

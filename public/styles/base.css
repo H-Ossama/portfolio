@@ -11,21 +11,27 @@
     --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     --text-secondary: rgba(255, 255, 255, 0.7);
     --primary-gold-rgb: 212, 175, 55;
-    cursor: auto !important;
+    --z-index-theme-toggle: 1000;
+    
+    /* Winter theme colors */
+    --winter-primary: #4895ef;
+    --winter-accent: #3498db;
+    --winter-bg: #f8fafc;
+    --accent-rgb: 52, 152, 219;
 }
 
 /* Light Theme */
 [data-theme="light"] {
-    --primary-gold: #4895ef;     /* Winter blue */
-    --secondary-gold: #4361ee;   /* Darker winter blue */
-    --primary-black: #2C3E50;    /* Dark text for better contrast */
-    --text-white: #2C3E50;       /* Dark text for better contrast */
-    --bg-dark: #f8fafc;          /* Lighter background */
+    --primary-gold: var(--winter-primary);
+    --secondary-gold: var(--winter-accent);
+    --primary-black: #2C3E50;
+    --text-white: #2C3E50;
+    --bg-dark: var(--winter-bg);
     --card-bg: rgba(255, 255, 255, 0.95);
-    --border-color: rgba(72, 149, 239, 0.2);
+    --border-color: rgba(52, 152, 219, 0.2);
     --section-bg: linear-gradient(135deg, rgba(248, 250, 252, 0.97) 0%, rgba(255, 255, 255, 0.95) 100%);
-    --card-shadow: 0 8px 32px rgba(67, 97, 238, 0.1);
-    --text-secondary: rgba(44, 62, 80, 0.8);  /* Darker secondary text */
+    --card-shadow: 0 8px 32px rgba(52, 152, 219, 0.15);
+    --text-secondary: rgba(44, 62, 80, 0.8);
     /* Override base background */
     background-color: var(--winter-bg);
 }
@@ -329,20 +335,72 @@ nav ul li a:hover {
 
 /* Theme Toggle */
 .theme-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    font-size: 1.2rem;
-    color: var(--primary-gold);
-    transition: transform 0.3s ease;
-    background: var(--primary-black);
-    border-color: var(--border-color);
+    background: rgba(18, 18, 18, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(212, 175, 55, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-toggle:hover {
-    transform: rotate(180deg);
+    transform: translateY(-2px);
+    border-color: var(--primary-gold);
+    background: rgba(212, 175, 55, 0.1);
 }
 
 .theme-toggle i {
+    font-size: 1.4rem;
     color: var(--primary-gold);
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle-spin {
+    animation: spin 0.3s ease-in-out;
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(52, 152, 219, 0.2);
+    box-shadow: 0 8px 32px rgba(52, 152, 219, 0.15);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    border-color: var(--winter-accent);
+    background: rgba(52, 152, 219, 0.1);
+}
+
+[data-theme="light"] .theme-toggle i {
+    color: var(--winter-primary);
+}
+
+@keyframes spin {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .theme-toggle i {
+        font-size: 1.2rem;
+    }
 }
 
 /* Typing Animation */

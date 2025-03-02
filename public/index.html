@@ -23,6 +23,7 @@
         <!-- Core Styles -->
         <link rel="stylesheet" href="./styles/base.css">
         <link rel="stylesheet" href="./styles/index.css">
+        <link rel="stylesheet" href="./styles/language.css">
         
         <!-- Theme Styles (preloaded for faster switching) -->
         <link rel="preload" href="./styles/winter-theme.css" as="style">
@@ -30,7 +31,7 @@
         <link rel="preload" href="./styles/theme-transition.css" as="style">
         
         <!-- Light theme CSS will be loaded dynamically -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
         <!-- Preload light theme for faster switching -->
@@ -71,6 +72,8 @@
         <!-- Custom Scripts -->
         <script src="./scripts/themeTransition.js" defer></script>
         <script src="./script.js" defer></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="./scripts/language.js"></script>
 </head>
 <body>
     <!-- SVG Filters -->
@@ -140,6 +143,82 @@
         </div>
     </div>
 
+    <style>
+        .theme-loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-loading-screen.active {
+            opacity: 1;
+        }
+
+        .theme-transition-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            transition: background-color 2s ease;
+        }
+
+        .theme-transition-elements {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .theme-transition-sun,
+        .theme-transition-moon {
+            display: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .theme-transition-sun {
+            background: #ffd700;
+            box-shadow: 0 0 50px #ffd700;
+        }
+
+        .theme-transition-moon {
+            background: #fff;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        .theme-rays {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        [data-transition="to-light"] .theme-transition-backdrop {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-transition="to-dark"] .theme-transition-backdrop {
+            background: rgba(0, 0, 0, 0.9);
+        }
+    </style>
+
     <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loading-content">
@@ -182,7 +261,7 @@
     </noscript>
 
     <!-- Winter theme overlay container -->
-    <div class="winter-overlay" style="display: none;"></div>
+    <div class="winter-overlay"></div>
 
     <!-- Background Canvas -->
     <div class="bg-container">
@@ -194,7 +273,7 @@
     
     <!-- Navigation -->
     <div class="logo-container">
-        <a href="#home" class="logo" aria-label="Home">
+        <a href="#home" class="logo nav-exclude" aria-label="Home">
             <i class="fas fa-code-branch"></i>
             <span class="logo-text">Oussama.dev</span>
             <span class="portfolio-tag">Portfolio</span>
@@ -208,12 +287,24 @@
             <li><a href="#education">Education</a></li>
             <li><a href="#technologies">Skills</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html#contact">Contact</a></li>
         </ul>
     </nav>
 
     <div class="theme-toggle">
         <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="lang-switch">
+        <button class="lang-switch-btn">
+            <i class="fas fa-globe"></i>
+            <span class="current-lang">EN</span>
+        </button>
+        <div class="lang-options">
+            <button class="lang-option active" data-lang="en">English</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="ar">العربية</button>
+        </div>
     </div>
 
     <!-- Hero Section -->
@@ -287,28 +378,28 @@
                                 </div>
                                 <div class="info-divider"></div>
                                 <div class="info-section">
-                                    <div class="info-item" style="--item-index: 1">
+                                    <div class="info-item" style="--item-index: 1" data-type="expertise">
                                         <i class="fas fa-code"></i>
                                         <div class="info-detail">
                                             <span class="label">Expertise</span>
                                             <span class="value">Backend Development</span>
                                         </div>
                                     </div>
-                                    <div class="info-item" style="--item-index: 2">
+                                    <div class="info-item" style="--item-index: 2" data-type="experience">
                                         <i class="fas fa-calendar-alt"></i>
                                         <div class="info-detail">
                                             <span class="label">Experience</span>
                                             <span class="value">3+ Years</span>
                                         </div>
                                     </div>
-                                    <div class="info-item" style="--item-index: 3">
+                                    <div class="info-item" style="--item-index: 3" data-type="location">
                                         <i class="fas fa-map-marker-alt"></i>
                                         <div class="info-detail">
                                             <span class="label">Location</span>
                                             <span class="value">Azrou, Morocco</span>
                                         </div>
                                     </div>
-                                    <div class="info-item" style="--item-index: 4">
+                                    <div class="info-item" style="--item-index: 4" data-type="education">
                                         <i class="fas fa-graduation-cap"></i>
                                         <div class="info-detail">
                                             <span class="label">Education</span>
@@ -620,10 +711,26 @@
                 <label for="pro-user-project-type">Project Type</label>
                 <select id="pro-user-project-type" name="projectType" required>
                     <option value="">Select project type</option>
-                    <option value="backend">Backend Development</option>
-                    <option value="fullstack">Full Stack Project</option>
-                    <option value="consulting">Technical Consulting</option>
+                    <option value="api">API Development</option>
+                    <option value="database">Database Architecture</option>
+                    <option value="system">System Integration</option>
+                    <option value="microservices">Microservices Development</option>
+                    <option value="cloud">Cloud Infrastructure</option>
+                    <option value="automation">Process Automation</option>
+                    <option value="maintenance">System Maintenance & Support</option>
+                    <option value="security">Security Implementation</option>
                     <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="project-timeline">Estimated Timeline</label>
+                <select id="project-timeline" name="timeline" required>
+                    <option value="">Select timeline</option>
+                    <option value="urgent">Urgent (1-2 weeks)</option>
+                    <option value="short">Short term (2-4 weeks)</option>
+                    <option value="medium">Medium term (1-3 months)</option>
+                    <option value="long">Long term (3+ months)</option>
+                    <option value="flexible">Flexible</option>
                 </select>
             </div>
             <div class="form-group">
@@ -634,6 +741,49 @@
         </form>
     </div>
 </div>
+
+<style>
+    .modal select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(30, 30, 30, 0.95);
+        color: #fff;
+        font-size: 16px;
+        margin-top: 5px;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 1em;
+    }
+
+    .modal select option {
+        background: #1e1e1e;
+        color: #fff;
+        padding: 10px;
+    }
+
+    .modal select:focus {
+        outline: none;
+        border-color: var(--primary-gold);
+    }
+
+    [data-theme="light"] .modal select {
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #333;
+        border-color: rgba(0, 0, 0, 0.1);
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    }
+
+    [data-theme="light"] .modal select option {
+        background: #ffffff;
+        color: #333;
+        padding: 10px;
+    }
+</style>
 
     <footer>
         <div class="footer-content">
@@ -703,6 +853,7 @@
     <script src="scripts/profileCard.js"></script>
     <script src="./scripts/particles-config.js"></script>
     <script src="./scripts/skills.js"></script>
+    <script src="./scripts/language.js"></script>
     <script>
         // Loading screen handler
         window.addEventListener('load', () => {
@@ -717,3 +868,152 @@
     </script>
 </body>
 </html>
+
+<style>
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: var(--z-index-theme-toggle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle i {
+    font-size: 1.4rem;
+}
+
+.lang-switch {
+    width: auto;
+    min-width: 50px;
+    height: 50px;
+    padding: 0 1rem;
+    border-radius: 15px;
+    position: fixed;
+    top: 2rem;
+    right: 6rem;
+    z-index: var(--z-index-theme-toggle);
+    background: rgba(18, 18, 18, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(212, 175, 55, 0.1);
+}
+
+.lang-switch-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    color: var(--primary-gold);
+    cursor: pointer;
+    padding: 0;
+}
+
+.lang-switch-btn i {
+    font-size: 1.4rem;
+}
+
+.current-lang {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--primary-gold);
+}
+
+.lang-options {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 0.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 120px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.lang-switch.active .lang-options {
+    display: flex;
+}
+
+.lang-option {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    color: var(--text-white);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.lang-option:hover,
+.lang-option.active {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary-gold);
+}
+
+[data-theme="light"] .lang-switch {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(52, 152, 219, 0.2);
+    box-shadow: 0 8px 32px rgba(52, 152, 219, 0.15);
+}
+
+[data-theme="light"] .lang-switch-btn,
+[data-theme="light"] .current-lang {
+    color: #3498DB;
+}
+
+[data-theme="light"] .lang-options {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(52, 152, 219, 0.2);
+}
+
+[data-theme="light"] .lang-option {
+    color: #2c3e50;
+}
+
+[data-theme="light"] .lang-option:hover,
+[data-theme="light"] .lang-option.active {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498DB;
+}
+
+/* Match theme toggle responsive behavior */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+    .lang-switch {
+        top: 1rem;
+        right: 4rem;
+        width: auto;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 0.75rem;
+    }
+    .lang-switch-btn i {
+        font-size: 1.2rem;
+    }
+    .current-lang {
+        font-size: 0.8rem;
+    }
+}
+</style>
