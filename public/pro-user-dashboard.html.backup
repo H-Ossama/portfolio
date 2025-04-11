@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Message Container -->
+    <div id="message-container"></div>
+
+    <div class="dashboard-container">
+        <!-- Mobile Nav Toggle -->
+        <button class="mobile-toggle" id="mobile-nav-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="logo shimmer">
+                    <i class="fas fa-code"></i>
+                    <span>Gold Portfolio</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>Content</h3>
+                    <a href="#" class="nav-item active" data-section="projects">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Projects</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="skills">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Skills</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="education">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Education</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3>Analytics</h3>
+                    <a href="#" class="nav-item" data-section="messages">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                        <span class="badge">3</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="stats">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Statistics</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3>Settings</h3>
+                    <a href="#" class="nav-item" data-section="profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <header class="main-header">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search projects, skills...">
+                </div>
+                <div class="header-actions">
+                    <button class="notifications-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="user-menu">
+                        <img src="assets/images/profile-pic.jpg" alt="Profile" class="user-avatar">
+                        <span class="user-name">John Doe</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Sample Content -->
+                <div id="content-area">
+                    <div class="section-header">
+                        <h2>My Projects</h2>
+                        <button class="add-btn">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Project</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Stats Overview -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-title">Total Projects</div>
+                            <div class="stat-value">12</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+2 this month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-title">Active Projects</div>
+                            <div class="stat-value">4</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+1 this week</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-title">Portfolio Views</div>
+                            <div class="stat-value">587</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12% this month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-title">Inquiries</div>
+                            <div class="stat-value">24</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+3 since last week</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project Grid -->
+                    <h3 class="gold-accent" style="padding-left: 15px; margin-top: 2rem;">Featured Projects</h3>
+                    <div class="projects-grid">
+                        <!-- Project Card 1 -->
+                        <div class="project-card">
+                            <h3>E-Commerce Platform</h3>
+                            <p>A full-featured online store with payment integration</p>
+                            <div class="tech-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">Node.js</span>
+                                <span class="tag">MongoDB</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Project Card 2 -->
+                        <div class="project-card">
+                            <h3>Portfolio Website</h3>
+                            <p>Personal portfolio showcasing projects and skills</p>
+                            <div class="tech-tags">
+                                <span class="tag">HTML5</span>
+                                <span class="tag">CSS3</span>
+                                <span class="tag">JavaScript</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Project Card 3 -->
+                        <div class="project-card">
+                            <h3>Task Management App</h3>
+                            <p>Web application for managing tasks and projects</p>
+                            <div class="tech-tags">
+                                <span class="tag">Vue.js</span>
+                                <span class="tag">Firebase</span>
+                                <span class="tag">Tailwind</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Canvas for background particles -->
+    <canvas id="background-canvas"></canvas>
+
+    <script src="dashboard.js"></script>
+    <script>
+        // Sample JavaScript for particle background
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('background-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            function createParticles() {
+                particles = [];
+                const particleCount = Math.floor(window.innerWidth / 20);
+                
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 1.5 + 0.5,
+                        color: Math.random() > 0.5 ? '#d4af37' : '#ffffff',
+                        speedX: Math.random() * 0.5 - 0.25,
+                        speedY: Math.random() * 0.5 - 0.25
+                    });
+                }
+            }
+            
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(particle => {
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = particle.color;
+                    ctx.fill();
+                    
+                    // Update position
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Bounce off edges
+                    if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+                    if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+                });
+                
+                // Connect nearby particles
+                particles.forEach((particleA, i) => {
+                    particles.slice(i + 1).forEach(particleB => {
+                        const dx = particleA.x - particleB.x;
+                        const dy = particleA.y - particleB.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(212, 175, 55, ${0.2 - distance/500})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particleA.x, particleA.y);
+                            ctx.lineTo(particleB.x, particleB.y);
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                requestAnimationFrame(drawParticles);
+            }
+            
+            // Initialize canvas
+            resizeCanvas();
+            createParticles();
+            drawParticles();
+            
+            // Handle resize
+            window.addEventListener('

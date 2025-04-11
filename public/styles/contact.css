@@ -938,7 +938,7 @@ textarea ~ .input-icon {
 }
 
 [data-theme="light"] .logo-text {
-    color: var(--primary-black);
+    color: var (--primary-black);
 }
 
 [data-theme="light"] .portfolio-tag {
@@ -1148,4 +1148,61 @@ nav {
 /* Style placeholder text */
 .input-group select:invalid {
     color: rgba(255, 255, 255, 0.5);
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-color: var(--gold-primary);
+}
+
+.notification.error {
+    border-color: #f44336;
+}
+
+.notification i {
+    font-size: 1.2rem;
+}
+
+.notification.success i {
+    color: var(--gold-primary);
+}
+
+.notification.error i {
+    color: #f44336;
+}
+
+.notification span {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(120%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); }
+    to { transform: translateX(120%); }
 }

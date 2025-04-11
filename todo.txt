@@ -1,6 +1,18 @@
 TODO LIST
 =========
 
+Ultra high Priority:
+# Making Pro-user-dashboard:
+* try when making this dashboard to seperate the work on seperated files so the page be organized.
+- make a full dashboard to handel the index page data
+- the dashboard pagfe should be full with elements and data handling and editing posibility
+- the abitlity to modify user username and password and img
+- theme switcher
+- live data of peapole visited my website and peapole clicked on see cv or downloaded cv, peapole send messages, peapole clicked on take a look in theme switcher popup, 
+- the visited peapole data should be real data not just nubers displayed on the page if no porsen visited the site show 0 visitor and so on
+- display some data as Graph
+
+
 High Priority:
 - Fix email sending functionality in contact form
 - Add email verification service

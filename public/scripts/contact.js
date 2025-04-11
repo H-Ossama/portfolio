@@ -176,3 +176,131 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update availability every minute
     setInterval(updateAvailabilityStatus, 60000);
 });
+
+const contactFormHandler = {
+    init() {
+        const form = document.getElementById('contact-form');
+        if (form) {
+            form.addEventListener('submit', this.handleSubmit.bind(this));
+            this.setupFormValidation();
+        }
+    },
+
+    setupFormValidation() {
+        const inputs = document.querySelectorAll('#contact-form input, #contact-form textarea, #contact-form select');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => this.validateField(input));
+            input.addEventListener('blur', () => this.validateField(input));
+        });
+    },
+
+    validateField(field) {
+        const errorElement = field.nextElementSibling;
+        if (!errorElement || !errorElement.classList.contains('error-message')) {
+            const error = document.createElement('div');
+            error.className = 'error-message';
+            field.parentNode.insertBefore(error, field.nextSibling);
+        }
+
+        let isValid = field.checkValidity();
+        let errorMessage = '';
+
+        if (!isValid) {
+            if (field.validity.valueMissing) {
+                errorMessage = `${field.name} is required`;
+            } else if (field.validity.typeMismatch) {
+                errorMessage = `Please enter a valid ${field.type}`;
+            }
+        }
+
+        errorElement.textContent = errorMessage;
+        field.classList.toggle('invalid', !isValid);
+        return isValid;
+    },
+
+    validateForm(form) {
+        const inputs = form.querySelectorAll('input, textarea, select');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (!this.validateField(input)) {
+                isValid = false;
+            }
+        });
+
+        return isValid;
+    },
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+
+        if (!this.validateForm(form)) {
+            return;
+        }
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+        try {
+            const formData = new FormData(form);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                company: formData.get('company'),
+                projectType: formData.get('projectType'),
+                timeline: formData.get('timeline'),
+                message: formData.get('message'),
+                id: Date.now().toString(),
+                createdAt: new Date().toISOString(),
+                read: false
+            };
+
+            const response = await fetch('/api/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            // Show success message
+            this.showNotification('Message sent successfully! I will get back to you soon.', 'success');
+            form.reset();
+
+        } catch (error) {
+            console.error('Error sending message:', error);
+            this.showNotification('Failed to send message. Please try again.', 'error');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+        }
+    },
+
+    showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+            <span>${message}</span>
+        `;
+
+        document.body.appendChild(notification);
+        requestAnimationFrame(() => notification.classList.add('show'));
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 5000);
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    contactFormHandler.init();
+});

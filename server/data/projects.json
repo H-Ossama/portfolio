@@ -1,10 +1,10 @@
 [
     {
-        "id": 1,
+        "id": "1709422726001",
         "title": "Portfolio Website",
         "description": "A modern portfolio website built with Node.js and Express",
         "technologies": ["Node.js", "Express", "JavaScript", "HTML5", "CSS3"],
-        "image": "../assets/images/project1.jpg",
+        "image": "/assets/images/project1.jpg",
         "githubLink": "https://github.com/ossama21",
         "liveLink": "https://portfolio.dev",
         "createdAt": "2024-02-11T01:32:07.634Z"
