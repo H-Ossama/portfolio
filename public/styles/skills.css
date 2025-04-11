@@ -26,7 +26,7 @@
 
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
     padding: 0 2rem;
@@ -43,6 +43,12 @@
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .skill-card[data-aos] {
@@ -81,6 +87,11 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
+.skill-card-back {
+    transform: rotateY(180deg);
+    padding: 2rem;
+}
+
 .skill-card-front::before,
 .skill-card-back::before {
     content: '';
@@ -96,20 +107,17 @@
     pointer-events: none;
 }
 
-.skill-card-back {
-    transform: rotateY(180deg);
-}
-
 .skill-icon {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     color: var(--primary-gold);
     margin-bottom: 1.5rem;
     filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
     text-align: center;
+    display: block;
 }
 
 .skill-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: var(--text-white);
     margin-bottom: 1.5rem;
     background: linear-gradient(45deg, #fff, var(--primary-gold));
@@ -130,6 +138,7 @@
     border-radius: 4px;
     overflow: hidden;
     border: 1px solid rgba(212, 175, 55, 0.1);
+    margin: 1rem 0;
 }
 
 .skill-level-fill {
@@ -139,6 +148,8 @@
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    transform: scaleX(0);
+    transition: transform 1s ease-out;
 }
 
 .skill-level-fill::after {
@@ -159,6 +170,8 @@
     color: var(--primary-gold);
     font-size: 1.1rem;
     font-weight: 600;
+    display: block;
+    text-align: right;
 }
 
 .skill-tags {
@@ -167,6 +180,8 @@
     gap: 0.8rem;
     margin-top: 2rem;
     justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
 }
 
 .skill-tag {
@@ -177,6 +192,8 @@
     color: var(--primary-gold);
     font-size: 0.9rem;
     transition: all 0.3s ease;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
 }
 
 .skill-tag:hover {
@@ -192,6 +209,10 @@
     line-height: 1.8;
     margin-bottom: 2rem;
     text-align: center;
+    color: var(--text-white);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    opacity: 0.9;
 }
 
 .skill-features {
@@ -325,6 +346,12 @@
 @media (max-width: 1400px) {
     .skills-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

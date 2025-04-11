@@ -269,6 +269,7 @@ body * {
 
 /* Base Navigation Styles */
 nav {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;

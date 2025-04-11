@@ -568,7 +568,7 @@ app.put('/api/user/theme', authenticateToken, async (req, res) => {
 });
 
 // Skills routes
-app.get('/api/skills', authenticateToken, async (req, res) => {
+app.get('/api/skills', async (req, res) => {
     try {
         const skills = await loadData('skills.json');
         res.json(skills || { skills: [] });

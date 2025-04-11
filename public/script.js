@@ -1,5 +1,11 @@
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
+    // Enable normal right-click behavior
+    document.addEventListener('contextmenu', function(e) {
+        // Allow default right-click behavior
+        return true;
+    });
+
     // Initialize UI Elements
     const canvas = document.getElementById('background-canvas');
     const typingText = document.querySelector('.typing-text');

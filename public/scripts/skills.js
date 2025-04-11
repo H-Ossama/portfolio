@@ -57,16 +57,8 @@ function renderSkills(skills) {
                     </div>
                 </div>
                 <div class="skill-card-back">
-                    <h3 class="skill-title">${skill.name} Expertise</h3>
+                    <h3 class="skill-title">${skill.name}</h3>
                     <p class="skill-description">${skill.description}</p>
-                    <div class="skill-features custom-scrollbar">
-                        ${skill.features.map(feature => `
-                            <div class="skill-feature" title="${feature}">
-                                <i class="fas fa-check"></i>
-                                <span>${feature}</span>
-                            </div>
-                        `).join('')}
-                    </div>
                 </div>
             </div>
         </div>
