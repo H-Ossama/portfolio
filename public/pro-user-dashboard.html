@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
+<head>    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Dashboard</title>
     <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/settings.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <!-- Chart.js -->
@@ -29,7 +29,7 @@
         <!-- Sidebar -->
         <aside class="dashboard-sidebar">
             <div class="sidebar-header">
-                <a href="index.html" class="logo">
+                <a href="pro-user-dashboard.html" class="logo">
                     <i class="fas fa-code"></i>
                     <span>Portfolio Dashboard</span>
                 </a>
@@ -63,17 +63,15 @@
                         <i class="fas fa-chart-line"></i>
                         <span>Visitor Stats</span>
                     </a>
-                </div>
-
-                <div class="nav-section">
+                </div>                <div class="nav-section">
                     <h3>Settings</h3>
                     <a href="#" class="nav-item" data-section="profile">
                         <i class="fas fa-user-circle"></i>
                         <span>Profile</span>
                     </a>
-                    <a href="#" class="nav-item" data-section="theme">
-                        <i class="fas fa-palette"></i>
-                        <span>Theme</span>
+                    <a href="#" class="nav-item" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
                     </a>
                 </div>
             </nav>
@@ -117,7 +115,7 @@
     </div>
 
     <!-- Canvas for background particles -->
-    <canvas id="background-canvas"></canvas>
+    <!-- <canvas id="background-canvas"></canvas> -->
 
     <!-- Modals -->
     <!-- Skill Modal -->
@@ -169,8 +167,51 @@
         </div>
     </div>
 
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Add Project</h2>
+                <button class="close-btn" onclick="closeModal('project-modal')">&times;</button>
+            </div>
+            <form id="project-form">
+                <div class="form-group">
+                    <label for="project-title">Title</label>
+                    <input type="text" id="project-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Description</label>
+                    <textarea id="project-description" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-technologies">Technologies (comma-separated)</label>
+                    <input type="text" id="project-technologies" name="technologies" placeholder="e.g., Node.js, Express, MongoDB" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-image">Image URL</label>
+                    <input type="text" id="project-image" name="image" placeholder="/assets/images/project.jpg" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-github">GitHub URL</label>
+                    <input type="url" id="project-github" name="githubLink" placeholder="https://github.com/username/project" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-live">Live Demo URL</label>
+                    <input type="url" id="project-live" name="liveLink" placeholder="https://project-demo.com" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="scripts/charts.js"></script>
+    <script src="scripts/messages.js"></script> <!-- Added messages script -->
+    <script src="scripts/profile.js"></script>  <!-- Added profile script -->
     <script src="scripts/dashboard.js"></script>
     <script>
         // Initialize particles and dashboard

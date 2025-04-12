@@ -497,7 +497,8 @@ app.get('/api/user/settings', authenticateToken, async (req, res) => {
     }
 });
 
-app.put('/api/user/settings', authenticateToken, async (req, res) => {
+// Use multer middleware for FormData parsing, including the optional 'avatar' file
+app.put('/api/user/settings', authenticateToken, upload.single('avatar'), async (req, res) => {
     try {
         const users = await loadData('users.json') || [];
         const index = users.findIndex(u => u.id === req.user.id);
@@ -506,21 +507,33 @@ app.put('/api/user/settings', authenticateToken, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Validate required fields
-        const { username, cursor } = req.body;
-        if (!username) {
-            return res.status(400).json({ error: 'Username is required' });
+        // Access text fields from req.body (parsed by multer)
+        const { username, email, theme } = req.body; 
+        if (!username || !email) { // Added email validation
+            return res.status(400).json({ error: 'Username and Email are required' });
         }
 
         const updatedUser = {
             ...users[index],
             username,
-            cursor: cursor || 'default',
+            email, // Added email update
+            settings: {
+                ...users[index].settings,
+                theme: theme || users[index].settings?.theme || 'dark' // Update theme if provided
+            },
             updatedAt: new Date().toISOString()
         };
 
+        // Handle password update
         if (req.body.password) {
             updatedUser.password = await bcrypt.hash(req.body.password, 10);
+        }
+
+        // Handle avatar update
+        if (req.file) {
+            // Optionally: delete old avatar file if it exists
+            // ... (logic to find and delete old file path stored in users[index].avatar)
+            updatedUser.avatar = `/assets/images/${req.file.filename}`; // Store the web-accessible path
         }
 
         // Update user in array
@@ -530,10 +543,14 @@ app.put('/api/user/settings', authenticateToken, async (req, res) => {
         await saveData('users.json', users);
 
         // Return user data without password
-        const { password, ...settings } = updatedUser;
-        res.json(settings);
+        const { password, ...userResponse } = updatedUser;
+        res.json(userResponse);
     } catch (error) {
         console.error('Error updating user settings:', error);
+        // Handle multer errors specifically if needed
+        if (error instanceof multer.MulterError) {
+            return res.status(400).json({ error: `File upload error: ${error.message}` });
+        }
         res.status(500).json({ error: 'Failed to update user settings' });
     }
 });
@@ -806,17 +823,33 @@ app.get('/api/messages', authenticateToken, async (req, res) => {
     }
 });
 
+// Define specific routes like /unread-count BEFORE dynamic routes like /:id
+app.get('/api/messages/unread-count', authenticateToken, async (req, res) => {
+    console.log('GET /api/messages/unread-count hit'); // Keep logging
+    try {
+        const messages = await loadData('messages.json') || [];
+        const count = messages.filter(m => !m.read).length;
+        res.json({ count });
+    } catch (error) {
+        console.error('Error in /api/messages/unread-count:', error); // Keep enhanced error logging
+        res.status(500).json({ error: 'Failed to get unread count' });
+    }
+});
+
 app.get('/api/messages/:id', authenticateToken, async (req, res) => {
+    console.log(`GET /api/messages/:id hit with id: ${req.params.id}`); // Add logging
     try {
         const messages = await loadData('messages.json') || [];
         const message = messages.find(m => m.id === req.params.id);
         
         if (!message) {
+            console.log(`Message with id "${req.params.id}" not found.`); // Add logging
             return res.status(404).json({ error: 'Message not found' });
         }
 
         res.json(message);
     } catch (error) {
+        console.error(`Error in /api/messages/:id for id ${req.params.id}:`, error); // Add logging
         res.status(500).json({ error: 'Failed to load message' });
     }
 });
@@ -853,16 +886,6 @@ app.delete('/api/messages/:id', authenticateToken, async (req, res) => {
         res.json({ message: 'Message deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete message' });
-    }
-});
-
-app.get('/api/messages/unread-count', authenticateToken, async (req, res) => {
-    try {
-        const messages = await loadData('messages.json') || [];
-        const count = messages.filter(m => !m.read).length;
-        res.json({ count });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to get unread count' });
     }
 });
 

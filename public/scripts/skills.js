@@ -14,13 +14,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadSkills() {
     try {
-        const response = await fetch('/api/skills');
+        // Try loading directly from the data file instead of the API endpoint
+        const response = await fetch('/data/skills.json');
         const data = await response.json();
+        console.log('Skills data received:', data); // Debug log
         if (data && data.skills) {
             renderSkills(data.skills);
             initializeSkillCards();
         } else {
-            console.error('Skills data is not in the expected format');
+            console.error('Skills data is not in the expected format', data);
+            const skillsGrid = document.querySelector('.skills-grid');
+            if (skillsGrid) {
+                skillsGrid.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Failed to load skills. Please try again later.</p>
+                    </div>
+                `;
+            }
         }
     } catch (error) {
         console.error('Error loading skills:', error);

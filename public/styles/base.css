@@ -239,7 +239,7 @@ body {
     position: relative;
     cursor: url('../../assets/images/cursur-default.png'), auto;
     transition: all 0.3s ease;
-    cursor: none;
+    /* cursor: none; */
 }
 
 /* Theme Transition */
@@ -2096,7 +2096,7 @@ a, button, input[type="button"], input[type="submit"], .interactive {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    cursor: none;
+    /* cursor: none; */
 }
 
 .category-title {
@@ -2136,7 +2136,7 @@ a, button, input[type="button"], input[type="submit"], .interactive {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: none;
+    /* cursor: none; */
 }
 
 .tech-item:hover {
@@ -2194,7 +2194,7 @@ a, button, input[type="button"], input[type="submit"], .interactive {
     background: rgba(255, 255, 255, 0.06);
     border-radius: 2px;
     overflow: hidden;
-    cursor: none;
+    /* cursor: none; */
 }
 
 .skill-bar {
@@ -2271,7 +2271,7 @@ a, button, input[type="button"], input[type="submit"], .interactive {
 
 /* Hide default cursor on text */
 p, h1, h2, h3, h4, h5, h6, span {
-    cursor: none;
+    /* cursor: none; */
 }
 
 /* Special cursor states for different interactions */
@@ -2305,9 +2305,9 @@ input, textarea {
     cursor: auto !important;
 }
 
-body * {
+/* body * {
     cursor: auto !important;
-}
+} */
 
 /* Interactive elements cursor */
 a, button, input[type="submit"], input[type="button"], .interactive, 

@@ -6,8 +6,9 @@
     "email": "admin@example.com",
     "settings": {
       "cursor": "default",
-      "theme": "dark"
+      "theme": "light"
     },
-    "createdAt": "2025-03-02T21:46:39.704Z"
+    "createdAt": "2025-03-02T21:46:39.704Z",
+    "updatedAt": "2025-04-12T09:12:22.588Z"
   }
 ]

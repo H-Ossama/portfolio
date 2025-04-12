@@ -28,13 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form handling
     const form = document.getElementById('contact-form');
     const submitBtn = form.querySelector('.submit-btn');
-    const budgetInput = document.getElementById('budget');
-    const budgetOutput = form.querySelector('output[for="budget"]');
-
-    // Update budget range display
-    budgetInput.addEventListener('input', (e) => {
-        budgetOutput.textContent = `$${e.target.value}`;
-    });
 
     // Handle form submission
     form.addEventListener('submit', async (e) => {
@@ -258,7 +251,7 @@ const contactFormHandler = {
                 read: false
             };
 
-            const response = await fetch('/api/messages', {
+            const response = await fetch('/api/contact', { // Changed endpoint from /api/messages
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

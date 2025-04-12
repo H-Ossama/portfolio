@@ -15,7 +15,7 @@
     <div class="login-container">
         <div class="login-box" data-aos="zoom-in">
             <div class="login-header">
-                <img src="/assets/images/profile-pic-2.png" alt="Profile" class="login-profile-pic">
+                <img src="/assets/images/oussama_chatgpt.png" alt="Profile" class="login-profile-pic">
                 <h2>Welcome Back!</h2>
                 <p>Access your pro dashboard</p>
             </div>
@@ -111,19 +111,21 @@
                     }, 500);
                 } else {
                     throw new Error(data.message || 'Invalid credentials');
-                }
-            } catch (error) {
-                // Show error state
-                btnText.textContent = 'Failed';
+                }            } catch (error) {
+                // Show error state with vibration animation
+                loginBtn.classList.add('error');
+                btnText.textContent = 'Wrong Password';
                 btnIcon.innerHTML = '<i class="fas fa-times"></i>';
-                alert(error.message || 'Login failed');
+                
+                // Remove alert for better user experience, the button animation is enough feedback
                 
                 // Reset button after delay
                 setTimeout(() => {
+                    loginBtn.classList.remove('error');
                     btnText.textContent = 'Login';
                     btnIcon.innerHTML = '<i class="fas fa-arrow-right"></i>';
                     loginBtn.disabled = false;
-                }, 1000);
+                }, 2000);
             }
         });
 

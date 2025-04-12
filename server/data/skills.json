@@ -7,7 +7,7 @@
       "icon": "fab fa-node-js",
       "level": 90,
       "tags": ["Express.js", "REST APIs", "WebSocket"],
-      "description": "Advanced proficiency in building scalable backend services and real-time applications."
+      "description": "Advanced proficiency in building scalable backend services and real-time applications with high performance and security."
     },
     {
       "id": "python",
@@ -16,16 +16,34 @@
       "icon": "fab fa-python",
       "level": 85,
       "tags": ["Django", "Flask", "FastAPI"],
-      "description": "Strong experience in Python-based web frameworks and data processing."
+      "description": "Expert in building robust Python applications with a focus on clean code and best practices."
     },
     {
-      "id": "mongodb",
-      "name": "MongoDB",
+      "id": "database",
+      "name": "Database Design",
       "category": "database",
       "icon": "fas fa-database",
       "level": 88,
-      "tags": ["Aggregation", "Indexing", "Atlas"],
-      "description": "Extensive experience in MongoDB database design and optimization."
+      "tags": ["MongoDB", "PostgreSQL", "Redis"],
+      "description": "Specialized in designing and optimizing both SQL and NoSQL database architectures for scalable applications."
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "category": "backend",
+      "icon": "fab fa-php",
+      "level": 84,
+      "tags": ["Laravel", "Symfony", "WordPress"],
+      "description": "Proficient in building dynamic web applications and CMS solutions with modern PHP frameworks."
+    },
+    {
+      "id": "system-design",
+      "name": "System Design",
+      "category": "backend",
+      "icon": "fas fa-sitemap",
+      "level": 85,
+      "tags": ["Architecture", "Scalability", "Microservices"],
+      "description": "Skilled in designing and implementing scalable distributed systems and microservices architectures."
     }
   ]
 }

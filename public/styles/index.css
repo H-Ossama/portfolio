@@ -3810,13 +3810,76 @@ nav {
 }
 
 .particle-controls-toggle:hover {
-    transform: rotate(180deg);
     background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+/* Admin Dashboard Toggle Button */
+.admin-dashboard-toggle {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid var(--primary-gold);
+    color: var(--primary-gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    pointer-events: all;
+    z-index: 10000;
+    margin-top: 10px;
+    position: relative;
+}
+
+.admin-dashboard-toggle:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+/* Control button tooltips */
+.particle-controls-toggle .tooltip,
+.admin-dashboard-toggle .tooltip {
+    position: absolute;
+    right: 50px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--primary-gold);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 0;
+    /* Ensure tooltip is positioned properly */
+    left: auto;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.particle-controls-toggle:hover .tooltip,
+.admin-dashboard-toggle:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    border: 1px solid var(--primary-gold);
+}
+
+/* Hide tooltip when button is clicked */
+.particle-controls-toggle:active .tooltip,
+.admin-dashboard-toggle:active .tooltip,
+.particle-controls-toggle:focus .tooltip,
+.admin-dashboard-toggle:focus .tooltip {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .control-panel {
     position: absolute;
-    bottom: 50px;
+    bottom: 100px;
     right: 0;
     background: rgba(0, 0, 0, 0.85);
     border: 1px solid var(--primary-gold);
@@ -3858,6 +3921,7 @@ nav {
     border-radius: 2px;
     outline: none;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .control-group input[type="range"]::-webkit-slider-thumb {

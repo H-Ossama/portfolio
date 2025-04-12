@@ -202,7 +202,7 @@ const messageManager = {
 
             // Mark as read if unread
             if (!message.read) {
-                await this.markAsRead(id);
+                await this.toggleReadStatus(id);
             }
 
             // Update UI
@@ -214,28 +214,53 @@ const messageManager = {
         }
     },
 
-    async markAsRead(id) {
+    async toggleReadStatus(id) { // Renamed from markAsRead
         try {
-            const response = await fetch(`/api/messages/${id}/read`, {
+            // Find the current status from the UI to determine the new status
+            const messageItem = document.querySelector(`.message-item[data-id="${id}"]`);
+            const isCurrentlyRead = messageItem ? messageItem.classList.contains('read') : false;
+            const newReadStatus = !isCurrentlyRead;
+
+            const response = await fetch(`/api/messages/${id}/read`, { // Keep using the same endpoint, but send the desired status
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json' // Added Content-Type
+                },
+                body: JSON.stringify({ read: newReadStatus }) // Send the new status in the body
             });
 
-            if (!response.ok) throw new Error('Failed to mark message as read');
+            if (!response.ok) throw new Error('Failed to toggle message read status');
 
             // Update UI
-            const messageItem = document.querySelector(`.message-item[data-id="${id}"]`);
             if (messageItem) {
-                messageItem.classList.remove('unread');
-                messageItem.classList.add('read');
-                messageItem.querySelector('.unread-badge')?.remove();
+                messageItem.classList.toggle('read', newReadStatus);
+                messageItem.classList.toggle('unread', !newReadStatus);
+                const badge = messageItem.querySelector('.unread-badge');
+                if (newReadStatus && badge) {
+                    badge.remove();
+                } else if (!newReadStatus && !badge) {
+                    const metaDiv = messageItem.querySelector('.message-meta');
+                    if (metaDiv) {
+                        const newBadge = document.createElement('span');
+                        newBadge.className = 'unread-badge';
+                        metaDiv.appendChild(newBadge);
+                    }
+                }
+            }
+            
+            // Update detail view button if this message is selected
+            const detailButton = document.querySelector(`.message-detail button[onclick*="toggleReadStatus('${id}')"]`);
+            if (detailButton) {
+                 detailButton.innerHTML = newReadStatus 
+                    ? '<i class="fas fa-envelope-open"></i> Mark as Unread'
+                    : '<i class="fas fa-envelope"></i> Mark as Read';
             }
 
             await this.updateUnreadCount();
         } catch (error) {
-            utils.showMessage('Failed to mark message as read', 'error');
+            utils.showMessage('Failed to toggle message read status', 'error');
+            console.error('Toggle Read Status Error:', error); // Added console log
         }
     },
 
@@ -264,19 +289,26 @@ const messageManager = {
     },
 
     async updateUnreadCount() {
+        console.log('Attempting to fetch /api/messages/unread-count'); // Add log
         try {
-            const response = await fetch('/api/messages/unread-count', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-
-            if (!response.ok) throw new Error('Failed to get unread count');
+            const response = await utils.fetchWithAuth('/api/messages/unread-count'); // Use fetchWithAuth
             
-            const { count } = await response.json();
+            // No need to check response.ok here, fetchWithAuth handles it
+            // if (!response.ok) throw new Error('Failed to get unread count');
+            
+            // fetchWithAuth already parses JSON if applicable
+            // const { count } = await response.json(); 
+            const count = response.count; // Access count directly from the parsed response
+
+            if (typeof count !== 'number') { // Add check for valid count
+                 console.error('Invalid count received:', response);
+                 throw new Error('Invalid count received from server');
+            }
+
             this.updateMessageCount(count);
         } catch (error) {
             console.error('Failed to update unread count:', error);
+            // utils.showMessage is likely called within fetchWithAuth already
         }
     },
 
@@ -319,7 +351,7 @@ const messageManager = {
     },
 
     truncateText(text, maxLength) {
-        if (text.length <= maxLength) return text;
+        if (!text || text.length <= maxLength) return text || ''; // Handle null/undefined text
         return text.substr(0, maxLength) + '...';
     },
 

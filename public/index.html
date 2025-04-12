@@ -39,9 +39,8 @@
         
         <!-- Winter theme CSS will be loaded dynamically -->
         <link rel="preload" href="./styles/winter-theme.css" as="style">
-        
-        <!-- Skills Section Styles -->
-        <link rel="stylesheet" href="./styles/skills.css">
+          <!-- Skills Section Styles -->
+        <link rel="stylesheet" href="./styles/skills-winter.css">
         
         <!-- Preload winter animations for faster switching -->
         <link rel="preload" href="./styles/winter-animations.css" as="style">
@@ -90,12 +89,14 @@
     </svg>
 
     <!-- Full page particles container -->
-    <div id="particles-js"></div>
-
-    <!-- Particle Controls -->
-    <div class="particle-controls">
+    <div id="particles-js"></div>    <!-- Particle Controls -->    <div class="particle-controls">
         <button class="particle-controls-toggle">
             <i class="fas fa-sliders-h"></i>
+            <span class="tooltip">Particle Controls</span>
+        </button>
+        <button class="admin-dashboard-toggle" onclick="window.location.href='login.html'">
+            <i class="fas fa-user-shield"></i>
+            <span class="tooltip">Admin Dashboard</span>
         </button>
         <div class="control-panel">
             <div class="control-group">
@@ -596,9 +597,12 @@
 <!-- Skills Section -->
 <section id="technologies" class="skills-section snowfall-parallax">
     <div class="section-ambient-light"></div>
+    <div class="skills-stars-bg"></div>
     <div class="container">
-        <h2 class="section-title" data-aos="fade-down">Technical Expertise</h2>
-        <p class="section-subtitle" data-aos="fade-up">Specialized in building robust backend solutions with cutting-edge technologies</p>
+        <div class="section-header">
+            <h2 class="section-title frost-text" data-aos="fade-down">Technical Expertise</h2>
+            <p class="section-subtitle" data-aos="fade-up">Building robust digital solutions with cutting-edge technologies</p>
+        </div>
         
         <div class="skills-filter" data-aos="fade-up">
             <button class="filter-btn active" data-filter="all">
@@ -610,9 +614,6 @@
             <button class="filter-btn" data-filter="database">
                 <i class="fas fa-database"></i> Database
             </button>
-            <button class="filter-btn" data-filter="devops">
-                <i class="fas fa-cloud"></i> DevOps
-            </button>
             <button class="filter-btn" data-filter="tools">
                 <i class="fas fa-tools"></i> Tools
             </button>
@@ -620,9 +621,52 @@
 
         <div class="skills-grid">
             <!-- Skills will be dynamically loaded here -->
+            <div class="skills-loading">
+                <div class="loading-spinner"></div>
+                <p>Loading skills...</p>
+            </div>
+        </div>        <div class="skills-stats aos-init aos-animate" data-aos="fade-up">
+            <div class="stat-card frost-card winter-card aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value counter" data-target="5">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="ice-crystal"></div>
+            </div>
+            
+            <div class="stat-card frost-card winter-card aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value counter" data-target="15">0</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+                <div class="ice-crystal"></div>
+            </div>
+            
+            <a href="https://github.com/ossama21" class="stat-card-link" target="_blank" rel="noopener noreferrer" aria-label="View Projects on GitHub">
+                <div class="stat-card frost-card winter-card aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value counter" data-target="50">0</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="view-more">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="ice-crystal"></div>
+                </div>
+            </a>
         </div>
     </div>
     <div class="floating-particles"></div>
+    <div class="snow-particles"></div>
 </section>
 
 <!-- About Section -->

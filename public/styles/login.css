@@ -162,6 +162,21 @@
     }
 }
 
+@keyframes vibrate {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+}
+
+@keyframes celebrate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    75% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
 /* Loading State */
 .login-btn.loading {
     background: var(--primary-gold);
@@ -185,10 +200,12 @@
 /* Success/Error States */
 .login-btn.success {
     background: #28a745;
+    animation: celebrate 0.8s ease-in-out;
 }
 
 .login-btn.error {
     background: #dc3545;
+    animation: vibrate 0.4s ease-in-out;
 }
 
 /* Responsive Design */

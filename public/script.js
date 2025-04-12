@@ -132,6 +132,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initParticleControls();
 });
 
+// Check if user is logged in and show admin button if they are
+document.addEventListener('DOMContentLoaded', function() {
+    // Check for admin token
+    const token = localStorage.getItem('token');
+    const adminButton = document.querySelector('.admin-dashboard-toggle');
+    
+    if (token) {
+        // User is logged in, show admin button
+        adminButton.style.display = 'flex';
+        
+        // Add click event to navigate to admin dashboard
+        adminButton.addEventListener('click', function() {
+            window.location.href = 'pro-user-dashboard.html';
+        });
+    }
+});
+
 // Helper Functions
 function initCanvas(canvas) {
     const ctx = canvas.getContext('2d');
