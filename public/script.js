@@ -1,5 +1,122 @@
 // script.js
+// Global settings variable
+let portfolioSettings = {};
+
+// Function to load settings from localStorage
+function loadPortfolioSettings() {
+    const savedSettings = localStorage.getItem('portfolioSettings');
+    if (savedSettings) {
+        try {
+            portfolioSettings = JSON.parse(savedSettings);
+        } catch (error) {
+            console.error('Error parsing portfolio settings:', error);
+            // Use default settings if parsing fails
+            portfolioSettings = getDefaultSettings(); 
+        }
+    } else {
+        // Use default settings if none found in localStorage
+        portfolioSettings = getDefaultSettings();
+    }
+    console.log('Loaded portfolio settings:', portfolioSettings); // For debugging
+}
+
+// Function to get default settings (mirroring dashboard.js defaults)
+function getDefaultSettings() {
+    return {
+        contentVisibility: {
+            showProjects: true,
+            showSkills: true,
+            showEducation: true,
+            showExperience: true,
+            showContact: true,
+            showAbout: true
+        },
+        maintenanceMode: { // Add default maintenance settings
+            contact: { enabled: false, message: 'Contact form is under maintenance.' },
+            portfolio: { enabled: false, message: 'Projects section is under maintenance.' },
+            skills: { enabled: false, message: 'Skills section is under maintenance.' }
+        }
+        // Add other default settings if needed
+    };
+}
+
+// Function to apply content visibility and maintenance mode
+function applyContentVisibility() {
+    const visibility = portfolioSettings.contentVisibility || getDefaultSettings().contentVisibility;
+    const maintenance = portfolioSettings.maintenanceMode || getDefaultSettings().maintenanceMode;
+    
+    console.log('Applying visibility:', visibility); // For debugging
+    console.log('Applying maintenance:', maintenance); // For debugging
+
+    const sections = {
+        '#projects': { visible: visibility.showProjects, maintenance: maintenance.portfolio },
+        '#technologies': { visible: visibility.showSkills, maintenance: maintenance.skills }, 
+        '#education': { visible: visibility.showEducation, maintenance: null },
+        '#about': { visible: visibility.showAbout, maintenance: null }
+    };
+
+    for (const selector in sections) {
+        const element = document.querySelector(selector);
+        if (element) {
+            const config = sections[selector];
+            console.log(`Processing ${selector}: Visible=${config.visible}, Maintenance=${config.maintenance?.enabled}`); // Debugging
+
+            if (config.maintenance?.enabled) {
+                // Show maintenance message
+                element.style.display = 'block'; // Ensure section container is visible
+                element.innerHTML = `<div class="maintenance-message"><i class="fas fa-tools"></i> ${config.maintenance.message}</div>`;
+                // Remove AOS if present
+                if (element.hasAttribute('data-aos')) {
+                    element.removeAttribute('data-aos');
+                }
+            } else if (config.visible === false) { // Explicitly check for false
+                // Hide section entirely
+                element.style.display = 'none';
+                // Store original AOS type and remove it
+                if (element.hasAttribute('data-aos')) {
+                    if (!element.hasAttribute('data-aos-original')) {
+                        element.setAttribute('data-aos-original', element.getAttribute('data-aos'));
+                    }
+                    element.removeAttribute('data-aos');
+                }
+            } else {
+                // Show section content
+                element.style.display = ''; // Reset to default display value
+                // Restore AOS animation if it was stored
+                const originalAos = element.getAttribute('data-aos-original') || 'fade-up';
+                element.setAttribute('data-aos', originalAos);
+            }
+        } else {
+            console.warn(`Element with selector "${selector}" not found.`);
+        }
+    }
+
+    // Handle contact link maintenance
+    const contactLink = document.querySelector('nav a[href="contact.html#contact"]');
+    if (contactLink) {
+        if (maintenance.contact?.enabled) {
+            contactLink.style.pointerEvents = 'none';
+            contactLink.style.opacity = '0.5';
+            contactLink.title = maintenance.contact.message; // Add tooltip
+        } else {
+            contactLink.style.pointerEvents = '';
+            contactLink.style.opacity = '';
+            contactLink.title = '';
+        }
+    }
+    
+    // Refresh AOS after potentially changing display styles or attributes
+    if (typeof AOS !== 'undefined') {
+        AOS.refreshHard(); // Use refreshHard to re-detect elements
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Load settings first
+    loadPortfolioSettings();
+    // Apply visibility & maintenance rules
+    applyContentVisibility();
+
     // Enable normal right-click behavior
     document.addEventListener('contextmenu', function(e) {
         // Allow default right-click behavior
@@ -18,8 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalForm = document.getElementById('pro-user-form');
     const modalCloseBtn = modal ? modal.querySelector('.close-btn') : null;
 
-    // Load education data
-    loadEducationData();
+    // Load education data - potentially move this inside applyContentVisibility if needed
+    if (portfolioSettings.contentVisibility?.showEducation) {
+        loadEducationData();
+    }
 
     // Add loading state
     const loading = document.createElement('div');
@@ -254,6 +373,11 @@ function initContactForm(form) {
 
 // Theme Toggle with Enhanced Snow Effect
 function initThemeToggle() {
+    // Load settings if not already loaded (safety check)
+    if (Object.keys(portfolioSettings).length === 0) {
+        loadPortfolioSettings();
+    }
+    
     const themeToggle = document.querySelector('.theme-toggle');
     if (!themeToggle) return;
 
@@ -776,6 +900,11 @@ function updateParticlesColors(theme) {
 
 // Enhanced theme toggle function
 function initThemeToggle() {
+    // Load settings if not already loaded (safety check)
+    if (Object.keys(portfolioSettings).length === 0) {
+        loadPortfolioSettings();
+    }
+    
     const themeToggle = document.querySelector('.theme-toggle');
     if (!themeToggle) return;
 
@@ -910,7 +1039,7 @@ function initThemeToggle() {
                 loadWinterTheme();
                 initSnowEffect();
             } else {
-                removeWinterEffects();
+                removeSnowEffect();
             }
             
             updateThemeIcon(newTheme);
@@ -943,14 +1072,20 @@ function loadWinterTheme() {
     });
 }
 
-function removeWinterEffects() {
-    const winterOverlay = document.querySelector('.winter-overlay');
-    if (winterOverlay) {
-        winterOverlay.addEventListener('animationend', () => {
-            winterOverlay.remove();
-        });
-        winterOverlay.style.animation = 'fadeOut 0.5s forwards';
+function removeSnowEffect() {
+    const particlesContainer = document.getElementById('winter-particles');
+    if (particlesContainer) {
+        if (window.pJSDom && window.pJSDom[0]) {
+            window.pJSDom[0].pJS.fn.vendors.destroyParticles();
+            window.pJSDom = [];
+        }
+        particlesContainer.style.display = 'none';
     }
+
+    // Remove section overlays
+    document.querySelectorAll('.section-bg-overlay').forEach(overlay => {
+        overlay.remove();
+    });
 }
 
 // Theme switching functionality
@@ -1001,7 +1136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 initSnowEffect();
             } else {
-                removeWinterEffects();
+                removeSnowEffect();
             }
 
             // Hide loading overlay after theme is loaded
@@ -1306,6 +1441,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load education data directly from the JSON file
 async function loadEducationData() {
+    // Check visibility setting before fetching/rendering
+    if (!portfolioSettings.contentVisibility?.showEducation) {
+        const container = document.querySelector('.edu-cards-container');
+        if (container) container.innerHTML = ''; // Clear content if hidden
+        return; 
+    }
+    
     try {
         const response = await fetch('/data/education.json');
         if (!response.ok) throw new Error('Failed to load education data');
@@ -1776,3 +1918,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ...existing code...
+
+function initializeSkillsSection() {
+    if (portfolioSettings.contentVisibility?.showSkills) {
+        // Run skill initialization logic (e.g., fetching data, setting up animations)
+        console.log("Initializing Skills Section");
+        // Example: initSkillAnimations(); 
+        // Example: loadSkillsData();
+    } else {
+        // Ensure the section is hidden if logic relies on JS initialization
+        const skillsSection = document.querySelector('#technologies');
+        if (skillsSection) skillsSection.style.display = 'none';
+    }
+}
+
+// Call initialization functions conditionally
+document.addEventListener('DOMContentLoaded', () => {
+    // ... other initializations ...
+    initializeSkillsSection(); // Call this after loading settings
+    // Initialize other sections similarly...
+});

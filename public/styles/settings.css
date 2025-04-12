@@ -28,6 +28,111 @@
     margin-bottom: 1.5rem;
 }
 
+/* Maintenance section tooltip styles */
+.maintenance-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.maintenance-title-tooltip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.maintenance-tooltip {
+    position: relative;
+    display: inline-block;
+    color: var(--gold-primary);
+    cursor: help;
+}
+
+.maintenance-tooltip .tooltip-content {
+    width: 280px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+/* SEO & Meta section tooltip styles */
+.seo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seo-title-tooltip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.seo-tooltip {
+    position: relative;
+    display: inline-block;
+    color: var(--gold-primary);
+    cursor: help;
+}
+
+.seo-tooltip .tooltip-content {
+    width: 280px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+/* Social Media section tooltip styles */
+.social-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.social-title-tooltip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.social-tooltip {
+    position: relative;
+    display: inline-block;
+    color: var(--gold-primary);
+    cursor: help;
+}
+
+.social-tooltip .tooltip-content {
+    width: 280px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+/* Advanced section tooltip styles */
+.advanced-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.advanced-title-tooltip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.advanced-tooltip {
+    position: relative;
+    display: inline-block;
+    color: var(--gold-primary);
+    cursor: help;
+}
+
+.advanced-tooltip .tooltip-content {
+    width: 280px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+/* Settings Actions */
 .settings-actions {
     display: flex;
     gap: 10px;
@@ -283,74 +388,13 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     gap: 8px;
-    position: relative; /* Needed for tooltip positioning */
 }
 
-/* Style for the exclamation icon itself */
-.tooltip-trigger {
-    display: inline-flex; /* Use flex to center the icon */
-    justify-content: center;
+.card-header-with-tooltip {
+    display: flex;
     align-items: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background-color: rgba(255, 170, 0, 0.2); /* Light gold background */
-    color: var(--gold-primary);
-    font-weight: bold;
-    font-size: 12px;
-    cursor: help;
-    margin-left: 5px; /* Space from the label */
-    position: relative; /* Context for the tooltip */
-    transition: background-color 0.2s ease;
-}
-
-.tooltip-trigger:hover {
-    background-color: rgba(255, 170, 0, 0.4); /* Darker gold on hover */
-}
-
-/* General tooltip content styling (reusing previous structure but adjusted) */
-.tooltip-content {
-    position: absolute;
-    bottom: 120%; /* Position above the icon */
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--secondary-black);
-    border: 1px solid var(--gold-primary);
-    border-radius: 6px;
-    padding: 8px 12px; /* Slightly smaller padding */
-    width: max-content; /* Adjust width to content */
-    max-width: 250px; /* Max width */
-    color: var(--text-light);
-    font-size: 12px;
-    font-weight: normal; /* Reset font weight */
-    line-height: 1.4;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
-    pointer-events: none; /* Allow clicks to pass through if needed */
-    white-space: normal; /* Allow text wrapping */
-}
-
-/* Arrow for the tooltip */
-.tooltip-content::after {
-    content: '';
-    position: absolute;
-    top: 100%; /* Pointing down from the bottom of the tooltip */
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--gold-primary) transparent transparent transparent; /* Arrow color */
-}
-
-/* Show tooltip on hover/focus */
-.tooltip-trigger:hover .tooltip-content,
-.tooltip-trigger:focus .tooltip-content { /* Added focus for accessibility */
-    visibility: visible;
-    opacity: 1;
-    transform: translateX(-50%) translateY(-5px); /* Slight upward movement */
+    gap: 8px;
+    flex: 1;
 }
 
 .tooltip-icon {
@@ -360,6 +404,13 @@ input:checked + .slider:before {
     opacity: 0.7;
     transition: opacity 0.2s ease;
     position: relative;
+    margin-left: 6px;
+}
+
+.section-title-with-tooltip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .tooltip-icon:hover {
@@ -375,7 +426,7 @@ input:checked + .slider:before {
     border: 1px solid var(--gold-primary);
     border-radius: 6px;
     padding: 10px 12px;
-    width: 220px;
+    width: 250px;
     color: var(--text-light);
     font-size: 12px;
     font-weight: normal;
@@ -385,6 +436,7 @@ input:checked + .slider:before {
     opacity: 0;
     transition: all 0.3s ease;
     pointer-events: none;
+    line-height: 1.5;
 }
 
 .tooltip-icon:hover .tooltip-content {
@@ -618,6 +670,138 @@ input:checked + .slider:before {
     background: rgba(255,82,82,0.2);
 }
 
+/* Password Confirmation Modal */
+.password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.password-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.password-modal-content {
+    width: 100%;
+    max-width: 400px;
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.password-modal.active .password-modal-content {
+    transform: translateY(0);
+}
+
+.password-modal-header {
+    padding: 20px;
+    background: var(--card-header-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.password-modal-header i {
+    color: #ff5252;
+    font-size: 20px;
+}
+
+.password-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--text-light);
+}
+
+.password-modal-body {
+    padding: 20px;
+}
+
+.password-modal-body p {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.password-input-container {
+    margin-bottom: 20px;
+}
+
+.password-input-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.password-input-container input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: var(--input-bg);
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.password-input-container input:focus {
+    outline: none;
+    border-color: var(--gold-primary);
+}
+
+.password-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.password-modal-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.password-modal-cancel {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+.password-modal-cancel:hover {
+    background: var(--hover-bg);
+    color: var(--text-light);
+}
+
+.password-modal-confirm {
+    background: rgba(255,82,82,0.1);
+    border: 1px solid #ff5252;
+    color: #ff5252;
+}
+
+.password-modal-confirm:hover {
+    background: rgba(255,82,82,0.2);
+}
+
 /* Preview Button */
 .maintenance-preview {
     margin-top: 10px;
@@ -738,117 +922,4 @@ input:checked + .slider:before {
 
 .close-popup:hover {
     background: var(--accent-hover);
-}
-
-/* Password Confirmation Modal */
-.password-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1050; /* Ensure it's above other content */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.password-modal-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.password-modal {
-    background: var(--card-bg);
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    padding: 25px 30px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
-
-.password-modal-overlay.show .password-modal {
-    transform: scale(1);
-}
-
-.password-modal h4 {
-    color: var(--text-light);
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-}
-
-.password-modal p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-}
-
-.password-modal-input {
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    background: var(--input-bg);
-    color: var(--text-light);
-    font-family: inherit;
-    font-size: 1rem;
-    box-sizing: border-box; /* Include padding in width */
-}
-
-.password-modal-input:focus {
-    border-color: var(--gold-primary);
-    outline: none;
-}
-
-.password-modal-actions {
-    display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    gap: 10px;
-}
-
-.modal-btn {
-    padding: 8px 18px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.modal-btn.confirm {
-    background-color: #ff5252; /* Red for confirm/danger */
-    color: white;
-}
-
-.modal-btn.confirm:hover {
-    background-color: #e04040; /* Darker red */
-}
-
-.modal-btn.cancel {
-    background-color: var(--button-secondary-bg, #555); /* Use theme variable or default */
-    color: var(--button-secondary-text, white);
-    border: 1px solid var(--border-color);
-}
-
-.modal-btn.cancel:hover {
-    background-color: var(--button-secondary-hover-bg, #666);
-}
-
-/* Optional: Style for error message inside modal */
-.password-modal-error {
-    color: #ff5252;
-    font-size: 0.85rem;
-    margin-top: -10px; /* Pull up below input */
-    margin-bottom: 15px;
-    text-align: left;
-    display: none; /* Hidden by default */
 }

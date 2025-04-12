@@ -1,0 +1,654 @@
+<!-- Maintenance Section -->
+<div class="settings-card">
+    <div class="settings-card-header">
+        <i class="fas fa-tools"></i>
+        <div class="card-header-with-tooltip">
+            <div class="maintenance-header">
+                <h3>Maintenance</h3>
+                <div class="maintenance-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Configure maintenance mode settings to temporarily disable parts of your portfolio while you update them.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="settings-card-body">
+        <div class="setting-group">
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Contact Form</label>
+                    <div class="maintenance-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Disables the contact form and shows a maintenance notice. Use when updating the contact system.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="contactFormMaintenance">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-details" id="contactFormMaintenanceDetails">
+                <textarea id="contactMaintenanceMessage" rows="3" placeholder="Custom maintenance message for contact form...">Sorry, the contact form is currently undergoing maintenance. Please email me directly at [your-email] instead.</textarea>
+            </div>
+        </div>
+        <div class="setting-group">
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Portfolio Section</label>
+                    <div class="maintenance-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Hides portfolio projects and shows a maintenance notice. Use when updating your project showcase.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="portfolioMaintenance">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-details" id="portfolioMaintenanceDetails">
+                <textarea id="portfolioMaintenanceMessage" rows="3" placeholder="Custom maintenance message for portfolio section...">Portfolio section is being updated with new projects. Check back soon!</textarea>
+            </div>
+        </div>
+        <div class="setting-group">
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Skills Section</label>
+                    <div class="maintenance-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Hides skills visualizations and shows a maintenance notice. Use when updating your skills display.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="skillsMaintenance">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-details" id="skillsMaintenanceDetails">
+                <textarea id="skillsMaintenanceMessage" rows="3" placeholder="Custom maintenance message for skills section...">Skills section is being updated to reflect my latest technologies. Check back soon!</textarea>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="section-title-with-tooltip maintenance-title-tooltip">
+                <h4>Scheduled Maintenance</h4>
+                <div class="maintenance-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Schedule maintenance mode for specific time periods. Site will automatically enter and exit maintenance mode.
+                    </div>
+                </div>
+            </div>
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Enable Schedule</label>
+                    <div class="maintenance-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Turn on scheduled maintenance mode timing for the entire site.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="scheduledMaintenance">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-details" id="scheduledMaintenanceDetails">
+                <div class="setting-row" style="display: flex; gap: 10px; margin-bottom: 12px;">
+                    <div>
+                        <label for="maintenanceStart">Start Time</label>
+                        <input type="datetime-local" id="maintenanceStart">
+                    </div>
+                    <div>
+                        <label for="maintenanceEnd">End Time</label>
+                        <input type="datetime-local" id="maintenanceEnd">
+                    </div>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="notifyBeforeMaintenance">
+                    <span class="checkmark"></span>
+                    <label for="notifyBeforeMaintenance">Show maintenance notice 24 hours before</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="maintenance-preview">
+            <button class="preview-btn" id="previewMaintenanceBtn">
+                <i class="fas fa-eye"></i> Preview Notice
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- SEO & Meta Section -->
+<div class="settings-card">
+    <div class="settings-card-header">
+        <i class="fas fa-search"></i>
+        <div class="card-header-with-tooltip">
+            <div class="seo-header">
+                <h3>SEO & Meta</h3>
+                <div class="seo-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Optimize your portfolio for search engines with meta data, keywords, and structured data.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="settings-card-body">
+        <div class="setting-group">
+            <div class="setting-label-container">
+                <label>Meta Title</label>
+                <div class="seo-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        The title that appears in search results and browser tabs (55-60 characters recommended).
+                    </div>
+                </div>
+            </div>
+            <input type="text" id="metaTitle" placeholder="Oussama Hattan | Frontend Developer & UI Designer">
+        </div>
+        
+        <div class="setting-group">
+            <div class="setting-label-container">
+                <label>Meta Description</label>
+                <div class="seo-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Brief summary that appears in search results (150-160 characters recommended for best visibility).
+                    </div>
+                </div>
+            </div>
+            <textarea id="metaDescription" rows="3" placeholder="Frontend developer specializing in modern JavaScript frameworks and responsive design with 5+ years of experience building user-friendly web applications."></textarea>
+        </div>
+
+        <div class="setting-group">
+            <div class="section-title-with-tooltip seo-title-tooltip">
+                <h4>Keywords</h4>
+                <div class="seo-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Keywords help search engines understand your portfolio's content focus.
+                    </div>
+                </div>
+            </div>
+            <textarea id="keywords" rows="2" placeholder="web developer, frontend, UI/UX, JavaScript, React, Vue, responsive design"></textarea>
+        </div>
+        
+        <div class="setting-group">
+            <div class="section-title-with-tooltip seo-title-tooltip">
+                <h4>Structured Data</h4>
+                <div class="seo-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Structured data helps search engines display rich snippets in search results.
+                    </div>
+                </div>
+            </div>
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Person Schema</label>
+                    <div class="seo-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Adds Person schema markup to help search engines identify you as the creator.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="personSchema" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Portfolio Projects</label>
+                    <div class="seo-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Adds CreativeWork schema markup to your portfolio projects for better search visibility.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="projectsSchema" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="section-title-with-tooltip seo-title-tooltip">
+                <h4>Indexing Controls</h4>
+                <div class="seo-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Control how search engines interact with your portfolio pages.
+                    </div>
+                </div>
+            </div>
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Allow Indexing</label>
+                    <div class="seo-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Uncheck to add noindex tag and prevent search engines from indexing your portfolio.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="allowIndexing" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Follow Links</label>
+                    <div class="seo-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Uncheck to add nofollow tag and prevent search engines from following links on your site.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="followLinks" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Social Media Section -->
+<div class="settings-card">
+    <div class="settings-card-header">
+        <i class="fas fa-share-alt"></i>
+        <div class="card-header-with-tooltip">
+            <div class="social-header">
+                <h3>Social Media</h3>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Configure how your portfolio appears when shared on social media platforms.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="settings-card-body">
+        <div class="setting-group">
+            <div class="section-title-with-tooltip social-title-tooltip">
+                <h4>Open Graph</h4>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Open Graph protocol determines how your content appears when shared on Facebook, LinkedIn, and other platforms.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-label-container">
+                <label>OG Title</label>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Title displayed when your portfolio is shared on social media (can differ from your meta title).
+                    </div>
+                </div>
+            </div>
+            <input type="text" id="ogTitle" placeholder="Oussama Hattan | Creative Frontend Developer">
+            
+            <div class="setting-label-container">
+                <label>OG Description</label>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Description displayed when your portfolio is shared on social media.
+                    </div>
+                </div>
+            </div>
+            <textarea id="ogDescription" rows="2" placeholder="Check out my portfolio showcasing interactive web experiences and responsive designs"></textarea>
+            
+            <div class="setting-label-container">
+                <label>OG Image</label>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Image displayed when your portfolio is shared (recommended: 1200×630 pixels).
+                    </div>
+                </div>
+            </div>
+            <div class="file-upload">
+                <div class="file-upload-btn">
+                    <i class="fas fa-upload"></i>
+                    <span>Choose Image</span>
+                </div>
+                <input type="file" id="ogImage" accept="image/*">
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="section-title-with-tooltip social-title-tooltip">
+                <h4>Twitter Card</h4>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Twitter Cards determine how your content appears when shared on Twitter.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-label-container">
+                <label>Card Type</label>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Summary shows small image beside text, Summary with Large Image shows large image above text.
+                    </div>
+                </div>
+            </div>
+            <select id="twitterCardType">
+                <option value="summary">Summary</option>
+                <option value="summary_large_image" selected>Summary with Large Image</option>
+            </select>
+            
+            <div class="setting-label-container">
+                <label>Twitter Handle</label>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Your Twitter username with @ symbol to attribute content when shared.
+                    </div>
+                </div>
+            </div>
+            <div class="input-with-icon">
+                <i class="fab fa-twitter"></i>
+                <input type="text" id="twitterHandle" placeholder="@yourtwitterhandle">
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="section-title-with-tooltip social-title-tooltip">
+                <h4>Share Links</h4>
+                <div class="social-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Choose which social platforms to include in the share buttons on your portfolio.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="checkbox-group">
+                <label class="checkbox-container">Twitter
+                    <input type="checkbox" checked="checked" id="shareTwitter">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Facebook
+                    <input type="checkbox" checked="checked" id="shareFacebook">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">LinkedIn
+                    <input type="checkbox" checked="checked" id="shareLinkedIn">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Pinterest
+                    <input type="checkbox" id="sharePinterest">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Reddit
+                    <input type="checkbox" id="shareReddit">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Email
+                    <input type="checkbox" checked="checked" id="shareEmail">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Advanced Section -->
+<div class="settings-card">
+    <div class="settings-card-header">
+        <i class="fas fa-cogs"></i>
+        <div class="card-header-with-tooltip">
+            <div class="advanced-header">
+                <h3>Advanced</h3>
+                <div class="advanced-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Configure technical settings for performance optimization and advanced functionality.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="settings-card-body">
+        <div class="setting-group">
+            <div class="section-title-with-tooltip advanced-title-tooltip">
+                <h4>Performance</h4>
+                <div class="advanced-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Settings that affect how quickly your portfolio loads and performs.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Enable Caching</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Implements browser caching to speed up subsequent visits to your portfolio.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="enableCaching" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Lazy Load Images</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Defers loading of off-screen images until user scrolls near them, improving initial page load speed.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="lazyLoadImages" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Minify Resources</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Automatically minifies CSS and JavaScript files to reduce file size and improve load times.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="minifyResources" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Compress Images</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Automatically optimizes and compresses images to reduce file size while maintaining quality.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="compressImages" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="section-title-with-tooltip advanced-title-tooltip">
+                <h4>Analytics</h4>
+                <div class="advanced-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Configure visitor tracking and analytics integration for your portfolio.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Google Analytics</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Tracks visitor behavior, traffic sources, and user demographics with Google Analytics.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="googleAnalytics">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-details" id="googleAnalyticsDetails">
+                <input type="text" id="gaTrackingID" placeholder="GA Measurement ID (G-XXXXXXXXXX)">
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Custom Tracking</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Add custom tracking scripts like Hotjar, MouseFlow, or other analytics tools.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="customTracking">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-details" id="customTrackingDetails">
+                <textarea id="customTrackingCode" rows="4" placeholder="Paste your custom tracking script here..."></textarea>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="section-title-with-tooltip advanced-title-tooltip">
+                <h4>Security</h4>
+                <div class="advanced-tooltip">
+                    <i class="fas fa-info-circle tooltip-icon"></i>
+                    <div class="tooltip-content">
+                        Configure security settings to protect your portfolio from common threats.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>Content Security Policy</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Sets CSP headers to protect against XSS attacks and unwanted resource loading.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="enableCSP">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>HTTPS Redirect</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Automatically redirects HTTP traffic to HTTPS for secure connections.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="httpsRedirect" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting-toggle">
+                <div class="setting-label-container">
+                    <label>reCAPTCHA</label>
+                    <div class="advanced-tooltip">
+                        <i class="fas fa-info-circle tooltip-icon"></i>
+                        <div class="tooltip-content">
+                            Adds Google reCAPTCHA protection to the contact form to prevent spam submissions.
+                        </div>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="enableRecaptcha">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-details" id="recaptchaDetails">
+                <div class="setting-row" style="display: flex; gap: 10px; margin-bottom: 12px;">
+                    <input type="text" id="recaptchaSiteKey" placeholder="Site Key">
+                    <input type="text" id="recaptchaSecretKey" placeholder="Secret Key">
+                </div>
+                <select id="recaptchaVersion">
+                    <option value="v2">reCAPTCHA v2</option>
+                    <option value="v3" selected>reCAPTCHA v3</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="danger-zone">
+            <h4><i class="fas fa-exclamation-triangle"></i> Danger Zone</h4>
+            <p class="setting-description">These actions cannot be undone. Please be certain.</p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                <button class="danger-btn" id="resetSettings">
+                    <i class="fas fa-redo-alt"></i> Reset All Settings
+                </button>
+                <button class="danger-btn" id="clearAnalytics">
+                    <i class="fas fa-chart-bar"></i> Clear Analytics Data
+                </button>
+                <button class="danger-btn" id="purgeCache">
+                    <i class="fas fa-trash-alt"></i> Purge All Caches
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

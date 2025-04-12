@@ -228,6 +228,12 @@ const contactFormHandler = {
         event.preventDefault();
         const form = event.target;
 
+        // Check maintenance status first
+        if (window.maintenanceHandler && window.maintenanceHandler.isInMaintenance('contact')) {
+            window.maintenanceHandler.showMaintenancePopup('contact');
+            return;
+        }
+
         if (!this.validateForm(form)) {
             return;
         }

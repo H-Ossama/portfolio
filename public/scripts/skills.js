@@ -1,4 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Check settings first to see if skills section should be displayed
+    const portfolioSettings = JSON.parse(localStorage.getItem('portfolioSettings') || '{}');
+    const contentVisibility = portfolioSettings.contentVisibility || {};
+    
+    // If skills section is disabled in settings, hide the section and don't load skills
+    if (contentVisibility.showSkills === false) {
+        const skillsSection = document.querySelector('.skills-section');
+        if (skillsSection) {
+            skillsSection.style.display = 'none';
+        }
+        return; // Don't proceed with loading skills
+    }
+    
+    // Also check maintenance mode
+    const maintenanceMode = portfolioSettings.maintenanceMode || {};
+    if (maintenanceMode.skills && maintenanceMode.skills.enabled) {
+        const skillsSection = document.querySelector('.skills-section');
+        if (skillsSection) {
+            skillsSection.innerHTML = `
+                <div class="maintenance-message">
+                    <i class="fas fa-tools"></i>
+                    <p>${maintenanceMode.skills.message || 'Skills section is under maintenance. Please check back later.'}</p>
+                </div>
+            `;
+        }
+        return; // Don't proceed with loading skills
+    }
+    
+    // If we get here, load skills normally
     loadSkills();
 
     // Initialize skills filtering

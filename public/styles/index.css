@@ -1,15 +1,5 @@
 @import 'base.css';
 
-/* Base cursor styles */
-body, .hero, .projects, .about, .education, .technologies {
-    cursor: url('../../assets/images/cursur-default.png'), auto;
-}
-
-/* Interactive elements cursor */
-a, button, .btn, .contact-btn, .project-links a {
-    cursor: url('../../assets/images/cursur-pointer.png'), pointer;
-}
-
 /* Hero Section */
 .hero {
     min-height: 100vh;
@@ -1359,7 +1349,7 @@ a, button, .btn, .contact-btn, .project-links a {
     background: linear-gradient(135deg, rgba(13, 13, 13, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
     position: relative;
     overflow: hidden;
-    cursor: url('../../assets/images/cursur-default.png'), auto;
+    
 }
 
 .projects::before {
@@ -1766,7 +1756,6 @@ a, button, .btn, .contact-btn, .project-links a {
     background: linear-gradient(135deg, rgba(13, 13, 13, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
     position: relative;
     overflow: hidden;
-    cursor: url('../../assets/images/cursur-default.png'), auto;
 }
 
 .technologies::before, .education::before {
@@ -2067,7 +2056,6 @@ a, button, .btn, .contact-btn, .project-links a {
     padding: 8rem 0;
     background: linear-gradient(135deg, rgba(13, 13, 13, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%);
     position: relative;
-    cursor: url('../../assets/images/cursur-default.png'), auto;
 }
 
 .education::before {

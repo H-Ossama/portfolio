@@ -237,7 +237,6 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
-    cursor: url('../../assets/images/cursur-default.png'), auto;
     transition: all 0.3s ease;
     /* cursor: none; */
 }
@@ -655,11 +654,6 @@ nav ul li a:hover {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
-}
-
-/* Custom Cursors */
-a, button, .btn {
-    cursor: url('../../assets/images/cursur-pointer.png'), pointer;
 }
 
 /* Common Modal Styles */

@@ -23,6 +23,10 @@ const state = {
             skills: {
                 enabled: false,
                 message: 'Skills section is under maintenance. Please check back later.'
+            },
+            winter: {
+                enabled: false,
+                message: 'Winter theme is currently under maintenance. Please try another theme.'
             }
         },
         errorHandling: {
@@ -51,7 +55,8 @@ const state = {
             showSkills: true,
             showEducation: true,
             showExperience: true,
-            showContact: true
+            showContact: true,
+            showAbout: true  // Added this line
         },
         performance: {
             enableLazyLoading: true,
@@ -145,6 +150,15 @@ const utils = {
             this.showMessage(error.message, 'error');
             throw error;
         }
+    },
+
+    isInMaintenance(feature) {
+        return state.settings.maintenanceMode[feature]?.enabled || false;
+    },
+
+    showMaintenanceMessage(feature) {
+        const message = state.settings.maintenanceMode[feature]?.message || 'This feature is currently under maintenance.';
+        this.showMessage(message, 'warning');
     }
 };
 
@@ -245,8 +259,15 @@ const themeManager = {
             const newThemeToggle = themeToggle.cloneNode(true);
             themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
             
-            // Add click handler
-            newThemeToggle.addEventListener('click', () => this.toggleTheme());
+            // Add click handler with maintenance check
+            newThemeToggle.addEventListener('click', () => {
+                // Check maintenance status
+                if (window.maintenanceHandler && window.maintenanceHandler.isInMaintenance('winter')) {
+                    window.maintenanceHandler.showMaintenancePopup('winter');
+                    return;
+                }
+                this.toggleTheme();
+            });
             
             // Initialize theme icon
             const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -303,10 +324,11 @@ const navigation = {
                 }
             });
         }
-    },
-
-    async navigateToSection(section) {
+    },    async navigateToSection(section) {
         state.currentSection = section;
+        
+        // Save current section to localStorage for persistence across page reloads
+        localStorage.setItem('currentSection', section);
         
         // Update active state in navigation
         document.querySelectorAll('.nav-item').forEach(item => {
@@ -509,15 +531,17 @@ async function initializeDashboard() {
 
         // Initialize modules
         themeManager.init();
-        navigation.init();
-          // Load initial data
+        navigation.init();        // Load initial data
         await Promise.all([
             userProfile.loadUserProfile(),
             analytics.loadStats()
         ]);
-
-        // Load default section - setting projects as default instead of analytics
-        await navigation.navigateToSection('projects');
+        
+        // Get saved section from localStorage or default to 'projects'
+        const savedSection = localStorage.getItem('currentSection') || 'projects';
+        
+        // Navigate to saved section or projects if none saved
+        await navigation.navigateToSection(savedSection);
 
     } catch (error) {
         utils.showMessage('Failed to initialize dashboard', 'error');
@@ -724,19 +748,24 @@ const settingsManager = {
             utils.showMessage('Failed to save settings', 'error');
             console.error('Error saving settings:', error);
         }
-    },
-
-    async saveSettingsToApi() {
+    },    async saveSettingsToApi() {
         try {
+            // Check if we're in development mode or if the API might not be available
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.log('Development mode detected: Skipping API settings save (using localStorage only)');
+                return; // Skip API call in development mode
+            }
+            
             await utils.fetchWithAuth('/api/settings', {
                 method: 'POST',
                 body: state.settings
             });
         } catch (error) {
-            console.error('API settings save error:', error);
-            throw error;
+            // Don't throw the error, just log it - this way the settings save process won't be interrupted
+            console.log('Note: Settings saved to localStorage only. API endpoint not available.');
+            // We're just suppressing the error as it's expected if the API endpoint doesn't exist yet
         }
-    },    // Helper function to create tooltip HTML
+    },// Helper function to create tooltip HTML
     createTooltip(text) {
         return `
             <span class="tooltip-icon">
@@ -796,12 +825,14 @@ const settingsManager = {
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Content Visibility Settings -->
+                          <!-- Content Visibility Settings -->
                         <div class="settings-card">
                             <div class="settings-card-header">
                                 <i class="fas fa-eye"></i>
-                                <h3>Content Visibility</h3>
+                                <div class="section-title-with-tooltip">
+                                    <h3>Content Visibility</h3>
+                                    ${this.createTooltip("Control which sections are visible on your portfolio website. Disabling a section hides it from visitors but keeps all your data intact.")}
+                                </div>
                             </div>
                             <div class="settings-card-body">
                                 <div class="setting-group">                                <div class="setting-toggle">
@@ -816,10 +847,12 @@ const settingsManager = {
                                         </label>
                                     </div>
                                 </div>
-                                
-                                <div class="setting-group">
+                                  <div class="setting-group">
                                     <div class="setting-toggle">
-                                        <label>Show Skills Section</label>
+                                        <div class="setting-label-container">
+                                            <label>Show Skills Section</label>
+                                            ${this.createTooltip("Controls the visibility of your skills section. When disabled, visitors won't see your skills showcase but all your skill data remains saved.")}
+                                        </div>
                                         <label class="switch">
                                             <input type="checkbox" id="show-skills-toggle" 
                                                 ${contentVisibility.showSkills ? 'checked' : ''}>
@@ -827,10 +860,12 @@ const settingsManager = {
                                         </label>
                                     </div>
                                 </div>
-                                
-                                <div class="setting-group">
+                                  <div class="setting-group">
                                     <div class="setting-toggle">
-                                        <label>Show Education Section</label>
+                                        <div class="setting-label-container">
+                                            <label>Show Education Section</label>
+                                            ${this.createTooltip("Controls visibility of your education history on your portfolio. When disabled, visitors won't see your academic background but the information remains stored.")}
+                                        </div>
                                         <label class="switch">
                                             <input type="checkbox" id="show-education-toggle" 
                                                 ${contentVisibility.showEducation ? 'checked' : ''}>
@@ -838,10 +873,12 @@ const settingsManager = {
                                         </label>
                                     </div>
                                 </div>
-                                
-                                <div class="setting-group">
+                                  <div class="setting-group">
                                     <div class="setting-toggle">
-                                        <label>Show Experience Section</label>
+                                        <div class="setting-label-container">
+                                            <label>Show Experience Section</label>
+                                            ${this.createTooltip("Controls visibility of your work experience on your portfolio. When disabled, your professional history won't be visible to visitors but remains in your profile data.")}
+                                        </div>
                                         <label class="switch">
                                             <input type="checkbox" id="show-experience-toggle" 
                                                 ${contentVisibility.showExperience ? 'checked' : ''}>
@@ -849,10 +886,12 @@ const settingsManager = {
                                         </label>
                                     </div>
                                 </div>
-                                
-                                <div class="setting-group">
+                                  <div class="setting-group">
                                     <div class="setting-toggle">
-                                        <label>Show Contact Section</label>
+                                        <div class="setting-label-container">
+                                            <label>Show Contact Section</label>
+                                            ${this.createTooltip("Controls visibility of your contact information and contact form. When disabled, visitors won't be able to see your contact details or send you messages through the site.")}
+                                        </div>
                                         <label class="switch">
                                             <input type="checkbox" id="show-contact-toggle" 
                                                 ${contentVisibility.showContact ? 'checked' : ''}>
@@ -867,18 +906,19 @@ const settingsManager = {
                 
                 <div class="settings-tab-content" id="maintenance-tab" style="display: none;">
                     <div class="settings-grid">
-                        <!-- Maintenance Mode Settings -->
-                        <div class="settings-card">
+                        <!-- Maintenance Mode Settings -->                        <div class="settings-card">
                             <div class="settings-card-header">
                                 <i class="fas fa-tools"></i>
-                                <h3>Maintenance Mode</h3>
+                                <div class="section-title-with-tooltip">
+                                    <h3>Maintenance Mode</h3>
+                                    ${this.createTooltip("Manage maintenance modes for different sections of your portfolio. This allows you to temporarily disable specific features while you update or fix them, without taking your entire site offline.")}
+                                </div>
                             </div>
                             <div class="settings-card-body">
-                                <!-- Contact Form Maintenance -->
-                                <div class="setting-group">                                <div class="setting-toggle">
+                                <!-- Contact Form Maintenance -->                                <div class="setting-group">                                <div class="setting-toggle">
                                         <div class="setting-label-container">
                                             <label>Contact Form</label>
-                                            ${this.createTooltip("Enables maintenance mode for your contact form. When enabled, visitors will see your custom maintenance message instead of the contact form, but can still reach you via the alternative contact methods shown.")}
+                                            ${this.createTooltip("When enabled, visitors will see your custom maintenance message instead of the contact form. This is useful when updating your contact form or resolving issues with message delivery.")}
                                         </div>
                                         <label class="switch">
                                             <input type="checkbox" id="contact-maintenance-toggle" 
@@ -896,11 +936,13 @@ const settingsManager = {
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <!-- Portfolio Maintenance -->
+                                  <!-- Portfolio Maintenance -->
                                 <div class="setting-group">
                                     <div class="setting-toggle">
-                                        <label>Portfolio Section</label>
+                                        <div class="setting-label-container">
+                                            <label>Portfolio Section</label>
+                                            ${this.createTooltip("Puts your portfolio projects section into maintenance mode. Visitors will see your custom message instead of your projects while you update your portfolio content.")}
+                                        </div>
                                         <label class="switch">
                                             <input type="checkbox" id="portfolio-maintenance-toggle" 
                                                 ${maintenanceMode.portfolio.enabled ? 'checked' : ''}>
@@ -917,11 +959,13 @@ const settingsManager = {
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <!-- Skills Maintenance -->
+                                  <!-- Skills Maintenance -->
                                 <div class="setting-group">
                                     <div class="setting-toggle">
-                                        <label>Skills Section</label>
+                                        <div class="setting-label-container">
+                                            <label>Skills Section</label>
+                                            ${this.createTooltip("Enables maintenance mode for your skills section. Visitors will see your custom message instead of your skills visualization while you update or redesign this section.")}
+                                        </div>
                                         <label class="switch">
                                             <input type="checkbox" id="skills-maintenance-toggle" 
                                                 ${maintenanceMode.skills.enabled ? 'checked' : ''}>
@@ -940,11 +984,13 @@ const settingsManager = {
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="settings-card">
+                          <div class="settings-card">
                             <div class="settings-card-header">
                                 <i class="fas fa-calendar-times"></i>
-                                <h3>Scheduled Maintenance</h3>
+                                <div class="section-title-with-tooltip">
+                                    <h3>Scheduled Maintenance</h3>
+                                    ${this.createTooltip("Schedule site-wide maintenance periods in advance. This helps notify visitors of planned downtime and automatically enables/disables maintenance mode at the specified times.")}
+                                </div>
                             </div>
                             <div class="settings-card-body">
                                 <div class="setting-group">
@@ -1400,19 +1446,29 @@ const settingsManager = {
                 });
             }, 600); // Short delay for animation effect
         });
-        
-        // Reset all settings (danger zone) with password confirmation
+          // Reset all settings (danger zone) with custom password confirmation modal
         document.getElementById('reset-all-settings')?.addEventListener('click', () => {
-            const password = prompt('Please enter your password to confirm resetting all settings to factory defaults:');
-            
-            if (password) {
-                // In a real app, you'd verify this password against the user's actual password
-                // For demo purposes, we'll use a simple check
-                if (password === 'admin' || password === state.user?.password) {
-                    this.resetAllSettings();
-                    utils.showMessage('All settings have been reset to defaults', 'success');
-                } else {
-                    utils.showMessage('Incorrect password. Settings reset cancelled.', 'error');
+            // Show the custom password confirmation modal
+            if (window.showPasswordModal) {
+                window.showPasswordModal((confirmed) => {
+                    if (confirmed) {
+                        this.resetAllSettings();
+                        utils.showMessage('All settings have been reset to defaults', 'success');
+                    }
+                });
+            } else {
+                // Fallback to regular prompt if modal is not available
+                const password = prompt('Please enter your password to confirm resetting all settings to factory defaults:');
+                
+                if (password) {
+                    // In a real app, you'd verify this password against the user's actual password
+                    // For demo purposes, we'll use a simple check
+                    if (password === 'admin' || password === state.user?.password) {
+                        this.resetAllSettings();
+                        utils.showMessage('All settings have been reset to defaults', 'success');
+                    } else {
+                        utils.showMessage('Incorrect password. Settings reset cancelled.', 'error');
+                    }
                 }
             }
         });

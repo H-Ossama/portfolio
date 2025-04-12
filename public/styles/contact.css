@@ -194,7 +194,7 @@ body {
     border-radius: 20px;
     font-size: 0.9rem;
     background: rgba(var(--primary-gold-rgb), 0.1);
-    color: var(--primary-gold);
+    color: #FFFFFF;
     transition: all 0.3s ease;
 }
 
