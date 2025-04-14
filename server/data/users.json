@@ -2,13 +2,15 @@
   {
     "id": "1740951999704",
     "username": "admin",
-    "password": "$2b$10$zNedCinHjFYJoSMXTWOcSekiVD9OeY70DLmEliDNPe/QLD9hVXjp2",
-    "email": "admin@example.com",
+    "password": "$2b$10$iYQRcjDr5qfEGKIKCn/dkOR4HhZ2aQ1Mswh3CnzTPnzxSEq2AS2Fm",
+    "email": "ossamahattan@gmail.com",
     "settings": {
       "cursor": "default",
       "theme": "dark"
     },
     "createdAt": "2025-03-02T21:46:39.704Z",
-    "updatedAt": "2025-04-12T13:59:09.420Z"
+    "updatedAt": "2025-04-12T13:59:09.420Z",
+    "resetToken": null,
+    "resetTokenExpires": null
   }
 ]

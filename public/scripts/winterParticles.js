@@ -207,9 +207,16 @@ function initRainEffect() {
 }
 
 function cleanupRainEffect() {
-    if (window.pJSDom && window.pJSDom[0]) {
-        window.pJSDom[0].pJS.fn.vendors.destroyParticles();
+    if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS && typeof window.pJSDom[0].pJS.fn?.vendors?.destroy === 'function') {
+        // Use the documented destroy method if available
+        window.pJSDom[0].pJS.fn.vendors.destroy();
         window.pJSDom = [];
+    } else {
+        // Fallback: Remove the canvas element directly
+        const particlesContainer = document.getElementById('winter-particles');
+        if (particlesContainer) {
+            particlesContainer.innerHTML = ''; // Clear the container
+        }
     }
     if (rainInterval) {
         clearInterval(rainInterval);
@@ -218,12 +225,14 @@ function cleanupRainEffect() {
 }
 
 function cleanupSnowEffect() {
-    if (window.pJSDom && window.pJSDom[0]) {
-        window.pJSDom[0].pJS.fn.vendors.destroyParticles();
+    if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS && typeof window.pJSDom[0].pJS.fn?.vendors?.destroy === 'function') {
+        // Use the documented destroy method if available
+        window.pJSDom[0].pJS.fn.vendors.destroy();
         window.pJSDom = [];
-    }
+    } 
     const container = document.getElementById('winter-particles');
     if (container) {
+        container.innerHTML = ''; // Clear the container
         container.style.display = 'none';
     }
 }

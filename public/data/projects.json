@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "Project Alpha",
+    "description": "Description for Project Alpha.",
+    "image": "assets/images/project1.jpg",
+    "githubLink": "#",
+    "liveLink": "#",
+    "technologies": ["HTML", "CSS", "JavaScript"]
+  },
+  {
+    "id": "2",
+    "title": "Project Beta",
+    "description": "Description for Project Beta.",
+    "image": "assets/images/project2.jpg",
+    "githubLink": "#",
+    "liveLink": "#",
+    "technologies": ["React", "Node.js", "MongoDB"]
+  }
+]

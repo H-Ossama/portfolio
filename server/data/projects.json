@@ -1,12 +1,62 @@
-[
-    {
-        "id": "1709422726001",
-        "title": "Portfolio Website",
-        "description": "A modern portfolio website built with Node.js and Express",
-        "technologies": ["Node.js", "Express", "JavaScript", "HTML5", "CSS3"],
-        "image": "/assets/images/project1.jpg",
-        "githubLink": "https://github.com/ossama21",
-        "liveLink": "https://portfolio.dev",
-        "createdAt": "2024-02-11T01:32:07.634Z"
-    }
+            [
+  {
+    "id": "1709422726001",
+    "title": "E-Commerce API",
+    "description": "A robust RESTful API for e-commerce platforms with advanced authentication, payment integration, and order management.",
+    "technologies": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "JWT"
+    ],
+    "image": "/assets/images/project1.jpg",
+    "githubLink": "https://github.com/your-username/project1",
+    "liveLink": "https://project1-demo.com",
+    "createdAt": "2024-02-11T01:32:07.634Z"
+  },
+  {
+    "id": "1709422726002",
+    "title": "Social Media Platform",
+    "description": "Full-stack social media application with real-time messaging, notifications, and content sharing capabilities.",
+    "technologies": [
+      "React",
+      "Node.js",
+      "Socket.IO",
+      "Redis"
+    ],
+    "image": "/assets/images/project2.jpg",
+    "githubLink": "https://github.com/your-username/project2",
+    "liveLink": "https://project2-demo.com",
+    "createdAt": "2024-02-12T01:32:07.634Z"
+  },
+  {
+    "id": "1709422726003",
+    "title": "Analytics Dashboard",
+    "description": "Interactive data visualization platform with real-time analytics, custom reports, and automated insights generation.",
+    "technologies": [
+      "Python",
+      "Django",
+      "D3.js",
+      "PostgreSQL"
+    ],
+    "image": "/assets/images/project3.jpg",
+    "githubLink": "https://github.com/your-username/project3",
+    "liveLink": "https://project3-demo.com",
+    "createdAt": "2024-02-13T01:32:07.634Z"
+  },
+  {
+    "id": "1709422726004",
+    "title": "AI Chatbot System",
+    "description": "Advanced conversational AI system with natural language processing and machine learning capabilities.",
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "Flask",
+      "WebSocket"
+    ],
+    "image": "/assets/images/project4.jpg",
+    "githubLink": "https://github.com/your-username/project4",
+    "liveLink": "https://project4-demo.com",
+    "createdAt": "2024-02-14T01:32:07.634Z"
+  }
 ]

@@ -105,16 +105,113 @@ function applyContentVisibility() {
         }
     }
     
+    // Load dynamic content *after* checking visibility and maintenance
+    if (sections['#projects'].visible && !sections['#projects'].maintenance?.enabled) {
+        loadProjectsData();
+    }
+    if (sections['#education'].visible && !sections['#education'].maintenance?.enabled) {
+        loadEducationData();
+    }
+    if (sections['#technologies'].visible && !sections['#technologies'].maintenance?.enabled) {
+        // Assuming loadSkillsData exists or will be added
+        // loadSkillsData(); 
+    }
+
     // Refresh AOS after potentially changing display styles or attributes
     if (typeof AOS !== 'undefined') {
         AOS.refreshHard(); // Use refreshHard to re-detect elements
     }
 }
 
+// Function to fetch and display projects
+async function loadProjectsData() {
+    const projectGrid = document.querySelector('#projects .project-grid');
+    const loadingIndicator = document.querySelector('#projects .projects-loading');
+
+    if (!projectGrid || !loadingIndicator) {
+        console.error('Project grid or loading indicator not found.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/projects'); // Fetch from the backend API
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const projects = await response.json();
+
+        // Clear loading state
+        loadingIndicator.style.display = 'none';
+        projectGrid.innerHTML = ''; // Clear any previous content
+
+        if (projects.length === 0) {
+            projectGrid.innerHTML = '<p>No projects available at the moment.</p>';
+            return;
+        }
+
+        // Render project cards
+        projects.forEach((project, index) => {
+            const projectCard = createProjectCard(project, index);
+            projectGrid.appendChild(projectCard);
+        });
+
+        // Re-initialize AOS for newly added elements
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+        }
+        // Re-initialize project card interactions if needed
+        initProjectCards(); 
+
+    } catch (error) {
+        console.error('Error loading projects:', error);
+        loadingIndicator.innerHTML = '<p>Failed to load projects. Please try again later.</p>';
+    }
+}
+
+// Function to create a single project card element
+function createProjectCard(project, index) {
+    const card = document.createElement('div');
+    card.className = 'project-card frosted-card winter-card';
+    card.setAttribute('data-aos', 'fade-up');
+    card.setAttribute('data-aos-delay', index * 100);
+
+    // Correct placeholder path assuming server serves /assets directly
+    const imagePath = project.image || '/assets/images/project-placeholder.jpg'; 
+
+    card.innerHTML = `
+        <div class="project-image">
+            <img src="${imagePath}" alt="${project.title}">
+            <div class="project-overlay">
+                <div class="project-tech-stack">
+                    ${(project.technologies || []).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                </div>
+            </div>
+        </div>
+        <div class="project-info">
+            <h3 class="project-title">${project.title}</h3>
+            <p class="project-description">${project.description}</p>
+            <div class="project-links">
+                ${project.githubLink ? `
+                <a href="${project.githubLink}" class="project-link github" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                    <span>View Code</span>
+                </a>` : ''}
+                ${project.liveLink ? `
+                <a href="${project.liveLink}" class="project-link live" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Live Demo</span>
+                </a>` : ''}
+            </div>
+        </div>
+        <div class="ice-crystal"></div>
+    `;
+    return card;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Load settings first
     loadPortfolioSettings();
-    // Apply visibility & maintenance rules
+    // Apply visibility & maintenance rules (this will now trigger loadProjectsData if applicable)
     applyContentVisibility();
 
     // Enable normal right-click behavior
@@ -416,9 +513,13 @@ function initThemeToggle() {
     function removeSnowEffect() {
         const particlesContainer = document.getElementById('winter-particles');
         if (particlesContainer) {
-            if (window.pJSDom && window.pJSDom[0]) {
-                window.pJSDom[0].pJS.fn.vendors.destroyParticles();
+            if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS && typeof window.pJSDom[0].pJS.fn?.vendors?.destroy === 'function') {
+                // Use the documented destroy method
+                window.pJSDom[0].pJS.fn.vendors.destroy();
                 window.pJSDom = [];
+            } else {
+                 // Fallback: Clear the container
+                 particlesContainer.innerHTML = '';
             }
             particlesContainer.style.display = 'none';
         }
@@ -841,23 +942,30 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(updateNavigation);
     });
 
-    // Smooth scrolling with offset
+    // Smooth scrolling with offset AND handling external links
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
             const targetId = link.getAttribute('href');
-            if (targetId === '#') return;
 
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                const navHeight = nav.offsetHeight;
-                const targetPosition = targetSection.offsetTop - (navHeight + 20);
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+            // Check if it's an internal link (starts with #)
+            if (targetId && targetId.startsWith('#')) {
+                e.preventDefault(); // Prevent default only for internal links
+
+                // Skip if href is just "#"
+                if (targetId === '#') return;
+
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    const navHeight = nav ? nav.offsetHeight : 70; // Use a default height if nav is not found
+                    const targetPosition = targetSection.offsetTop - (navHeight + 20);
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             }
+            // For external links (like contact.html), do nothing and let the browser handle the navigation.
         });
     });
 });
@@ -943,9 +1051,13 @@ function initThemeToggle() {
     function removeSnowEffect() {
         const particlesContainer = document.getElementById('winter-particles');
         if (particlesContainer) {
-            if (window.pJSDom && window.pJSDom[0]) {
-                window.pJSDom[0].pJS.fn.vendors.destroyParticles();
+            if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS && typeof window.pJSDom[0].pJS.fn?.vendors?.destroy === 'function') {
+                // Use the documented destroy method
+                window.pJSDom[0].pJS.fn.vendors.destroy();
                 window.pJSDom = [];
+            } else {
+                // Fallback: Clear the container
+                particlesContainer.innerHTML = '';
             }
             particlesContainer.style.display = 'none';
         }
@@ -1075,9 +1187,13 @@ function loadWinterTheme() {
 function removeSnowEffect() {
     const particlesContainer = document.getElementById('winter-particles');
     if (particlesContainer) {
-        if (window.pJSDom && window.pJSDom[0]) {
-            window.pJSDom[0].pJS.fn.vendors.destroyParticles();
+        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS && typeof window.pJSDom[0].pJS.fn?.vendors?.destroy === 'function') {
+            // Use the documented destroy method
+            window.pJSDom[0].pJS.fn.vendors.destroy();
             window.pJSDom = [];
+        } else {
+             // Fallback: Clear the container
+             particlesContainer.innerHTML = '';
         }
         particlesContainer.style.display = 'none';
     }
@@ -1909,6 +2025,17 @@ class ThemeManager {
     removeWinterEffects() {
         const winterStyles = document.querySelectorAll('link[href*="winter-"]');
         winterStyles.forEach(style => style.remove());
+        // Also ensure snow particles are removed
+        const particlesContainer = document.getElementById('winter-particles');
+        if (particlesContainer) {
+            if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS && typeof window.pJSDom[0].pJS.fn?.vendors?.destroy === 'function') {
+                window.pJSDom[0].pJS.fn.vendors.destroy();
+                window.pJSDom = [];
+            } else {
+                particlesContainer.innerHTML = '';
+            }
+            particlesContainer.style.display = 'none';
+        }
     }
 }
 

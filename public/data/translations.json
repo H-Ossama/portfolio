@@ -54,11 +54,14 @@
         "label": "Education",
         "value": "Computer Science"
       },
-      "stats": ["Projects", "Technologies"],
+      "stats": [
+        "Projects",
+        "Technologies"
+      ],
       "contactBtn": "Contact Me"
     },
     "buttons": {
-      "cta-button": "Let's Collaborate",
+      "collaborate-btn": "Let's Collaborate",
       "resume-btn": "View Resume",
       "download-btn": "Download CV",
       "view-btn": "View CV"
@@ -93,6 +96,96 @@
         ]
       },
       "submit": "Send Message"
+    },
+    "projects": {
+      "ecommerce_api": {
+        "title": "E-Commerce API",
+        "description": "A robust RESTful API for e-commerce platforms with advanced authentication, payment integration, and order management."
+      },
+      "social_media": {
+        "title": "Social Media Platform",
+        "description": "Full-stack social media application with real-time messaging, notifications, and content sharing capabilities."
+      },
+      "analytics_dashboard": {
+        "title": "Analytics Dashboard",
+        "description": "Interactive data visualization platform with real-time analytics, custom reports, and automated insights generation."
+      },
+      "ai_chatbot": {
+        "title": "AI Chatbot System",
+        "description": "Advanced conversational AI system with natural language processing and machine learning capabilities."
+      }
+    },
+    "skills": {
+      "nodejs": {
+        "name": "Node.js",
+        "description": "Advanced proficiency in building scalable backend services and real-time applications with high performance and security."
+      },
+      "python": {
+        "name": "Python",
+        "description": "Expert in building robust Python applications with a focus on clean code and best practices."
+      },
+      "database": {
+        "name": "Database Design",
+        "description": "Specialized in designing and optimizing both SQL and NoSQL database architectures for scalable applications."
+      },
+      "php": {
+        "name": "PHP",
+        "description": "Proficient in building dynamic web applications and CMS solutions with modern PHP frameworks."
+      },
+      "system-design": {
+        "name": "System Design",
+        "description": "Skilled in designing and implementing scalable distributed systems and microservices architectures."
+      },
+      "developer-tools": {
+        "name": "Developer Tools",
+        "description": "Experienced in using modern development tools to enhance productivity, collaboration, and code quality."
+      }
+    },
+    "education": {
+      "edu-efed": {
+        "title": "European (EFED) Bachelor in Web Development",
+        "institution": "MULTIHEXA Meknes",
+        "highlights": [
+          "Advanced web development studies with European standards",
+          "Modern web technologies and frameworks",
+          "Full-stack development practices",
+          "Currently pursuing (2024-2025)"
+        ]
+      },
+      "edu-coursera": {
+        "title": "Computer Networks and Network Security",
+        "institution": "Coursera",
+        "highlights": [
+          "Network security fundamentals",
+          "Computer networking principles",
+          "Security protocols and best practices",
+          "Professional certification"
+        ]
+      },
+      "edu-alx": {
+        "title": "Software Engineering Bootcamp",
+        "institution": "ALX AFRICA",
+        "highlights": [
+          "Intensive software engineering training",
+          "Modern development practices",
+          "Full-stack application development",
+          "Project-based learning"
+        ]
+      },
+      "edu-efet": {
+        "title": "Technicien Spécialisé en Système et Réseau Informatique",
+        "institution": "EFET (Ecole Française D'enseignement Technique)",
+        "highlights": [
+          "IT systems administration",
+          "Network infrastructure management",
+          "Hardware and software integration",
+          "Technical specialization (2021-2023)"
+        ]
+      }
+    },
+    "about_page": {
+      "paragraph1": "I'm a <strong>passionate Backend Developer</strong> with over 3 years of experience in building scalable server-side applications. My journey in software development started with a deep curiosity about how things work behind the scenes, which led me to specialize in backend technologies.",
+      "paragraph2": "With a <strong>Bachelor's in Web Development</strong> and certification in <strong>Full Stack Engineering</strong> from ALX, I combine strong theoretical foundations with hands-on experience in modern development practices. I specialize in Node.js, Python, and database optimization, always focusing on writing clean, efficient, and maintainable code."
     }
   },
   "fr": {
@@ -150,11 +243,14 @@
         "label": "Formation",
         "value": "Informatique"
       },
-      "stats": ["Projets", "Technologies"],
+      "stats": [
+        "Projets",
+        "Technologies"
+      ],
       "contactBtn": "Me Contacter"
     },
     "buttons": {
-      "cta-button": "Collaborons",
+      "collaborate-btn": "Collaborons",
       "resume-btn": "Voir CV",
       "download-btn": "Télécharger CV",
       "view-btn": "Voir CV"
@@ -189,102 +285,285 @@
         ]
       },
       "submit": "Envoyer le Message"
+    },
+    "projects": {
+      "ecommerce_api": {
+        "title": "API E-Commerce",
+        "description": "Une API RESTful robuste pour les plateformes e-commerce avec authentification avancée, intégration de paiement et gestion des commandes."
+      },
+      "social_media": {
+        "title": "Plateforme de Médias Sociaux",
+        "description": "Application de médias sociaux full-stack avec messagerie en temps réel, notifications et capacités de partage de contenu."
+      },
+      "analytics_dashboard": {
+        "title": "Tableau de Bord Analytique",
+        "description": "Plateforme interactive de visualisation de données avec analyses en temps réel, rapports personnalisés et génération d'informations automatisée."
+      },
+      "ai_chatbot": {
+        "title": "Système de Chatbot IA",
+        "description": "Système d'IA conversationnelle avancé avec traitement du langage naturel et capacités d'apprentissage automatique."
+      }
+    },
+    "skills": {
+      "nodejs": {
+        "name": "Node.js",
+        "description": "Compétence avancée dans la création de services backend évolutifs et d'applications temps réel avec haute performance et sécurité."
+      },
+      "python": {
+        "name": "Python",
+        "description": "Expert dans la création d'applications Python robustes axées sur le code propre et les meilleures pratiques."
+      },
+      "database": {
+        "name": "Conception de Bases de Données",
+        "description": "Spécialisé dans la conception et l'optimisation d'architectures de bases de données SQL et NoSQL pour applications évolutives."
+      },
+      "php": {
+        "name": "PHP",
+        "description": "Compétent dans la création d'applications web dynamiques et de solutions CMS avec des frameworks PHP modernes."
+      },
+      "system-design": {
+        "name": "Conception de Systèmes",
+        "description": "Qualifié dans la conception et la mise en œuvre de systèmes distribués évolutifs et d'architectures microservices."
+      },
+      "developer-tools": {
+        "name": "Outils de Développement",
+        "description": "Expérimenté dans l'utilisation d'outils de développement modernes pour améliorer la productivité, la collaboration et la qualité du code."
+      }
+    },
+    "education": {
+      "edu-efed": {
+        "title": "Bachelor Européen (EFED) en Développement Web",
+        "institution": "MULTIHEXA Meknès",
+        "highlights": [
+          "Études avancées en développement web aux normes européennes",
+          "Technologies et frameworks web modernes",
+          "Pratiques de développement full-stack",
+          "En cours (2024-2025)"
+        ]
+      },
+      "edu-coursera": {
+        "title": "Réseaux Informatiques et Sécurité Réseau",
+        "institution": "Coursera",
+        "highlights": [
+          "Fondamentaux de la sécurité réseau",
+          "Principes des réseaux informatiques",
+          "Protocoles de sécurité et meilleures pratiques",
+          "Certification professionnelle"
+        ]
+      },
+      "edu-alx": {
+        "title": "Bootcamp en Ingénierie Logicielle",
+        "institution": "ALX AFRICA",
+        "highlights": [
+          "Formation intensive en ingénierie logicielle",
+          "Pratiques de développement modernes",
+          "Développement d'applications full-stack",
+          "Apprentissage par projet"
+        ]
+      },
+      "edu-efet": {
+        "title": "Technicien Spécialisé en Système et Réseau Informatique",
+        "institution": "EFET (Ecole Française D'enseignement Technique)",
+        "highlights": [
+          "Administration des systèmes informatiques",
+          "Gestion de l'infrastructure réseau",
+          "Intégration matérielle et logicielle",
+          "Spécialisation technique (2021-2023)"
+        ]
+      }
+    },
+    "about_page": {
+      "paragraph1": "Je suis un <strong>Développeur Backend passionné</strong> avec plus de 3 ans d'expérience dans la création d'applications côté serveur évolutives. Mon parcours dans le développement logiciel a commencé par une profonde curiosité sur le fonctionnement interne des choses, ce qui m'a conduit à me spécialiser dans les technologies backend.",
+      "paragraph2": "Avec un <strong>Bachelor en Développement Web</strong> et une certification en <strong>Ingénierie Full Stack</strong> d'ALX, je combine de solides bases théoriques avec une expérience pratique des pratiques de développement modernes. Je me spécialise en Node.js, Python et optimisation de bases de données, en me concentrant toujours sur l'écriture de code propre, efficace et maintenable."
     }
   },
-  "ar": {
+  "de": {
     "nav": {
-      "home": "الرئيسية",
-      "projects": "المشاريع",
-      "education": "التعليم",
-      "technologies": "المهارات",
-      "about": "نبذة عني",
-      "contact": "اتصل بي"
+      "home": "Startseite",
+      "projects": "Projekte",
+      "education": "Bildung",
+      "technologies": "Fähigkeiten",
+      "about": "Über mich",
+      "contact": "Kontakt"
     },
     "hero": {
-      "greeting": "مرحباً، أنا",
+      "greeting": "Hallo, ich bin",
       "roles": [
-        "مطور خلفية",
-        "مهندس واجهات برمجية",
-        "خبير قواعد البيانات",
-        "محلل مشاكل"
+        "Backend-Entwickler",
+        "API-Architekt",
+        "Datenbankexperte",
+        "Problemlöser"
       ],
-      "description": "تطوير حلول خلفية قوية وقابلة للتطوير مع شغف بالكود النظيف والأداء الأمثل. متخصص في بناء تطبيقات المؤسسات التي تدفع النجاح التجاري."
+      "description": "Entwicklung robuster und skalierbarer Backend-Lösungen mit Leidenschaft für sauberen Code und optimale Leistung. Spezialisiert auf die Erstellung von Unternehmensanwendungen, die den Geschäftserfolg fördern."
     },
     "sections": {
       "projects": {
-        "title": "المشاريع المميزة",
-        "subtitle": "مجموعة مختارة من أحدث أعمالي"
+        "title": "Ausgewählte Projekte",
+        "subtitle": "Eine Auswahl meiner letzten Arbeiten"
       },
       "education": {
-        "title": "المسيرة التعليمية",
-        "subtitle": "مؤهلاتي الأكاديمية والمهنية"
+        "title": "Bildungsweg",
+        "subtitle": "Meine akademischen und beruflichen Qualifikationen"
       },
       "technologies": {
-        "title": "الخبرة التقنية",
-        "subtitle": "متخصص في بناء حلول خلفية قوية باستخدام أحدث التقنيات"
+        "title": "Technische Expertise",
+        "subtitle": "Spezialisiert auf die Erstellung robuster Backend-Lösungen mit modernsten Technologien"
       },
       "about": {
-        "title": "نبذة عني",
-        "subtitle": "تحويل الأفكار إلى حلول خلفية فعالة"
+        "title": "Über Mich",
+        "subtitle": "Ideen in effiziente Backend-Lösungen verwandeln"
       }
     },
     "profile": {
-      "profession": "مطور خلفية",
+      "profession": "Backend-Entwickler",
       "expertise": {
-        "label": "التخصص",
-        "value": "تطوير الخلفية"
+        "label": "Expertise",
+        "value": "Backend-Entwicklung"
       },
       "experience": {
-        "label": "الخبرة",
-        "value": "+3 سنوات"
+        "label": "Erfahrung",
+        "value": "3+ Jahre"
       },
       "location": {
-        "label": "الموقع",
-        "value": "أزرو، المغرب"
+        "label": "Standort",
+        "value": "Azrou, Marokko"
       },
       "education": {
-        "label": "التعليم",
-        "value": "علوم الحاسوب"
+        "label": "Bildung",
+        "value": "Informatik"
       },
-      "stats": ["المشاريع", "التقنيات"],
-      "contactBtn": "اتصل بي"
+      "stats": [
+        "Projekte",
+        "Technologien"
+      ],
+      "contactBtn": "Kontaktieren Sie mich"
     },
     "buttons": {
-      "cta-button": "لنتعاون",
-      "resume-btn": "عرض السيرة",
-      "download-btn": "تحميل السيرة",
-      "view-btn": "عرض السيرة"
+      "collaborate-btn": "Lassen Sie uns zusammenarbeiten",
+      "resume-btn": "Lebenslauf ansehen",
+      "download-btn": "Lebenslauf herunterladen",
+      "view-btn": "Lebenslauf ansehen"
     },
     "contact": {
-      "title": "تواصل معي",
-      "subtitle": "دعنا نناقش مشروعك",
+      "title": "Kontakt aufnehmen",
+      "subtitle": "Lassen Sie uns Ihr Projekt besprechen",
       "form": {
         "name": {
-          "label": "الاسم الكامل",
-          "placeholder": "أدخل اسمك"
+          "label": "Vollständiger Name",
+          "placeholder": "Geben Sie Ihren Namen ein"
         },
         "email": {
-          "label": "البريد الإلكتروني",
-          "placeholder": "أدخل بريدك الإلكتروني"
+          "label": "E-Mail-Adresse",
+          "placeholder": "Geben Sie Ihre E-Mail ein"
         },
         "subject": {
-          "label": "الموضوع",
-          "placeholder": "ما هو موضوع الرسالة؟"
+          "label": "Betreff",
+          "placeholder": "Worum geht es?"
         },
         "message": {
-          "label": "الرسالة",
-          "placeholder": "أخبرني عن مشروعك"
+          "label": "Nachricht",
+          "placeholder": "Erzählen Sie mir von Ihrem Projekt"
         }
       },
       "info": {
-        "title": "معلومات الاتصال",
+        "title": "Kontaktinformationen",
         "items": [
-          "أزرو، المغرب",
+          "Azrou, Marokko",
           "ossamahattan@gmail.com",
           "@ossama21"
         ]
       },
-      "submit": "إرسال الرسالة"
+      "submit": "Nachricht senden"
+    },
+    "projects": {
+      "ecommerce_api": {
+        "title": "E-Commerce-API",
+        "description": "Eine robuste RESTful-API für E-Commerce-Plattformen mit erweiterter Authentifizierung, Zahlungsintegration und Bestellverwaltung."
+      },
+      "social_media": {
+        "title": "Social-Media-Plattform",
+        "description": "Full-Stack-Social-Media-Anwendung mit Echtzeit-Messaging, Benachrichtigungen und Funktionen zum Teilen von Inhalten."
+      },
+      "analytics_dashboard": {
+        "title": "Analyse-Dashboard",
+        "description": "Interaktive Datenvisualisierungsplattform mit Echtzeitanalysen, benutzerdefinierten Berichten und automatisierter Einblicksgenerierung."
+      },
+      "ai_chatbot": {
+        "title": "KI-Chatbot-System",
+        "description": "Fortschrittliches Konversations-KI-System mit Verarbeitung natürlicher Sprache und maschinellen Lernfähigkeiten."
+      }
+    },
+    "skills": {
+      "nodejs": {
+        "name": "Node.js",
+        "description": "Fortgeschrittene Kenntnisse im Aufbau skalierbarer Backend-Dienste und Echtzeitanwendungen mit hoher Leistung und Sicherheit."
+      },
+      "python": {
+        "name": "Python",
+        "description": "Experte im Erstellen robuster Python-Anwendungen mit Fokus auf sauberen Code und Best Practices."
+      },
+      "database": {
+        "name": "Datenbankdesign",
+        "description": "Spezialisiert auf das Entwerfen und Optimieren von SQL- und NoSQL-Datenbankarchitekturen für skalierbare Anwendungen."
+      },
+      "php": {
+        "name": "PHP",
+        "description": "Kompetent im Erstellen dynamischer Webanwendungen und CMS-Lösungen mit modernen PHP-Frameworks."
+      },
+      "system-design": {
+        "name": "Systemdesign",
+        "description": "Erfahren im Entwerfen und Implementieren skalierbarer verteilter Systeme und Microservices-Architekturen."
+      },
+      "developer-tools": {
+        "name": "Entwicklerwerkzeuge",
+        "description": "Erfahren im Umgang mit modernen Entwicklungswerkzeugen zur Steigerung von Produktivität, Zusammenarbeit und Codequalität."
+      }
+    },
+    "education": {
+      "edu-efed": {
+        "title": "Europäischer (EFED) Bachelor in Webentwicklung",
+        "institution": "MULTIHEXA Meknes",
+        "highlights": [
+          "Fortgeschrittene Webentwicklungsstudien nach europäischen Standards",
+          "Moderne Webtechnologien und Frameworks",
+          "Full-Stack-Entwicklungspraktiken",
+          "Derzeit im Studium (2024-2025)"
+        ]
+      },
+      "edu-coursera": {
+        "title": "Computernetzwerke und Netzwerksicherheit",
+        "institution": "Coursera",
+        "highlights": [
+          "Grundlagen der Netzwerksicherheit",
+          "Prinzipien der Computernetzwerke",
+          "Sicherheitsprotokolle und Best Practices",
+          "Berufszertifizierung"
+        ]
+      },
+      "edu-alx": {
+        "title": "Software Engineering Bootcamp",
+        "institution": "ALX AFRICA",
+        "highlights": [
+          "Intensives Software-Engineering-Training",
+          "Moderne Entwicklungspraktiken",
+          "Full-Stack-Anwendungsentwicklung",
+          "Projektbasiertes Lernen"
+        ]
+      },
+      "edu-efet": {
+        "title": "Technicien Spécialisé en Système et Réseau Informatique",
+        "institution": "EFET (Ecole Française D'enseignement Technique)",
+        "highlights": [
+          "IT-Systemadministration",
+          "Netzwerkinfrastrukturmanagement",
+          "Hardware- und Softwareintegration",
+          "Technische Spezialisierung (2021-2023)"
+        ]
+      }
+    },
+    "about_page": {
+      "paragraph1": "Ich bin ein <strong>leidenschaftlicher Backend-Entwickler</strong> mit über 3 Jahren Erfahrung im Aufbau skalierbarer serverseitiger Anwendungen. Meine Reise in der Softwareentwicklung begann mit einer tiefen Neugierde dafür, wie Dinge hinter den Kulissen funktionieren, was mich dazu brachte, mich auf Backend-Technologien zu spezialisieren.",
+      "paragraph2": "Mit einem <strong>Bachelor in Webentwicklung</strong> und einer Zertifizierung in <strong>Full Stack Engineering</strong> von ALX kombiniere ich starke theoretische Grundlagen mit praktischer Erfahrung in modernen Entwicklungspraktiken. Ich bin spezialisiert auf Node.js, Python und Datenbankoptimierung und konzentriere mich immer darauf, sauberen, effizienten und wartbaren Code zu schreiben."
     }
   }
 }

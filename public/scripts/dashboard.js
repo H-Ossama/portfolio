@@ -361,6 +361,9 @@ const navigation = {
                 case 'settings':
                     await settingsManager.loadSettingsSection();
                     break;
+                case 'translations': // Add this case
+                    await translationManager.loadTranslationsSection();
+                    break;
                 default:
                     contentArea.innerHTML = '<div class="error-message">Section not found</div>';
             }
@@ -1720,6 +1723,7 @@ async function editProject(id) {
             // Populate form fields
             form.elements.title.value = project.title || '';
             form.elements.description.value = project.description || '';
+            // Ensure technologies is joined correctly, handling potential non-array values
             form.elements.technologies.value = Array.isArray(project.technologies) ? project.technologies.join(', ') : '';
             form.elements.image.value = project.image || '';
             form.elements.githubLink.value = project.githubLink || '';
@@ -1813,5 +1817,159 @@ document.addEventListener('DOMContentLoaded', function() {
                 utils.hideLoading();
             }
         });
+    }
+});
+
+// Function to open the modal for adding or editing a project
+function openProjectModal(project = null) {
+    const modal = document.getElementById('project-modal');
+    const form = document.getElementById('project-modal-form');
+    const modalTitle = document.getElementById('project-modal-title');
+    const imagePreview = document.getElementById('project-image-preview');
+    const existingImageInput = document.getElementById('project-existing-image');
+    const imageUploadInput = document.getElementById('project-image-upload');
+
+    form.reset(); // Clear previous data
+    imagePreview.style.display = 'none'; // Hide preview initially
+    imagePreview.src = '#';
+    existingImageInput.value = ''; // Clear existing image path
+    imageUploadInput.value = ''; // Clear file input
+
+    if (project) {
+        // Editing existing project
+        modalTitle.textContent = 'Edit Project';
+        form.dataset.projectId = project.id;
+        document.getElementById('project-title').value = project.title || '';
+        document.getElementById('project-description').value = project.description || '';
+        // Ensure technologies is joined correctly, handling potential non-array values
+        document.getElementById('project-technologies').value = Array.isArray(project.technologies) ? project.technologies.join(', ') : '';
+        document.getElementById('project-github-link').value = project.githubLink || '';
+        document.getElementById('project-live-link').value = project.liveLink || '';
+
+        // Handle existing image
+        if (project.image) {
+            imagePreview.src = project.image; // Use the direct path from the server
+            imagePreview.style.display = 'block';
+            existingImageInput.value = project.image; // Store the path
+        } else {
+            imagePreview.style.display = 'none';
+            imagePreview.src = '#';
+        }
+
+    } else {
+        // Adding new project
+        modalTitle.textContent = 'Add New Project';
+        delete form.dataset.projectId;
+    }
+
+    modal.style.display = 'flex';
+}
+
+// Handle project form submission (Add/Edit)
+async function handleProjectFormSubmit(event) {
+    event.preventDefault();
+    utils.showLoading(); // Use utils.showLoading
+    const form = event.target;
+    const projectId = form.dataset.projectId;
+    const isEditing = !!projectId;
+
+    // Use FormData to handle file uploads and other fields
+    const formData = new FormData(form);
+
+    // No need to manually append fields if they have `name` attributes
+    // FormData automatically picks up: title, description, technologies, image, githubLink, liveLink, existingImage
+
+    // Ensure technologies are sent correctly (FormData might not handle the split)
+    const technologiesValue = form.elements['technologies']?.value || '';
+    formData.set('technologies', technologiesValue); // Send as comma-separated string
+
+    const url = isEditing ? `/api/projects/${projectId}` : '/api/projects';
+    const method = isEditing ? 'PUT' : 'POST';
+
+    try {
+        // Use fetch directly as fetchWithAuth might not handle FormData correctly
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                // 'Content-Type': 'multipart/form-data' is set automatically by browser when using FormData
+            },
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            // Log the detailed error from the server if available
+            console.error('Server responded with error:', result);
+            throw new Error(result.error || `HTTP error! status: ${response.status}`);
+        }
+
+        utils.showMessage(isEditing ? 'Project updated successfully!' : 'Project added successfully!', 'success');
+        closeModal('project-modal');
+        await navigation.navigateToSection('projects'); // Refresh the project list using the navigation function
+
+    } catch (error) {
+        console.error('Error submitting project form:', error);
+        // Display a more specific error message if possible
+        utils.showMessage(`Error: ${error.message || 'Failed to save project.'}`, 'error');
+    } finally {
+        utils.hideLoading(); // Use utils.hideLoading
+    }
+}
+
+// ... (rest of the code) ...
+
+// Ensure the project form submission listener is correctly attached
+document.addEventListener('DOMContentLoaded', () => {
+    // ... other listeners ...
+
+    const projectForm = document.getElementById('project-modal-form'); // Corrected ID
+    if (projectForm) {
+        // Remove previous listener if any to avoid duplicates
+        projectForm.removeEventListener('submit', handleProjectFormSubmit);
+        // Add the listener
+        projectForm.addEventListener('submit', handleProjectFormSubmit);
+    }
+
+    // ... image preview listener ...
+});
+
+// Add event listener for image preview
+document.addEventListener('DOMContentLoaded', () => {
+    // ... other listeners ...
+
+    const imageUploadInput = document.getElementById('project-image-upload');
+    const imagePreview = document.getElementById('project-image-preview');
+
+    if (imageUploadInput && imagePreview) {
+        imageUploadInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                // If no file is selected (e.g., user cancels), 
+                // check if there was an existing image to display
+                const existingImage = document.getElementById('project-existing-image').value;
+                if (existingImage) {
+                    imagePreview.src = existingImage;
+                    imagePreview.style.display = 'block';
+                } else {
+                    imagePreview.src = '#';
+                    imagePreview.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    // Add listener for the form submission
+    const projectForm = document.getElementById('project-modal-form');
+    if (projectForm) {
+        projectForm.addEventListener('submit', handleProjectFormSubmit);
     }
 });

@@ -3,13 +3,13 @@
 <head>    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Dashboard</title>
-    <link rel="stylesheet" href="styles/dashboard.css">
-    <link rel="stylesheet" href="styles/settings.css">
+    <link rel="stylesheet" href="styles/dashboard.css">    <link rel="stylesheet" href="styles/settings.css">
+    <link rel="stylesheet" href="styles/translations-admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">    <!-- Chart.js -->    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="scripts/dashboard-particles.js"></script>
     <script src="scripts/settings-modal.js"></script>
+    <script src="scripts/translations-admin.js"></script>
 </head>
 <body>
     <!-- Loading Overlay -->
@@ -45,10 +45,13 @@
                     <a href="#" class="nav-item" data-section="skills">
                         <i class="fas fa-code-branch"></i>
                         <span>Skills</span>
-                    </a>
-                    <a href="#" class="nav-item" data-section="education">
+                    </a>                    <a href="#" class="nav-item" data-section="education">
                         <i class="fas fa-graduation-cap"></i>
                         <span>Education</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="translations">
+                        <i class="fas fa-language"></i>
+                        <span>Translations</span>
                     </a>
                 </div>
 
@@ -187,10 +190,16 @@
                     <label for="project-technologies">Technologies (comma-separated)</label>
                     <input type="text" id="project-technologies" name="technologies" placeholder="e.g., Node.js, Express, MongoDB" required>
                 </div>
+
+                <!-- Image Upload -->
                 <div class="form-group">
-                    <label for="project-image">Image URL</label>
-                    <input type="text" id="project-image" name="image" placeholder="/assets/images/project.jpg" required>
+                    <label for="project-image-upload" class="upload-btn-styled">Upload Image</label>
+                    <input type="file" id="project-image-upload" name="image" accept="image/*" style="display: none;">
+                    <input type="hidden" id="project-existing-image" name="existingImage"> <!-- To hold existing image path -->
+                    <img id="project-image-preview" src="#" alt="Image Preview" style="display: none; max-width: 150px; max-height: 100px; margin-top: 10px; border-radius: 4px; border: 1px solid var(--border-color); object-fit: cover;">
                 </div>
+                <!-- End Image Upload -->
+
                 <div class="form-group">
                     <label for="project-github">GitHub URL</label>
                     <input type="url" id="project-github" name="githubLink" placeholder="https://github.com/username/project" required>

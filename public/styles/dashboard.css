@@ -981,6 +981,39 @@ body {
     margin-left: 0.5rem;
 }
 
+/* Style the file input label like a button */
+.form-group label[for="project-image-upload"] {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    margin-bottom: 5px; /* Add some space below the button */
+}
+
+.form-group label[for="project-image-upload"]:hover {
+    background-color: var(--primary-hover-color);
+}
+
+/* Hide the actual file input */
+.form-group input[type="file"]#project-image-upload {
+    display: none;
+}
+
+/* Style the image preview */
+#project-image-preview {
+    max-width: 150px; /* Slightly larger preview */
+    max-height: 100px;
+    margin-top: 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    object-fit: cover; /* Ensure image covers the area nicely */
+}
+
 .modal-footer {
     margin-top: 2rem;
     text-align: right;

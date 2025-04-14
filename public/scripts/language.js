@@ -55,10 +55,10 @@ function initLanguageSwitcher() {
 
 // Update UI elements based on selected language
 function updateLanguageUI(lang) {
-    // Update text direction for RTL languages
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    // Update text direction - German is LTR, like English and French
+    document.documentElement.dir = 'ltr'; // Set to LTR by default now
     document.documentElement.setAttribute('lang', lang);
-    document.body.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+    document.body.style.direction = 'ltr'; // Set to LTR by default now
     
     // Update language display
     const currentLangSpan = document.querySelector('.current-lang');
@@ -183,11 +183,18 @@ function updateButtons(lang) {
     Object.entries(buttons).forEach(([className, text]) => {
         const btns = document.querySelectorAll(`.${className}`);
         btns.forEach(btn => {
-            const textSpan = btn.querySelector('span');
+            // Target the specific inner span containing the text
+            const textSpan = btn.querySelector('.button-content > span'); 
             if (textSpan) {
                 textSpan.textContent = text;
             } else {
-                btn.textContent = text;
+                // Fallback for buttons without the specific structure
+                const directSpan = btn.querySelector('span');
+                if (directSpan) {
+                    directSpan.textContent = text;
+                } else {
+                    btn.textContent = text;
+                }
             }
         });
     });

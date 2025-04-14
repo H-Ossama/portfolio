@@ -24,6 +24,9 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Serve data files directly
 app.use('/data', express.static(path.join(__dirname, 'data')));
 
+// Import routes
+const translationsRouter = require('./routes/translations');
+
 // Rate limiting
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -155,7 +158,7 @@ async function initializeDefaultUser() {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'ossamahattan@gmail.com',
+        user: 'ebookrealm.info@gmail.com',
         pass: process.env.EMAIL_PASSWORD // Add your app password here
     }
 });
@@ -191,6 +194,9 @@ const errorHandler = (err, req, res, next) => {
         message: err.message
     });
 };
+
+// API Routes
+app.use('/api/translations', translationsRouter);
 
 // Authentication middleware
 const authenticateToken = (req, res, next) => {
@@ -235,55 +241,71 @@ const saveData = async (filename, data) => {
     }
 };
 
-// Routes
-app.post('/api/login', async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        const users = await loadData('users.json');
-        
-        const user = users.find(u => u.username === username);
-        if (!user || !await bcrypt.compare(password, user.password)) {
-            return res.status(401).json({ error: 'Invalid credentials' });
-        }
-
-        const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
-            expiresIn: '24h'
-        });
-
-        res.json({ token });
-    } catch (error) {
-        res.status(500).json({ error: 'Login failed' });
-    }
-});
-
 // Projects API
-app.get('/api/projects', authenticateToken, async (req, res) => {
+// Allow public GET access, but protect POST, PUT, DELETE
+app.get('/api/projects', async (req, res) => { // Removed authenticateToken middleware
     try {
         const projects = await loadData('projects.json');
+        // Ensure projects is always an array, even if loadData returns null or non-array
         res.json(Array.isArray(projects) ? projects : []);
     } catch (error) {
+        console.error('Error in GET /api/projects:', error); // Add logging
         res.status(500).json({ error: 'Failed to load projects' });
     }
 });
 
+// Add this new route to get a single project by ID
+app.get('/api/projects/:id', async (req, res) => {
+    try {
+        const projects = await loadData('projects.json');
+        if (!Array.isArray(projects)) {
+             console.error('Projects data is not an array or failed to load.');
+             return res.status(500).json({ error: 'Failed to load projects data' });
+        }
+        const project = projects.find(p => p.id === req.params.id);
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+        res.json(project);
+    } catch (error) {
+        console.error(`Error in GET /api/projects/${req.params.id}:`, error); // Add logging
+        res.status(500).json({ error: 'Failed to load project details' });
+    }
+});
+
+
 app.post('/api/projects', authenticateToken, upload.single('image'), async (req, res) => {
     try {
         const projects = await loadData('projects.json') || [];
+        // Ensure projects is treated as an array even if file was empty/corrupt initially
+        const projectsArray = Array.isArray(projects) ? projects : [];
+
         const newProject = {
-            id: Date.now().toString(),
-            ...req.body,
-            image: req.file ? `/assets/images/${req.file.filename}` : null,
+            id: Date.now().toString(), // Simple ID generation
+            title: req.body.title,
+            description: req.body.description,
+            // Ensure technologies is saved as an array
+            technologies: req.body.technologies ? req.body.technologies.split(',').map(t => t.trim()).filter(Boolean) : [],
+            // Use the correct web-accessible path for the image
+            image: req.file ? `/assets/images/${req.file.filename}` : (req.body.existingImage || null), // Keep existing if no new file
+            githubLink: req.body.githubLink || '',
+            liveLink: req.body.liveLink || '',
             createdAt: new Date().toISOString()
         };
 
-        if (!Array.isArray(projects)) {
-            await saveData('projects.json', [newProject]);
-        } else {
-            projects.push(newProject);
-            await saveData('projects.json', projects);
+        projectsArray.push(newProject); // Add to the array
+        const saved = await saveData('projects.json', projectsArray); // Save the whole array
+
+        if (!saved) {
+             throw new Error('Failed to save project data');
         }
-        res.json(newProject);
+        res.status(201).json(newProject); // Send 201 status for creation
     } catch (error) {
+        console.error('Error in POST /api/projects:', error); // Add logging
+        // Handle potential Multer errors specifically
+         if (error instanceof multer.MulterError) {
+            return res.status(400).json({ error: `Image upload error: ${error.message}` });
+        }
         res.status(500).json({ error: 'Failed to create project' });
     }
 });
@@ -291,24 +313,113 @@ app.post('/api/projects', authenticateToken, upload.single('image'), async (req,
 app.put('/api/projects/:id', authenticateToken, upload.single('image'), async (req, res) => {
     try {
         const projects = await loadData('projects.json') || [];
+         if (!Array.isArray(projects)) {
+             console.error('Projects data is not an array or failed to load for update.');
+             return res.status(500).json({ error: 'Failed to load projects data for update' });
+        }
         const index = projects.findIndex(p => p.id === req.params.id);
-        
+
         if (index === -1) {
             return res.status(404).json({ error: 'Project not found' });
         }
 
-        const updatedProject = {
-            ...projects[index],
-            ...req.body,
-            image: req.file ? `/assets/images/${req.file.filename}` : projects[index].image,
+        // --- Refined Validation ---
+        const { title, description, technologies, githubLink, liveLink, existingImage } = req.body;
+        const errors = [];
+        if (!title || title.trim() === '') errors.push('Title is required.');
+        if (!description || description.trim() === '') errors.push('Description is required.');
+        if (!technologies || technologies.trim() === '') errors.push('Technologies are required.');
+        // Optional fields like githubLink, liveLink don't need validation here unless specific format is needed
+
+        if (errors.length > 0) {
+            // Log the received body for debugging
+            console.error('Validation failed for PUT /api/projects/:id. Body:', req.body);
+            console.error('Validation errors:', errors);
+            // Send a more specific error message
+            return res.status(400).json({ error: `Validation failed: ${errors.join(' ')}` });
+        }
+        // --- End Refined Validation ---
+
+
+        const updatedProjectData = {
+            ...projects[index], // Start with existing data
+            title: title.trim(),
+            description: description.trim(),
+             // Ensure technologies is saved as an array
+            technologies: technologies ? technologies.split(',').map(t => t.trim()).filter(Boolean) : [],
+            githubLink: githubLink || '', // Allow empty strings
+            liveLink: liveLink || '',   // Allow empty strings
             updatedAt: new Date().toISOString()
         };
 
-        projects[index] = updatedProject;
-        await saveData('projects.json', projects);
-        res.json(updatedProject);
+        // --- Improved Image Handling ---
+        console.log('PUT /api/projects/:id - req.file:', req.file); // Log file info
+        console.log('PUT /api/projects/:id - req.body.existingImage:', existingImage); // Log existing image info
+
+        if (req.file) {
+            // A new file was uploaded
+            updatedProjectData.image = `/assets/images/${req.file.filename}`;
+            console.log(`New image uploaded: ${updatedProjectData.image}`);
+            // Optionally: Delete the old image file if it exists and is different
+            const oldImagePath = projects[index].image;
+            if (oldImagePath && oldImagePath !== updatedProjectData.image) {
+               try {
+                   // *** CORRECTED PATH: Go up one level from server directory ***
+                   const oldFilePath = path.join(__dirname, '..', 'public', oldImagePath);
+                   // Use fs.promises.access to check existence asynchronously
+                   await fs.access(oldFilePath); // Throws error if file doesn't exist or no permissions
+                   await fs.unlink(oldFilePath);
+                   console.log("Old image deleted:", oldFilePath);
+               } catch (unlinkError) {
+                   // Log specific errors for non-existence vs. other issues
+                   if (unlinkError.code === 'ENOENT') {
+                       console.warn("Old image file not found, skipping delete:", oldFilePath);
+                   } else {
+                       console.error("Error deleting old image:", oldFilePath, unlinkError);
+                       // Decide if this error should prevent the update or just be logged
+                       // For now, we'll log it but allow the update to proceed
+                   }
+               }
+            }
+        } else if (existingImage && existingImage !== 'undefined' && existingImage !== 'null' && existingImage.trim() !== '') {
+            // No new file uploaded, keep the existing image path sent from the frontend
+            updatedProjectData.image = existingImage;
+            console.log(`Keeping existing image: ${updatedProjectData.image}`);
+        } else {
+             // No new file and no valid existing image path sent.
+             // Keep the original image path from the loaded data if it exists, otherwise set to null.
+             updatedProjectData.image = projects[index].image || null;
+             console.log(`No new image and no valid existingImage received. Using original: ${updatedProjectData.image}`);
+        }
+        // --- End Improved Image Handling ---
+
+
+        projects[index] = updatedProjectData; // Update the project in the array
+
+        // *** ADDED LOG: Log data before saving ***
+        console.log('Attempting to save updated project data:', updatedProjectData);
+
+        const saved = await saveData('projects.json', projects); // Save the updated array
+
+        if (!saved) {
+             // Throw a more specific error if saving fails
+             throw new Error('Failed to save updated project data to projects.json');
+        }
+
+        console.log('Project updated and saved successfully:', updatedProjectData);
+        res.json(updatedProjectData); // Send back the updated project
+
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update project' });
+        // *** Enhanced Error Logging ***
+        console.error(`Error in PUT /api/projects/${req.params.id}:`, error.message);
+        console.error('Stack trace:', error.stack); // Log the full stack trace
+         if (error instanceof multer.MulterError) {
+            return res.status(400).json({ error: `Image upload error: ${error.message}` });
+        }
+        // Ensure a response is always sent
+        if (!res.headersSent) {
+            res.status(500).json({ error: error.message || 'Failed to update project. Check server logs.' });
+        }
     }
 });
 
@@ -886,6 +997,152 @@ app.delete('/api/messages/:id', authenticateToken, async (req, res) => {
         res.json({ message: 'Message deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete message' });
+    }
+});
+
+// Password Reset Endpoints
+app.post('/api/auth/request-password-reset', async (req, res) => {
+    try {
+        const { email } = req.body;
+        
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required' });
+        }
+        
+        // Find user by email
+        const users = await loadData('users.json') || [];
+        const user = users.find(u => u.email === email);
+        
+        // If no user found with this email, save the email for future reference and return an error
+        if (!user) {
+            // Save the attempted email in a recovery-attempts.json file
+            const recoveryFile = path.join(__dirname, 'data', 'recovery-attempts.json');
+            let attempts = [];
+            
+            try {
+                // Try to read existing attempts
+                const data = await fs.readFile(recoveryFile, 'utf8').catch(() => '[]');
+                attempts = JSON.parse(data);
+            } catch (err) {
+                // If file doesn't exist or has invalid JSON, start with empty array
+                attempts = [];
+            }
+            
+            // Add this attempt
+            attempts.push({
+                email,
+                timestamp: new Date().toISOString(),
+                ip: req.ip || 'unknown'
+            });
+            
+            // Save attempts
+            await fs.writeFile(recoveryFile, JSON.stringify(attempts, null, 2));
+            
+            console.log(`Password reset requested for non-existent email: ${email}`);
+            return res.status(404).json({ error: 'No account found with this email address.' });
+        }
+        
+        // Generate reset token (expires in 1 hour)
+        const resetToken = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+        // Store token hash and expiry with user for verification (optional but recommended)
+        // Hashing the token before storing adds another layer of security
+        const hashedToken = await bcrypt.hash(resetToken, 10);
+        user.resetToken = hashedToken;
+        user.resetTokenExpires = new Date(Date.now() + 3600000); // 1 hour from now
+
+        await saveData('users.json', users);
+
+        // Construct reset URL (adjust domain/port as needed for your environment)
+        const resetUrl = `http://localhost:${PORT}/reset-password.html?token=${resetToken}`;
+
+        // Send the password reset link via email
+        const mailOptions = {
+            from: '"Your Portfolio Admin" <ebookrealm.info@gmail.com>', // Use a display name
+            to: email,
+            subject: 'Password Reset Request for Your Portfolio',
+            html: `
+                <h1>Password Reset Request</h1>
+                <p>You requested a password reset for your portfolio account.</p>
+                <p>Click the link below to set a new password. This link is valid for 1 hour:</p>
+                <p><a href="${resetUrl}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a></p>
+                <p>Or copy and paste this URL into your browser:</p>
+                <p>${resetUrl}</p>
+                <p>If you didn't request this, please ignore this email.</p>
+            `
+        };
+
+        try {
+            await transporter.sendMail(mailOptions);
+            console.log(`Password reset link sent to ${email}`);
+            res.status(200).json({ message: 'If your email is registered, you will receive a password reset link shortly.' });
+        } catch (emailError) {
+            console.error('Error sending password reset email:', emailError);
+            // Inform the user that email sending failed, but don't expose details
+            res.status(500).json({ error: 'Could not send password reset email. Please contact support or try again later.' });
+        }
+
+    } catch (error) {
+        console.error('Error in password reset request:', error);
+        res.status(500).json({ error: 'An error occurred during the password reset process.' });
+    }
+});
+
+// Modify the /api/auth/reset-password endpoint to verify the hashed token if stored
+app.post('/api/auth/reset-password', async (req, res) => {
+    try {
+        const { token, password } = req.body;
+
+        if (!token || !password) {
+            return res.status(400).json({ error: 'Token and new password are required' });
+        }
+
+        // Verify token signature and expiry
+        let decoded;
+        try {
+            decoded = jwt.verify(token, JWT_SECRET);
+        } catch (err) {
+            return res.status(400).json({ error: 'Invalid or expired password reset token.' });
+        }
+
+        // Find user by ID from token
+        const users = await loadData('users.json') || [];
+        const userIndex = users.findIndex(u => u.id === decoded.userId);
+
+        if (userIndex === -1) {
+            return res.status(404).json({ error: 'User associated with this token not found.' });
+        }
+
+        const user = users[userIndex];
+
+        // Verify the token against the stored hash and check expiry (if stored)
+        if (!user.resetToken || !user.resetTokenExpires || new Date() > new Date(user.resetTokenExpires)) {
+             return res.status(400).json({ error: 'Password reset token is invalid or has expired.' });
+        }
+
+        const isTokenMatch = await bcrypt.compare(token, user.resetToken);
+        if (!isTokenMatch) {
+            return res.status(400).json({ error: 'Invalid password reset token.' });
+        }
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Update user's password and clear reset token fields
+        users[userIndex].password = hashedPassword;
+        users[userIndex].resetToken = null; // Clear the token after use
+        users[userIndex].resetTokenExpires = null;
+
+        // Save updated user data
+        const saved = await saveData('users.json', users);
+        if (!saved) {
+            throw new Error('Failed to save updated user data.');
+        }
+
+        res.json({ message: 'Password has been reset successfully.' });
+    } catch (error) {
+        console.error('Error resetting password:', error);
+        res.status(500).json({ error: 'An error occurred while resetting the password.' });
     }
 });
 

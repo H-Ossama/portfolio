@@ -50,19 +50,16 @@
         
         <!-- Particles.js for snow effect -->
         <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-        <script src="./scripts/winterParticles.js"></script>
         <script src="./scripts/skills.js" defer></script>
         
         <!-- Main Script -->
-        <script src="./script.js" defer></script>
-
+        
         <!-- Theme Styles -->
         <link rel="stylesheet" href="./styles/theme-transition.css">
         <link rel="stylesheet" href="./styles/light-theme.css">
         <link rel="stylesheet" href="./styles/winter-animations.css">
         
         <!-- Particles.js -->
-        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         
         <!-- Ensure winter particles script is loaded -->
         <script src="./scripts/winterParticles.js"></script>
@@ -288,9 +285,10 @@
         <ul class="nav-links">
             <li><a href="#home" class="active">Home</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#education">Education</a></li>            <li><a href="#technologies">Skills</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#technologies">Skills</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li> <!-- Fixed link to navigate to contact page -->
         </ul>
     </nav>
 
@@ -306,7 +304,7 @@
         <div class="lang-options">
             <button class="lang-option active" data-lang="en">English</button>
             <button class="lang-option" data-lang="fr">Français</button>
-            <button class="lang-option" data-lang="ar">العربية</button>
+            <button class="lang-option" data-lang="de">Deutsch</button> <!-- Changed from ar to de -->
         </div>
     </div>
 
@@ -341,14 +339,14 @@
                 </div>
                 <div class="cta-wrapper">
                     <div class="cta-container">
-                        <a href="contact.html" class="cta-button primary">
+                        <a href="contact.html" class="cta-button primary collaborate-btn"> <!-- Added collaborate-btn class -->
                             <span class="button-content">
                                 <i class="fas fa-paper-plane"></i>
                                 <span>Let's Collaborate</span>
                             </span>
                             <span class="button-border"></span>
                         </a>
-                        <a href="/assets/HATTAN_OUSSAMA.pdf" class="cta-button secondary">
+                        <a href="/assets/HATTAN_OUSSAMA.pdf" class="cta-button secondary resume-btn"> <!-- Added resume-btn class -->
                             <span class="button-content">
                                 <i class="fas fa-file-alt"></i>
                                 <span>View Resume</span>
@@ -452,124 +450,10 @@
         <p class="section-subtitle">A selection of my recent work</p>
         
         <div class="project-grid">
-            <!-- Project 1 -->
-            <div class="project-card frosted-card winter-card" data-aos="fade-up">
-                <div class="project-image">
-                    <img src="../assets/images/project1.jpg" alt="E-Commerce API Project">
-                    <div class="project-overlay">
-                        <div class="project-tech-stack">
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Express</span>
-                            <span class="tech-tag">MongoDB</span>
-                            <span class="tech-tag">JWT</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">E-Commerce API</h3>
-                    <p class="project-description">A robust RESTful API for e-commerce platforms with advanced authentication, payment integration, and order management.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/your-username/project1" class="project-link github" target="_blank">
-                            <i class="fab fa-github"></i>
-                            <span>View Code</span>
-                        </a>
-                        <a href="https://project1-demo.com" class="project-link live" target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="project-card frosted-card winter-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="project-image">
-                    <img src="assets/images/project2.jpg" alt="Social Media App">
-                    <div class="project-overlay">
-                        <div class="project-tech-stack">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Socket.IO</span>
-                            <span class="tech-tag">Redis</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Social Media Platform</h3>
-                    <p class="project-description">Full-stack social media application with real-time messaging, notifications, and content sharing capabilities.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/your-username/project2" class="project-link github" target="_blank">
-                            <i class="fab fa-github"></i>
-                            <span>View Code</span>
-                        </a>
-                        <a href="https://project2-demo.com" class="project-link live" target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="project-card frosted-card winter-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="project-image">
-                    <img src="../assets/images/project3.jpg" alt="Data Visualization Dashboard">
-                    <div class="project-overlay">
-                        <div class="project-tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Django</span>
-                            <span class="tech-tag">D3.js</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">Analytics Dashboard</h3>
-                    <p class="project-description">Interactive data visualization platform with real-time analytics, custom reports, and automated insights generation.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/your-username/project3" class="project-link github" target="_blank">
-                            <i class="fab fa-github"></i>
-                            <span>View Code</span>
-                        </a>
-                        <a href="https://project3-demo.com" class="project-link live" target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="project-card frosted-card winter-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="project-image">
-                    <img src="../assets/images/project4.jpg" alt="AI Chatbot">
-                    <div class="project-overlay">
-                        <div class="project-tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">Flask</span>
-                            <span class="tech-tag">WebSocket</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3 class="project-title">AI Chatbot System</h3>
-                    <p class="project-description">Advanced conversational AI system with natural language processing and machine learning capabilities.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/your-username/project4" class="project-link github" target="_blank">
-                            <i class="fab fa-github"></i>
-                            <span>View Code</span>
-                        </a>
-                        <a href="https://project4-demo.com" class="project-link live" target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="ice-crystal"></div>
+            <!-- Projects will be dynamically loaded here -->
+            <div class="projects-loading">
+                <div class="loading-spinner"></div>
+                <p>Loading projects...</p>
             </div>
         </div>
     </div>
@@ -894,11 +778,8 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="./script.js"></script>
-    <script src="scripts/winterParticles.js"></script>
     <script src="scripts/profileCard.js"></script>
     <script src="./scripts/particles-config.js"></script>
-    <script src="./scripts/skills.js"></script>
-    <script src="./scripts/language.js"></script>
     <script src="scripts/analytics.js"></script>
     <script>
         // Loading screen handler
