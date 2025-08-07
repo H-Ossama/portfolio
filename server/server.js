@@ -103,15 +103,29 @@ const About = mongoose.model('About', {
     cvViews: Number
 });
 
-const User = mongoose.model('User', {
-    username: String,
-    password: String,
-    email: String,
+const UserSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true, trim: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true, unique: true, trim: true, lowercase: true },
+    avatar: { type: String, default: null }, // Added avatar field
     settings: {
-        cursor: String,
-        theme: String
-    }
+        cursor: { type: String, default: 'default' },
+        theme: { type: String, default: 'dark' }
+    },
+    emailTemplates: {
+        passwordReset: {
+            subject: String,
+            headerColor: String,
+            buttonColor: String,
+            logoUrl: String,
+            customMessage: String
+        }
+    },
+    resetToken: String,
+    resetTokenExpires: Date
 });
+
+const User = mongoose.model('User', UserSchema);
 
 // JWT Secret
 const JWT_SECRET = 'your-secret-key';
@@ -133,24 +147,19 @@ async function initializeDefaultUser() {
     try {
         const userCount = await User.countDocuments();
         if (userCount === 0) {
-            const defaultPassword = 'admin123'; // You can change this
-            const hashedPassword = await bcrypt.hash(defaultPassword, 10);
-            
+            // Hash the default password before saving
+            const hashedPassword = await bcrypt.hash('admin123', 10);
             const defaultUser = new User({
                 username: 'admin',
-                password: hashedPassword,
-                email: 'admin@example.com',
-                settings: {
-                    cursor: 'default',
-                    theme: 'dark'
-                }
+                password: hashedPassword, // Store the hashed password
+                email: 'admin@example.com', // Default email
+                settings: { cursor: 'default', theme: 'dark' }
             });
-            
             await defaultUser.save();
-            console.log('Default user created - Username: admin, Password: admin123');
+            console.log('Default user created in MongoDB - Username: admin, Password: admin123');
         }
     } catch (error) {
-        console.error('Error creating default user:', error);
+        console.error('Error creating default user in MongoDB:', error);
     }
 }
 
@@ -160,7 +169,9 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: 'ebookrealm.info@gmail.com',
         pass: process.env.EMAIL_PASSWORD // Add your app password here
-    }
+    },
+    // Set empty name to prevent Google from showing the sender's profile picture
+    name: ''
 });
 
 // Multer configuration for file uploads
@@ -180,6 +191,29 @@ const upload = multer({
         const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
         if (!allowedTypes.includes(file.mimetype)) {
             cb(new Error('Invalid file type'));
+            return;
+        }
+        cb(null, true);
+    }
+});
+
+// Multer configuration for certificates
+const certificateStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../public/assets/certificates'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const uploadCertificate = multer({
+    storage: certificateStorage,
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit for certificates
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif'];
+        if (!allowedTypes.includes(file.mimetype)) {
+            cb(new Error('Invalid file type. Only PDF and image files are allowed.'));
             return;
         }
         cb(null, true);
@@ -423,6 +457,211 @@ app.put('/api/projects/:id', authenticateToken, upload.single('image'), async (r
     }
 });
 
+// --- End Improved Image Handling ---
+
+// User Settings API
+app.get('/api/user/settings', authenticateToken, async (req, res) => {
+    try {
+        // Log the received user payload from the token for debugging
+        console.log('Decoded token payload in /api/user/settings:', req.user);
+
+        // Check if the expected userId field exists in the decoded token
+        if (!req.user || !req.user.userId) {
+             console.error('User ID (userId) not found in token payload:', req.user);
+             // Return 403 Forbidden because the token is missing necessary info
+             return res.status(403).json({ error: 'Invalid token payload: User ID missing.' });
+        }
+
+        const userId = req.user.userId;
+        console.log(`Attempting to find user with ID: ${userId}`); // Log the ID being used
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            // Log that the specific user ID was not found
+            console.error(`User not found in database for ID: ${userId}`);
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Return user data without the password
+        const userData = {
+            _id: user._id, // Include ID if needed by frontend
+            username: user.username,
+            email: user.email,
+            avatar: user.avatar, // Now this field exists
+            settings: user.settings || { theme: 'dark' }, // Default settings if somehow missing
+            emailTemplates: user.emailTemplates
+        };
+
+        res.json(userData);
+    } catch (error) {
+        // Catch potential errors during findById (e.g., invalid ID format)
+        const attemptedUserId = req.user?.userId || 'unknown';
+        console.error(`Error fetching user settings for user ID ${attemptedUserId}:`, error);
+
+        // Check if the error is due to a CastError (invalid ObjectId format)
+        if (error.name === 'CastError' && error.kind === 'ObjectId') {
+             console.error(`Invalid ObjectId format for user ID: ${attemptedUserId}`);
+             return res.status(400).json({ error: 'Invalid user ID format in token.' });
+        }
+        // Generic server error for other issues
+        res.status(500).json({ error: 'Failed to fetch user settings due to server error.' });
+    }
+});
+
+app.put('/api/user/settings', authenticateToken, upload.single('avatar'), async (req, res) => {
+    try {
+        // Check for userId in token payload
+        if (!req.user || !req.user.userId) {
+            console.error('User ID (userId) not found in token payload for PUT:', req.user);
+            return res.status(403).json({ error: 'Invalid token payload: User ID missing.' });
+        }
+        const userId = req.user.userId;
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            console.error(`User not found for update with ID: ${userId}`);
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Update fields if provided
+        if (req.body.username) user.username = req.body.username.trim();
+        if (req.body.email) user.email = req.body.email.trim().toLowerCase();
+        if (req.body.theme) {
+            if (!user.settings) user.settings = {}; // Initialize if missing
+            user.settings.theme = req.body.theme;
+        }
+
+        // Handle password update if provided
+        if (req.body.password && req.body.password.trim() !== '') {
+            user.password = await bcrypt.hash(req.body.password.trim(), 10);
+        }
+
+        // Handle avatar upload if provided
+        if (req.file) {
+            const newAvatarUrl = `/assets/images/${req.file.filename}`;
+            const oldAvatarPath = user.avatar ? path.join(__dirname, '..', 'public', user.avatar) : null;
+
+            user.avatar = newAvatarUrl; // Update user model
+
+            // Delete old avatar if it exists and is different
+            if (oldAvatarPath && oldAvatarPath !== path.join(__dirname, '..', 'public', newAvatarUrl)) {
+                try {
+                    await fs.access(oldAvatarPath);
+                    await fs.unlink(oldAvatarPath);
+                    console.log(`Deleted old avatar: ${oldAvatarPath}`);
+                } catch (unlinkError) {
+                    if (unlinkError.code !== 'ENOENT') { // Ignore if file not found
+                       console.error(`Error deleting old avatar ${oldAvatarPath}:`, unlinkError);
+                    }
+                }
+            }
+        } else if (req.body.removeAvatar === 'true') {
+             // Handle explicit avatar removal
+             const oldAvatarPath = user.avatar ? path.join(__dirname, '..', 'public', user.avatar) : null;
+             user.avatar = null;
+             if (oldAvatarPath) {
+                 try {
+                    await fs.access(oldAvatarPath);
+                    await fs.unlink(oldAvatarPath);
+                    console.log(`Removed avatar: ${oldAvatarPath}`);
+                 } catch (unlinkError) {
+                    if (unlinkError.code !== 'ENOENT') {
+                       console.error(`Error removing avatar ${oldAvatarPath}:`, unlinkError);
+                    }
+                 }
+             }
+        }
+
+        await user.save();
+
+        // Return updated user data without password
+        const userData = {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            avatar: user.avatar,
+            settings: user.settings
+            // Exclude emailTemplates unless needed
+        };
+
+        res.json({ message: 'Settings updated successfully', user: userData });
+
+    } catch (error) {
+        const attemptedUserId = req.user?.userId || 'unknown';
+        console.error(`Error updating user settings for ID ${attemptedUserId}:`, error);
+         if (error instanceof multer.MulterError) {
+            return res.status(400).json({ error: `Avatar upload error: ${error.message}` });
+        }
+        if (error.name === 'CastError' && error.kind === 'ObjectId') {
+             return res.status(400).json({ error: 'Invalid user ID format in token.' });
+        }
+        // Check for validation errors (e.g., from Mongoose schema)
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: 'Validation failed', details: error.errors });
+        }
+        res.status(500).json({ error: 'Failed to update settings due to server error.' });
+    }
+});
+
+// Email Template settings
+app.get('/api/email-templates/password-reset', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        // Return default template if none exists
+        const defaultTemplate = {
+            subject: 'Reset Your Portfolio Password',
+            headerColor: '#111111',
+            buttonColor: 'linear-gradient(135deg, #d4af37 0%, #f2d068 100%)',
+            logoUrl: 'https://i.imgur.com/yJDxBo7.png',
+            customMessage: 'We received a password reset request for your portfolio dashboard account. To set a new password, simply click the button below:'
+        };
+        
+        const template = user.emailTemplates?.passwordReset || defaultTemplate;
+        res.json(template);
+    } catch (error) {
+        console.error('Error fetching email template:', error);
+        res.status(500).json({ error: 'Failed to fetch email template' });
+    }
+});
+
+app.put('/api/email-templates/password-reset', authenticateToken, async (req, res) => {
+    try {
+        const { subject, headerColor, buttonColor, logoUrl, customMessage } = req.body;
+        const user = await User.findById(req.user.userId);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        // Initialize emailTemplates if needed
+        if (!user.emailTemplates) {
+            user.emailTemplates = {};
+        }
+        
+        // Update template
+        user.emailTemplates.passwordReset = {
+            subject: subject || 'Reset Your Portfolio Password',
+            headerColor: headerColor || '#111111',
+            buttonColor: buttonColor || 'linear-gradient(135deg, #d4af37 0%, #f2d068 100%)',
+            logoUrl: logoUrl || 'https://i.imgur.com/yJDxBo7.png',
+            customMessage: customMessage || 'We received a password reset request for your portfolio dashboard account. To set a new password, simply click the button below:'
+        };
+        
+        await user.save();
+        res.json(user.emailTemplates.passwordReset);
+    } catch (error) {
+        console.error('Error updating email template:', error);
+        res.status(500).json({ error: 'Failed to update email template' });
+    }
+});
+
 app.delete('/api/projects/:id', authenticateToken, async (req, res) => {
     try {
         const projects = await loadData('projects.json') || [];
@@ -439,7 +678,17 @@ app.delete('/api/projects/:id', authenticateToken, async (req, res) => {
     }
 });
 
-// Education API
+// Public Education API (for main portfolio page)
+app.get('/api/public/education', async (req, res) => {
+    try {
+        const education = await loadData('education.json');
+        res.json(education || []);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to load education entries' });
+    }
+});
+
+// Education API (protected)
 app.get('/api/education', authenticateToken, async (req, res) => {
     try {
         const education = await loadData('education.json');
@@ -449,24 +698,72 @@ app.get('/api/education', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/education', authenticateToken, async (req, res) => {
+app.get('/api/education/:id', authenticateToken, async (req, res) => {
     try {
         const education = await loadData('education.json') || [];
+        const entry = education.find(e => e.id === req.params.id);
+        
+        if (!entry) {
+            return res.status(404).json({ error: 'Education entry not found' });
+        }
+        
+        res.json(entry);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to load education entry' });
+    }
+});
+
+app.post('/api/education', authenticateToken, uploadCertificate.single('certificate'), async (req, res) => {
+    try {
+        const education = await loadData('education.json') || [];
+        
+        // Parse arrays from JSON strings (sent by FormData)
+        let highlights = [];
+        let skills = [];
+        
+        try {
+            highlights = req.body.highlights ? JSON.parse(req.body.highlights) : [];
+        } catch (e) {
+            highlights = req.body.highlights ? req.body.highlights.split(',').map(h => h.trim()) : [];
+        }
+        
+        try {
+            skills = req.body.skills ? JSON.parse(req.body.skills) : [];
+        } catch (e) {
+            skills = req.body.skills ? req.body.skills.split(',').map(s => s.trim()) : [];
+        }
+        
         const newEntry = {
             id: Date.now().toString(),
-            ...req.body,
+            year: parseInt(req.body.year),
+            title: req.body.title,
+            institution: req.body.institution,
+            description: req.body.description || '',
+            highlights: highlights,
+            skills: skills,
+            isCurrent: req.body.isCurrent === 'true',
             createdAt: new Date().toISOString()
         };
+        
+        // Handle certificate upload
+        if (req.file) {
+            newEntry.certificate = `/assets/certificates/${req.file.filename}`;
+        }
 
         education.push(newEntry);
         await saveData('education.json', education);
         res.json(newEntry);
     } catch (error) {
+        // Handle multer errors
+        if (error instanceof multer.MulterError) {
+            return res.status(400).json({ error: error.message });
+        }
+        console.error('Education creation error:', error);
         res.status(500).json({ error: 'Failed to create education entry' });
     }
 });
 
-app.put('/api/education/:id', authenticateToken, async (req, res) => {
+app.put('/api/education/:id', authenticateToken, uploadCertificate.single('certificate'), async (req, res) => {
     try {
         const education = await loadData('education.json') || [];
         const index = education.findIndex(e => e.id === req.params.id);
@@ -475,16 +772,60 @@ app.put('/api/education/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ error: 'Education entry not found' });
         }
 
+        // Parse arrays from JSON strings (sent by FormData)
+        let highlights = [];
+        let skills = [];
+        
+        try {
+            highlights = req.body.highlights ? JSON.parse(req.body.highlights) : [];
+        } catch (e) {
+            highlights = req.body.highlights ? req.body.highlights.split(',').map(h => h.trim()) : [];
+        }
+        
+        try {
+            skills = req.body.skills ? JSON.parse(req.body.skills) : [];
+        } catch (e) {
+            skills = req.body.skills ? req.body.skills.split(',').map(s => s.trim()) : [];
+        }
+
         const updatedEntry = {
             ...education[index],
-            ...req.body,
+            year: parseInt(req.body.year),
+            title: req.body.title,
+            institution: req.body.institution,
+            description: req.body.description || '',
+            highlights: highlights,
+            skills: skills,
+            isCurrent: req.body.isCurrent === 'true',
             updatedAt: new Date().toISOString()
         };
+        
+        // Handle certificate upload
+        if (req.file) {
+            // Delete old certificate file if it exists
+            if (education[index].certificate) {
+                const oldCertPath = path.join(__dirname, '../public', education[index].certificate);
+                try {
+                    await fs.unlink(oldCertPath);
+                } catch (e) {
+                    console.log('Old certificate file not found or could not be deleted');
+                }
+            }
+            updatedEntry.certificate = `/assets/certificates/${req.file.filename}`;
+        } else if (req.body.certificate && req.body.certificate !== 'undefined') {
+            // Keep existing certificate
+            updatedEntry.certificate = req.body.certificate;
+        }
 
         education[index] = updatedEntry;
         await saveData('education.json', education);
         res.json(updatedEntry);
     } catch (error) {
+        // Handle multer errors
+        if (error instanceof multer.MulterError) {
+            return res.status(400).json({ error: error.message });
+        }
+        console.error('Education update error:', error);
         res.status(500).json({ error: 'Failed to update education entry' });
     }
 });
@@ -492,12 +833,23 @@ app.put('/api/education/:id', authenticateToken, async (req, res) => {
 app.delete('/api/education/:id', authenticateToken, async (req, res) => {
     try {
         const education = await loadData('education.json') || [];
-        const filteredEducation = education.filter(e => e.id !== req.params.id);
+        const entryToDelete = education.find(e => e.id === req.params.id);
         
-        if (education.length === filteredEducation.length) {
+        if (!entryToDelete) {
             return res.status(404).json({ error: 'Education entry not found' });
         }
-
+        
+        // Delete certificate file if it exists
+        if (entryToDelete.certificate) {
+            const certPath = path.join(__dirname, '../public', entryToDelete.certificate);
+            try {
+                await fs.unlink(certPath);
+            } catch (e) {
+                console.log('Certificate file not found or could not be deleted');
+            }
+        }
+        
+        const filteredEducation = education.filter(e => e.id !== req.params.id);
         await saveData('education.json', filteredEducation);
         res.json({ message: 'Education entry deleted successfully' });
     } catch (error) {
@@ -564,7 +916,7 @@ app.delete('/api/technologies/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ error: 'Technology not found' });
         }
 
-        await saveData('skills.json', filteredSkills);
+        await saveData('skills.json', { skills: filteredSkills });
         res.json({ message: 'Technology deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete technology' });
@@ -1004,71 +1356,133 @@ app.delete('/api/messages/:id', authenticateToken, async (req, res) => {
 app.post('/api/auth/request-password-reset', async (req, res) => {
     try {
         const { email } = req.body;
-        
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
         }
-        
-        // Find user by email
-        const users = await loadData('users.json') || [];
-        const user = users.find(u => u.email === email);
-        
-        // If no user found with this email, save the email for future reference and return an error
+
+        // Find user by email in MongoDB (Case-Insensitive)
+        const user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } });
+
         if (!user) {
-            // Save the attempted email in a recovery-attempts.json file
-            const recoveryFile = path.join(__dirname, 'data', 'recovery-attempts.json');
-            let attempts = [];
-            
-            try {
-                // Try to read existing attempts
-                const data = await fs.readFile(recoveryFile, 'utf8').catch(() => '[]');
-                attempts = JSON.parse(data);
-            } catch (err) {
-                // If file doesn't exist or has invalid JSON, start with empty array
-                attempts = [];
-            }
-            
-            // Add this attempt
-            attempts.push({
-                email,
-                timestamp: new Date().toISOString(),
-                ip: req.ip || 'unknown'
-            });
-            
-            // Save attempts
-            await fs.writeFile(recoveryFile, JSON.stringify(attempts, null, 2));
-            
-            console.log(`Password reset requested for non-existent email: ${email}`);
+            // Log attempt (optional: keep saving to recovery-attempts.json or move to DB)
+            // ... (code to save to recovery-attempts.json can remain if desired) ...
+            console.log(`Password reset requested for non-existent email (MongoDB): ${email}`);
             return res.status(404).json({ error: 'No account found with this email address.' });
         }
-        
-        // Generate reset token (expires in 1 hour)
-        const resetToken = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
-        // Store token hash and expiry with user for verification (optional but recommended)
-        // Hashing the token before storing adds another layer of security
+        // Generate reset token (expires in 1 hour)
+        const resetToken = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+        // Hash the token before storing for security
         const hashedToken = await bcrypt.hash(resetToken, 10);
+
+        // Update user in MongoDB with hashed token and expiry
         user.resetToken = hashedToken;
         user.resetTokenExpires = new Date(Date.now() + 3600000); // 1 hour from now
+        await user.save();
 
-        await saveData('users.json', users);
+        // Create a short reset URL
+        const shortResetUrl = `http://localhost:${PORT}/reset-password.html?t=${encodeURIComponent(resetToken.substring(0, 64))}`;
 
-        // Construct reset URL (adjust domain/port as needed for your environment)
-        const resetUrl = `http://localhost:${PORT}/reset-password.html?token=${resetToken}`;
+        // Get email template settings (use defaults if not set)
+        const defaultTemplate = {
+            subject: 'Reset Your Portfolio Password',
+            headerColor: '#111111',
+            buttonColor: 'linear-gradient(135deg, #d4af37 0%, #f2d068 100%)',
+            logoUrl: '/assets/images/oussama-min.png', // Using local profile image
+            customMessage: 'We received a password reset request for your portfolio dashboard account. For your security, this link will only be valid for the next hour. To create a new password and regain access to your account, click the button below:'
+        };
 
-        // Send the password reset link via email
+        const emailTemplate = user.emailTemplates?.passwordReset || {};
+        // Always ensure all fields are present
+        const subject = emailTemplate.subject || defaultTemplate.subject;
+        const headerColor = emailTemplate.headerColor || defaultTemplate.headerColor;
+        const buttonColor = emailTemplate.buttonColor || defaultTemplate.buttonColor;
+        const logoUrl = emailTemplate.logoUrl || defaultTemplate.logoUrl;
+        const customMessage = emailTemplate.customMessage || defaultTemplate.customMessage;
+
+        // Extract button colors for hover effect
+        let buttonColorStart = '#d4af37';
+        let buttonColorEnd = '#f2d068';
+        
+        if (buttonColor.includes('linear-gradient')) {
+            const colorMatches = buttonColor.match(/#[a-fA-F0-9]{6}|#[a-fA-F0-9]{3}/g);
+            if (colorMatches && colorMatches.length >= 2) {
+                buttonColorStart = colorMatches[0];
+                buttonColorEnd = colorMatches[1];
+            }
+        } else {
+            buttonColorStart = buttonColor;
+            buttonColorEnd = buttonColor;
+        }
+
+        // Send the password reset link via email with modern, professional design
+        // Using a simplified version that works reliably across email clients
         const mailOptions = {
-            from: '"Your Portfolio Admin" <ebookrealm.info@gmail.com>', // Use a display name
+            from: '"Portfolio Dashboard" <noreply@portfolio-dashboard.com>',
             to: email,
-            subject: 'Password Reset Request for Your Portfolio',
+            subject,
             html: `
-                <h1>Password Reset Request</h1>
-                <p>You requested a password reset for your portfolio account.</p>
-                <p>Click the link below to set a new password. This link is valid for 1 hour:</p>
-                <p><a href="${resetUrl}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a></p>
-                <p>Or copy and paste this URL into your browser:</p>
-                <p>${resetUrl}</p>
-                <p>If you didn't request this, please ignore this email.</p>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Reset Your Portfolio Password</title>
+                </head>
+                <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f5f7; color: #333;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                        <!-- Header -->
+                        <tr>
+                            <td align="center" bgcolor="#222222" style="padding: 30px 0; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                                <h2 style="color: #d4af37; margin: 0 0 15px; font-size: 24px;">Portfolio Dashboard</h2>
+                                <div style="height: 6px; background-color: #d4af37; width: 100%;"></div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Content -->
+                        <tr>
+                            <td style="padding: 40px 30px; text-align: center;">
+                                <h1 style="color: #222; font-size: 24px; margin: 0 0 25px;">Reset Your Password</h1>
+                                
+                                <p style="font-size: 18px; margin-bottom: 20px; color: #444; font-weight: bold;">Hello,</p>
+                                
+                                <p style="margin: 25px 0; color: #555; font-size: 16px; line-height: 1.7; text-align: center;">
+                                    ${customMessage}
+                                </p>
+                                
+                                <div style="margin: 35px 0; text-align: center;">
+                                    <a href="${shortResetUrl}" style="background-color: #d4af37; color: #111; text-decoration: none; padding: 15px 40px; font-weight: bold; font-size: 16px; border-radius: 8px; display: inline-block;">
+                                        Reset Password
+                                    </a>
+                                </div>
+                                
+                                <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 30px 0;">
+                                
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fff8e1; border-left: 5px solid #ffd54f; margin: 30px 0; border-radius: 6px;">
+                                    <tr>
+                                        <td style="padding: 14px 20px; text-align: left; font-size: 15px; color: #755800;">
+                                            <strong>⏰ Time-Sensitive:</strong> This link will expire in 1 hour for security purposes.
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <div style="margin: 30px 0 10px; font-size: 15px; color: #666; padding: 18px; background-color: #f9f9f9; border-radius: 8px; line-height: 1.6; text-align: left;">
+                                    If you didn't request this reset, please disregard this email. Your account security is important to us.
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Footer -->
+                        <tr>
+                            <td align="center" bgcolor="#f5f5f7" style="padding: 20px; text-align: center; font-size: 13px; color: #666; border-top: 1px solid #eaeaea; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                                <p style="margin: 5px 0;">&copy; ${new Date().getFullYear()} Portfolio Dashboard</p>
+                                <p style="margin: 5px 0;">This is an automated message. Please do not reply.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
             `
         };
 
@@ -1078,8 +1492,7 @@ app.post('/api/auth/request-password-reset', async (req, res) => {
             res.status(200).json({ message: 'If your email is registered, you will receive a password reset link shortly.' });
         } catch (emailError) {
             console.error('Error sending password reset email:', emailError);
-            // Inform the user that email sending failed, but don't expose details
-            res.status(500).json({ error: 'Could not send password reset email. Please contact support or try again later.' });
+            res.status(500).json({ error: 'Could not send password reset email.' });
         }
 
     } catch (error) {
@@ -1092,57 +1505,176 @@ app.post('/api/auth/request-password-reset', async (req, res) => {
 app.post('/api/auth/reset-password', async (req, res) => {
     try {
         const { token, password } = req.body;
-
         if (!token || !password) {
             return res.status(400).json({ error: 'Token and new password are required' });
         }
 
-        // Verify token signature and expiry
-        let decoded;
-        try {
-            decoded = jwt.verify(token, JWT_SECRET);
-        } catch (err) {
+        console.log("Received token for reset:", token.substring(0, 10) + "...");
+        
+        // Find all users with active reset tokens
+        const users = await User.find({
+            resetToken: { $exists: true },
+            resetTokenExpires: { $gt: new Date() }
+        });
+        
+        console.log(`Found ${users.length} users with active reset tokens`);
+        
+        // Since we're using a shortened token in the URL, we need a different approach
+        // Try to find the user whose token matches our shortened version
+        let matchedUser = null;
+        
+        for (const user of users) {
+            // For each user with an active reset token, try to generate a token
+            // with the same pattern as we did when creating the reset link
+            try {
+                // Create a sample token with the user's data
+                const sampleToken = jwt.sign(
+                    { userId: user._id, email: user.email },
+                    JWT_SECRET,
+                    { expiresIn: '1h' }
+                );
+                
+                // Get shortened version - this should match what we sent in email
+                const shortSample = sampleToken.substring(0, 64);
+                
+                // Compare with received token
+                if (token === shortSample) {
+                    console.log("Found matching user for token");
+                    matchedUser = user;
+                    break;
+                }
+            } catch (err) {
+                console.error("Error comparing tokens:", err);
+                continue;
+            }
+        }
+        
+        // No matching user found
+        if (!matchedUser) {
+            console.log("No user found with matching token");
             return res.status(400).json({ error: 'Invalid or expired password reset token.' });
         }
-
-        // Find user by ID from token
-        const users = await loadData('users.json') || [];
-        const userIndex = users.findIndex(u => u.id === decoded.userId);
-
-        if (userIndex === -1) {
-            return res.status(404).json({ error: 'User associated with this token not found.' });
+        
+        // Check token expiration
+        if (!matchedUser.resetToken || !matchedUser.resetTokenExpires || new Date() > matchedUser.resetTokenExpires) {
+            console.log("Token expired");
+            return res.status(400).json({ error: 'Password reset token has expired.' });
         }
-
-        const user = users[userIndex];
-
-        // Verify the token against the stored hash and check expiry (if stored)
-        if (!user.resetToken || !user.resetTokenExpires || new Date() > new Date(user.resetTokenExpires)) {
-             return res.status(400).json({ error: 'Password reset token is invalid or has expired.' });
-        }
-
-        const isTokenMatch = await bcrypt.compare(token, user.resetToken);
-        if (!isTokenMatch) {
-            return res.status(400).json({ error: 'Invalid password reset token.' });
-        }
+        
+        // Use the matched user for password reset
+        const user = matchedUser;
 
         // Hash the new password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Update user's password and clear reset token fields
-        users[userIndex].password = hashedPassword;
-        users[userIndex].resetToken = null; // Clear the token after use
-        users[userIndex].resetTokenExpires = null;
-
-        // Save updated user data
-        const saved = await saveData('users.json', users);
-        if (!saved) {
-            throw new Error('Failed to save updated user data.');
-        }
+        // Update user's password and clear reset token fields in MongoDB
+        user.password = hashedPassword;
+        user.resetToken = undefined; // Use undefined to remove field
+        user.resetTokenExpires = undefined;
+        await user.save();
 
         res.json({ message: 'Password has been reset successfully.' });
+
     } catch (error) {
         console.error('Error resetting password:', error);
         res.status(500).json({ error: 'An error occurred while resetting the password.' });
+    }
+});
+
+// Login Endpoint (Using MongoDB)
+app.post('/api/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Username and password are required' });
+        }
+
+        // Find user in MongoDB
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid credentials', errorType: 'username_not_found' });
+        }
+
+        // Compare password with hashed password in DB
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials', errorType: 'incorrect_password' });
+        }
+
+        // Generate JWT token (using MongoDB user _id)
+        const token = jwt.sign({ userId: user._id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+
+        res.json({ token });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'Login failed' });
+    }
+});
+
+// Email template settings endpoint
+app.get('/api/email-templates/password-reset', authenticateToken, async (req, res) => {
+    try {
+        // Find user in MongoDB
+        const user = await User.findById(req.user.userId);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Default values if not set
+        const defaultTemplate = {
+            subject: 'Reset Your Portfolio Password',
+            headerColor: '#111111',
+            buttonColor: 'linear-gradient(135deg, #d4af37 0%, #f2d068 100%)',
+            logoUrl: 'https://i.imgur.com/yJDxBo7.png',
+            customMessage: 'We received a password reset request for your portfolio dashboard account. To set a new password, simply click the button below:'
+        };
+
+        // Return user's template settings or defaults
+        const templateSettings = user.emailTemplates?.passwordReset || defaultTemplate;
+        res.json(templateSettings);
+    } catch (error) {
+        console.error('Error fetching email template settings:', error);
+        res.status(500).json({ error: 'Failed to fetch email template settings' });
+    }
+});
+
+app.put('/api/email-templates/password-reset', authenticateToken, async (req, res) => {
+    try {
+        const { subject, headerColor, buttonColor, logoUrl, customMessage } = req.body;
+        
+        // Validate required fields
+        if (!subject || !customMessage) {
+            return res.status(400).json({ error: 'Subject and message content are required' });
+        }
+
+        // Find and update user
+        const user = await User.findById(req.user.userId);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Initialize emailTemplates if it doesn't exist
+        if (!user.emailTemplates) {
+            user.emailTemplates = {};
+        }
+
+        // Update template settings
+        user.emailTemplates.passwordReset = {
+            subject,
+            headerColor: headerColor || '#111111',
+            buttonColor: buttonColor || 'linear-gradient(135deg, #d4af37 0%, #f2d068 100%)',
+            logoUrl: logoUrl || 'https://i.imgur.com/yJDxBo7.png',
+            customMessage
+        };
+
+        await user.save();
+        res.json(user.emailTemplates.passwordReset);
+    } catch (error) {
+        console.error('Error updating email template settings:', error);
+        res.status(500).json({ error: 'Failed to update email template settings' });
     }
 });
 

@@ -2,8 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = document.querySelector('.profile-card');
     const cardWrapper = document.querySelector('.profile-wrapper');
     const content = document.querySelector('.profile-content');
+    const toggleBtn = document.querySelector('.profile-toggle-btn');
 
     let bounds;
+    let isFlipped = false;
 
     function rotateToMouse(e) {
         const mouseX = e.clientX;
@@ -62,6 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function toggleCard() {
+        if (!isFlipped) {
+            content.style.transform = 'rotateY(180deg)';
+            toggleBtn.classList.add('flipped');
+        } else {
+            content.style.transform = 'rotateY(0)';
+            toggleBtn.classList.remove('flipped');
+        }
+        isFlipped = !isFlipped;
+    }
+
     card.addEventListener('mouseenter', () => {
         bounds = card.getBoundingClientRect();
         document.addEventListener('mousemove', rotateToMouse);
@@ -72,14 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
         resetStyles();
     });
 
-    // Handle card flip
-    let isFlipped = false;
-    card.addEventListener('click', () => {
-        if (!isFlipped) {
-            content.style.transform = 'rotateY(180deg)';
-        } else {
-            content.style.transform = 'rotateY(0)';
+    // Handle toggle button click
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            toggleCard();
+        });
+    }
+
+    // Handle card click (but not when clicking the toggle button)
+    card.addEventListener('click', (e) => {
+        if (!e.target.closest('.profile-toggle-btn')) {
+            toggleCard();
         }
-        isFlipped = !isFlipped;
     });
 });

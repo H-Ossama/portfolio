@@ -584,3 +584,17 @@ body[data-theme="light"] .section-bg-overlay {
 [data-theme="light"] p {
     color: var(--winter-text-light);
 }
+
+/* Winter theme toggle button */
+[data-theme="light"] .profile-toggle-btn {
+    background: rgba(72, 149, 239, 0.15);
+    border: 1px solid rgba(72, 149, 239, 0.3);
+    color: var(--winter-primary);
+    backdrop-filter: var(--frost-blur);
+}
+
+[data-theme="light"] .profile-toggle-btn:hover {
+    background: rgba(72, 149, 239, 0.25);
+    box-shadow: 0 6px 20px rgba(72, 149, 239, 0.4);
+    transform: scale(1.1);
+}

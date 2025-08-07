@@ -125,8 +125,8 @@
     <!-- Theme Warning Popup -->
     <div class="theme-warning-popup">
         <div class="popup-content">
-            <h3 class="popup-title">Switch to Winter Theme?</h3>
-            <p class="popup-message">Experience our magical winter wonderland theme.</p>
+            <h3 class="popup-title">Switch to Light Theme?</h3>
+            <p class="popup-message">Experience our bright light theme with beautiful animations.</p>
             <div class="popup-actions">
                 <button class="popup-button popup-preview">Try It</button>
                 <button class="popup-button popup-close">Stay Dark</button>
@@ -138,6 +138,7 @@
     <div class="theme-loading-screen">
         <div class="theme-transition-backdrop"></div>
         <div class="theme-transition-elements">
+            <div class="theme-horizon"></div>
             <div class="theme-transition-sun"></div>
             <div class="theme-transition-moon"></div>
             <div class="theme-rays"></div>
@@ -155,6 +156,7 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s ease;
+            overflow: hidden;
         }
 
         .theme-loading-screen.active {
@@ -167,56 +169,242 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 5);
-            transition: background-color 2s ease;
+            background: rgba(0, 0, 0, 0.5);
+            transition: background-color 1.5s ease;
         }
 
         .theme-transition-elements {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         .theme-transition-sun,
         .theme-transition-moon {
-            display: none;
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             position: absolute;
-            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateX(-50%) scale(0);
+            opacity: 0;
         }
 
         .theme-transition-sun {
             background: #ffd700;
-            box-shadow: 0 0 50px #ffd700;
+            box-shadow: 0 0 60px #ffd700;
+            bottom: -100px; /* Start below viewport */
         }
 
         .theme-transition-moon {
             background: #fff;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+            top: -100px; /* Start above viewport */
         }
 
         .theme-rays {
             position: absolute;
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
+            left: 50%;
+            bottom: -140px; /* Position relative to sun */
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            pointer-events: none;
+        }
+
+        /* Create 8 rays around the sun */
+        .theme-rays:before,
+        .theme-rays:after {
+            content: '';
+            position: absolute;
             top: 50%;
             left: 50%;
+            background: linear-gradient(to right, rgba(255, 215, 0, 0), rgba(255, 215, 0, 0.8), rgba(255, 215, 0, 0));
+            height: 3px;
+            width: 200px;
             transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 1s ease;
         }
 
+        .theme-rays:after {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        /* Add more rays at different angles */
+        .theme-rays:before {
+            box-shadow: 
+                0 0 15px rgba(255, 215, 0, 0.8),
+                0 0 30px rgba(255, 215, 0, 0.6),
+                0 0 45px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Add horizontal line as horizon */
+        .theme-horizon {
+            position: absolute;
+            bottom: 30%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scaleX(0);
+            transition: transform 0.8s ease;
+        }
+
+        /* Sunrise state - sun appears from bottom */
         [data-transition="to-light"] .theme-transition-backdrop {
-            background: rgba(255, 255, 255, 0.9);
+            background: linear-gradient(to top, #ff7e5f, #feb47b, #ffedbc, #87ceeb);
         }
 
+        [data-transition="to-light"] .theme-transition-sun {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            bottom: 35%; /* Rise to slightly above horizon */
+        }
+
+        [data-transition="to-light"] .theme-rays {
+            opacity: 1;
+            bottom: calc(35% - 50px); /* Position relative to sun */
+            transform: translateX(-50%) rotate(0deg);
+        }
+        
+        [data-transition="to-light"] .theme-horizon {
+            transform: scaleX(1);
+        }
+
+        /* Sunset state - moon rises from top */
         [data-transition="to-dark"] .theme-transition-backdrop {
-            background: rgba(0, 0, 0, 0.9);
+            background: linear-gradient(to bottom, #614385, #516395, #1a1a2e);
+        }
+
+        [data-transition="to-dark"] .theme-transition-moon {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            top: 35%; /* Moon rises from top to middle */
+        }
+        
+        [data-transition="to-dark"] .theme-horizon {
+            transform: scaleX(1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Add -webkit-backdrop-filter for Safari support */
+        .lang-options {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Theme Warning Popup Styles */
+        .theme-warning-popup {
+            position: fixed;
+            top: 1;
+            width: 100%;
+            height: 40%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .theme-warning-popup.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-content {
+            background: rgba(30, 30, 40, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-warning-popup.show .popup-content {
+            transform: translateY(0);
+        }
+        
+        .popup-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-gold);
+        }
+        
+        .popup-message {
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .popup-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .popup-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-preview {
+            background: var(--primary-gold);
+            color: #121212;
+            border: none;
+        }
+        
+        .popup-preview:hover {
+            background: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        .popup-close {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="light"] .popup-content {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        
+        [data-theme="light"] .popup-title {
+            color: #3498db;
+        }
+        
+        [data-theme="light"] .popup-preview {
+            background: #3498db;
+            color: white;
+        }
+        
+        [data-theme="light"] .popup-preview:hover {
+            background: #2980b9;
+        }
+        
+        [data-theme="light"] .popup-close {
+            color: #333;
+            border-color: rgba(0, 0, 0, 0.2);
         }
     </style>
 
@@ -367,6 +555,10 @@
             <div class="hero-profile">
                 <div class="profile-wrapper winter-card">
                     <div class="profile-card frosted-card">
+                        <!-- Rotation Toggle Icon -->
+                        <button class="profile-toggle-btn" aria-label="Toggle profile information">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
                         <div class="profile-content">
                             <div class="profile-frame">
                                 <img src="../assets/images/oussama.png" alt="Oussama Hattan" class="profile-image">
@@ -533,7 +725,7 @@
                 <div class="ice-crystal"></div>
             </div>
             
-            <a href="https://github.com/ossama21" class="stat-card-link" target="_blank" rel="noopener noreferrer" aria-label="View Projects on GitHub">
+            <a href="https://github.com/H-Ossama" class="stat-card-link" target="_blank" rel="noopener noreferrer" aria-label="View Projects on GitHub">
                 <div class="stat-card frost-card winter-card aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
                     <div class="stat-icon">
                         <i class="fas fa-clipboard-check"></i>
@@ -560,7 +752,7 @@
         <div class="about-left">
             <div class="about-image-container winter-card frosted-card">
                 <div class="image-frame">
-                    <img src="../assets/images/oussama_chatgpt.png" alt="Oussama Hattan">
+                    <img src="../assets/images/oussama.png" alt="Oussama Hattan">
                 </div>
                 <div class="ice-crystal"></div>
             </div>
@@ -720,7 +912,7 @@
                 <h3>About Me</h3>
                 <p>Backend developer specializing in building robust and scalable server-side applications. Passionate about creating efficient solutions and learning new technologies.</p>
                 <div class="social-links">
-                    <a href="https://github.com/ossama21" class="github" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                    <a href="https://github.com/H-Ossama" class="github" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
                         <i class="fab fa-github"></i>
                     </a>
                     <a href="https://www.linkedin.com/in/h-oussama/" class="linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
@@ -757,9 +949,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/ossama21" target="_blank" rel="noopener noreferrer">
+                        <a href="https://github.com/H-Ossama" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-github"></i>
-                            @ossama21
+                            @H-Ossama
                         </a>
                     </li>
                     <li>
@@ -792,6 +984,36 @@
                 }, 500);
             }, 2000); // Show loading screen for 2 seconds
         });
+
+        // Fix theme toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create new instance of theme transition manager
+            const transitionManager = new ThemeTransitionManager();
+            
+            // Remove any existing event listeners by cloning and replacing the button
+            const themeToggle = document.querySelector('.theme-toggle');
+            const newThemeToggle = themeToggle.cloneNode(true);
+            themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+            
+            // Add the fixed event listener
+            newThemeToggle.addEventListener('click', async () => {
+                // Get current theme
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'dark') {
+                    // Only show popup when going from dark to light
+                    const confirmed = await transitionManager.showThemePopup();
+                    
+                    if (confirmed) {
+                        // Dark to Light transition
+                        await transitionManager.transitionToLight();
+                    }
+                } else {
+                    // Light to Dark transition - no popup
+                    await transitionManager.transitionToDark();
+                }
+            });
+        });
     </script>
 </body>
 </html>
@@ -804,7 +1026,7 @@
     position: fixed;
     top: 2rem;
     right: 2rem;
-    z-index: var(--z-index-theme-toggle);
+    z-index: 10001;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -825,12 +1047,19 @@
     position: fixed;
     top: 2rem;
     right: 6rem;
-    z-index: var(--z-index-theme-toggle);
-    background: rgba(18, 18, 18, 0.75);
+    z-index: 10001;
+    background: rgba(18, 18, 18, 0.9);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(212, 175, 55, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+}
+
+.lang-switch:hover {
+    transform: scale(1.05) translateY(-2px);
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
 .lang-switch-btn {
@@ -869,6 +1098,7 @@
     gap: 0.5rem;
     min-width: 120px;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 

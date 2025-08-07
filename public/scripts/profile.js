@@ -7,16 +7,25 @@ const profileManager = {
     },
 
     getProfileTemplate() {
+        // Added tab structure
         return `
             <div class="section-header">
-                <h2>Profile Settings</h2>
-                <button class="save-btn" id="save-profile">
+                <h2>Profile & Settings</h2>
+                <button class="save-btn" id="save-profile" style="display: none;"> <!-- Initially hidden, shown on relevant tabs -->
                     <i class="fas fa-save"></i>
                     <span>Save Changes</span>
                 </button>
             </div>
 
-            <div class="profile-content">
+            <div class="profile-tabs">
+                <button class="tab-button active" data-tab="account">Account Info</button>
+                <button class="tab-button" data-tab="theme">Theme</button>
+                <button class="tab-button" data-tab="image">Profile Image</button>
+                <button class="tab-button" data-tab="email-template">Reset Email</button>
+            </div>
+
+            <div class="profile-tab-content active" id="account-tab-content">
+                <!-- Account Info content moved here -->
                 <div class="profile-section">
                     <h3>Account Information</h3>
                     <div class="form-group">
@@ -33,7 +42,10 @@ const profileManager = {
                         <small>Leave blank to keep current password</small>
                     </div>
                 </div>
+            </div>
 
+            <div class="profile-tab-content" id="theme-tab-content">
+                <!-- Theme Preferences content moved here -->
                 <div class="profile-section">
                     <h3>Theme Preferences</h3>
                     <div class="form-group">
@@ -45,7 +57,10 @@ const profileManager = {
                         </select>
                     </div>
                 </div>
+            </div>
 
+            <div class="profile-tab-content" id="image-tab-content">
+                <!-- Profile Image content moved here -->
                 <div class="profile-section">
                     <h3>Profile Image</h3>
                     <div class="image-upload-container">
@@ -63,23 +78,52 @@ const profileManager = {
                     </div>
                 </div>
             </div>
+
+            <div class="profile-tab-content" id="email-template-tab-content">
+                <!-- Email template editor will be loaded here -->
+                <div id="email-template-editor-container"></div>
+            </div>
         `;
     },
 
     async loadUserData() {
         try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                // If no token, redirect to login immediately
+                window.location.href = 'login.html';
+                return; // Stop execution
+            }
+
             const response = await fetch('/api/user/settings', {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
-            if (!response.ok) throw new Error('Failed to load user data');
-            
+            // Handle specific error statuses
+            if (response.status === 401 || response.status === 403) {
+                console.error('Authentication error loading user data. Redirecting to login.');
+                utils.showMessage('Authentication failed. Please log in again.', 'error');
+                localStorage.removeItem('token'); // Clear invalid token
+                window.location.href = 'login.html';
+                return; // Stop execution
+            }
+
+            if (!response.ok) {
+                // Handle other non-ok statuses (like 404, 500)
+                const errorData = await response.json().catch(() => ({ error: 'Failed to parse error response' })); // Try to get error details
+                console.error(`Error loading user data: ${response.status}`, errorData);
+                throw new Error(`Failed to load user data (Status: ${response.status})`);
+            }
+
             const userData = await response.json();
             this.populateForm(userData);
         } catch (error) {
-            utils.showMessage('Failed to load user data', 'error');
+            console.error('Error in loadUserData:', error); // Log the actual error object
+            // Display a user-friendly message, potentially using the error message if available
+            utils.showMessage(error.message || 'Failed to load user data', 'error');
+            // Optional: Consider redirecting or specific UI changes based on the error
         }
     },
 
@@ -95,13 +139,58 @@ const profileManager = {
     },
 
     setupEventListeners() {
-        // Image upload preview
+        // Tab switching logic
+        const tabButtons = document.querySelectorAll('.profile-tabs .tab-button');
+        const tabContents = document.querySelectorAll('.profile-tab-content');
+        const saveButton = document.getElementById('save-profile'); // Get the main save button
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+
+                // Update button active state
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Update content active state
+                tabContents.forEach(content => {
+                    content.classList.toggle('active', content.id === `${tabId}-tab-content`);
+                });
+
+                // Show/hide the main save button based on the tab
+                const showSaveButtonForTabs = ['account', 'theme', 'image'];
+                saveButton.style.display = showSaveButtonForTabs.includes(tabId) ? 'inline-flex' : 'none';
+
+
+                // Load email template editor if that tab is selected
+                if (tabId === 'email-template') {
+                    // Check if the emailTemplatesModule and its rendering function exist
+                    if (typeof emailTemplatesModule !== 'undefined' && typeof emailTemplatesModule.renderTemplateEditor === 'function') {
+                        const container = document.getElementById('email-template-editor-container');
+                        // Only render if the container is empty to avoid duplicates
+                        if (container && !container.hasChildNodes()) {
+                             emailTemplatesModule.renderTemplateEditor(container);
+                        }
+                    } else {
+                        console.error('Email templates module or render function not found.');
+                        // Optionally display an error message to the user in the container
+                        const container = document.getElementById('email-template-editor-container');
+                        if(container) container.innerHTML = '<p class="error-message">Error loading email template editor.</p>';
+                    }
+                }
+            });
+        });
+
+
+        // Existing event listeners (scoped correctly by IDs)
         const imageInput = document.getElementById('profile-image');
         imageInput?.addEventListener('change', this.handleImagePreview.bind(this));
 
-        // Form submission
-        const saveButton = document.getElementById('save-profile');
+        // Form submission (now handles combined profile data)
         saveButton?.addEventListener('click', this.handleSave.bind(this));
+
+        // Trigger click on the initially active tab to load its content correctly (if needed)
+        // document.querySelector('.profile-tabs .tab-button.active')?.click(); // Might not be needed if default HTML is sufficient
     },
 
     async handleImagePreview(event) {

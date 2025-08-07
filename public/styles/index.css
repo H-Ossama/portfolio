@@ -230,6 +230,47 @@
     animation: profileFloat 6s ease-in-out infinite;
 }
 
+/* Profile Toggle Button */
+.profile-toggle-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+.profile-toggle-btn i {
+    transition: transform 0.3s ease;
+}
+
+.profile-toggle-btn.flipped i {
+    transform: rotate(180deg);
+}
+
 .profile-content {
     position: relative;
     z-index: 1;
@@ -2915,15 +2956,15 @@ nav.nav-shrink {
     position: fixed;
     top: 2rem;
     right: 2rem;
-    z-index: var(--z-index-theme-toggle);
+    z-index: 10001;
     overflow: hidden;
-    background: rgba(18, 18, 18, 0.75);
+    background: rgba(18, 18, 18, 0.9);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.2),
-        0 2px 8px rgba(212, 175, 55, 0.1);
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(212, 175, 55, 0.2);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2954,6 +2995,7 @@ nav.nav-shrink {
 .theme-toggle i {
     font-size: 1.4rem;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--primary-gold);
 }
 
 /* Light theme specific styles */

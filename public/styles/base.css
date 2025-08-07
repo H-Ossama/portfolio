@@ -228,6 +228,7 @@ a, button, input[type="submit"], input[type="button"], .interactive,
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 /* Base Styles */
@@ -238,7 +239,19 @@ body {
     overflow-x: hidden;
     position: relative;
     transition: all 0.3s ease;
+    min-height: 100%;
+    height: auto;
     /* cursor: none; */
+}
+
+/* Prevent excessive page height */
+* {
+    box-sizing: border-box;
+}
+
+*::after,
+*::before {
+    box-sizing: border-box;
 }
 
 /* Theme Transition */
@@ -1148,6 +1161,18 @@ body[data-theme="light"] {
     --movement-factor: 0.8;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
+}
+
+/* Dark theme toggle button */
+[data-theme="dark"] .profile-toggle-btn {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: #d4af37;
+}
+
+[data-theme="dark"] .profile-toggle-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
 }
 
 [data-theme="dark"] .profile-content {
@@ -2265,7 +2290,7 @@ a, button, input[type="button"], input[type="submit"], .interactive {
 
 /* Hide default cursor on text */
 p, h1, h2, h3, h4, h5, h6, span {
-    /* cursor: none; */
+    cursor: pointer;
 }
 
 /* Special cursor states for different interactions */

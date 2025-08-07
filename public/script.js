@@ -493,6 +493,13 @@ function initThemeToggle() {
         if (!particlesContainer) {
             const container = document.createElement('div');
             container.id = 'winter-particles';
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.zIndex = '0';
+            container.style.pointerEvents = 'none';
             document.body.insertBefore(container, document.body.firstChild);
         }
         
@@ -508,6 +515,98 @@ function initThemeToggle() {
                 section.insertBefore(overlay, section.firstChild);
             }
         });
+    }
+
+    function initLightParticles() {
+        const particlesContainer = document.getElementById('particles-js');
+        if (!particlesContainer) {
+            const container = document.createElement('div');
+            container.id = 'particles-js';
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.zIndex = '0';
+            container.style.pointerEvents = 'none';
+            document.body.insertBefore(container, document.body.firstChild);
+        }
+        
+        // Light theme particles configuration
+        const lightConfig = {
+            particles: {
+                number: {
+                    value: 120,
+                    density: { enable: true, value_area: 800 }
+                },
+                color: {
+                    value: ["#2b6cb0", "#4299e1", "#63b3ed"]
+                },
+                shape: {
+                    type: "circle"
+                },
+                opacity: {
+                    value: 0.6,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 0.8,
+                        minimumValue: 0.2,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        minimumValue: 0.5,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: false
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "bottom",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    repulse: {
+                        distance: 80,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        };
+        
+        if (window.particlesJS) {
+            window.particlesJS('particles-js', lightConfig);
+        }
     }
 
     function removeSnowEffect() {
@@ -530,11 +629,28 @@ function initThemeToggle() {
         });
     }
 
+    function removeLightParticles() {
+        const particlesContainer = document.getElementById('particles-js');
+        if (particlesContainer) {
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                window.pJSDom.forEach(pJSObj => {
+                    if (pJSObj.pJS && typeof pJSObj.pJS.fn?.vendors?.destroy === 'function') {
+                        pJSObj.pJS.fn.vendors.destroy();
+                    }
+                });
+                window.pJSDom = [];
+            } else {
+                particlesContainer.innerHTML = '';
+            }
+            particlesContainer.style.display = 'none';
+        }
+    }
+
     // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme') || 'dark';
     if (savedTheme === 'light') {
         loadWinterThemeCSS();
-        setTimeout(initSnowEffect, 100);
+        setTimeout(initLightParticles, 100);
     }
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
@@ -546,10 +662,20 @@ function initThemeToggle() {
         document.documentElement.classList.add('theme-transition');
         
         if (newTheme === 'light') {
-            loadWinterThemeCSS();
-            setTimeout(initSnowEffect, 100);
-        } else {
+            // Remove dark theme particles first
+            removeLightParticles();
             removeSnowEffect();
+            
+            // Load light theme
+            loadWinterThemeCSS();
+            setTimeout(initLightParticles, 100);
+        } else {
+            // Remove light theme particles first
+            removeLightParticles();
+            removeSnowEffect();
+            
+            // Initialize snow for dark theme (winter theme)
+            setTimeout(initSnowEffect, 100);
         }
 
         document.documentElement.setAttribute('data-theme', newTheme);
@@ -1555,7 +1681,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeIcon('dark');
 });
 
-// Load education data directly from the JSON file
+// Load education data directly from the public API
 async function loadEducationData() {
     // Check visibility setting before fetching/rendering
     if (!portfolioSettings.contentVisibility?.showEducation) {
@@ -1565,7 +1691,7 @@ async function loadEducationData() {
     }
     
     try {
-        const response = await fetch('/data/education.json');
+        const response = await fetch('/api/public/education');
         if (!response.ok) throw new Error('Failed to load education data');
         const educationData = await response.json();
         renderEducationData(educationData);
@@ -1580,7 +1706,9 @@ function renderEducationData(educationData) {
     if (!container) return;
 
     container.innerHTML = educationData.map((edu, index) => {
-        const isCurrentYear = String(edu.year) === '2025';
+        const isCurrentYear = edu.isCurrent || String(edu.year) === '2025';
+        const hasCertificate = edu.certificate && edu.certificate.trim() !== '';
+        
         return `
             <div class="edu-card winter-card frosted-card" data-aos="fade-up" data-aos-delay="${index * 100}">
                 <div class="edu-year-badge ${isCurrentYear ? 'current' : ''}">${isCurrentYear ? `${edu.year} • Current` : edu.year}</div>
@@ -1588,22 +1716,32 @@ function renderEducationData(educationData) {
                     <div class="edu-header">
                         <h3>${edu.title}</h3>
                         <div class="edu-institution">${edu.institution}</div>
+                        ${edu.description ? `<p class="edu-description">${edu.description}</p>` : ''}
                     </div>
-                    <ul class="edu-highlights">
-                        ${edu.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
-                    </ul>
-                    <div class="edu-skills">
-                        ${edu.skills.map(skill => `<span class="edu-skill-tag">${skill}</span>`).join('')}
-                    </div>
+                    ${edu.highlights && edu.highlights.length > 0 ? `
+                        <ul class="edu-highlights">
+                            ${edu.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                    ${edu.skills && edu.skills.length > 0 ? `
+                        <div class="edu-skills">
+                            ${edu.skills.map(skill => `<span class="edu-skill-tag">${skill}</span>`).join('')}
+                        </div>
+                    ` : ''}
                     ${isCurrentYear ? `
                         <button class="certificate-btn in-progress" disabled>
                             <i class="fas fa-hourglass-half"></i>
                             In Progress
                         </button>
-                    ` : `
-                        <button class="certificate-btn" data-certificate-id="${edu.id}">
+                    ` : hasCertificate ? `
+                        <button class="certificate-btn" data-certificate-url="${edu.certificate}">
                             <i class="fas fa-certificate"></i>
                             View Certificate
+                        </button>
+                    ` : `
+                        <button class="certificate-btn no-certificate" disabled>
+                            <i class="fas fa-file-alt"></i>
+                            No Certificate
                         </button>
                     `}
                 </div>
@@ -1612,28 +1750,11 @@ function renderEducationData(educationData) {
     }).join('');
 
     // Add certificate click handlers
-    container.querySelectorAll('.certificate-btn:not(.in-progress)').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const certId = btn.dataset.certificateId;
-            const imgPath = `../../assets/images/certifications/${certId}.jpg`;
-            
-            try {
-                // Check if image exists
-                const response = await fetch(imgPath);
-                if (!response.ok) throw new Error('Certificate not found');
-                
-                // If image exists, open in new tab
-                window.open(imgPath, '_blank');
-            } catch (error) {
-                // Handle error
-                btn.classList.add('error');
-                btn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Certificate Unavailable';
-                
-                // Reset after 3 seconds
-                setTimeout(() => {
-                    btn.classList.remove('error');
-                    btn.innerHTML = '<i class="fas fa-certificate"></i> View Certificate';
-                }, 3000);
+    container.querySelectorAll('.certificate-btn[data-certificate-url]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const certificateUrl = btn.dataset.certificateUrl;
+            if (certificateUrl) {
+                window.open(certificateUrl, '_blank');
             }
         });
     });

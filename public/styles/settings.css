@@ -923,3 +923,32 @@ input:checked + .slider:before {
 .close-popup:hover {
     background: var(--accent-hover);
 }
+
+/* Profile Tabs */
+.profile-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Reuse existing tab button styles if they match */
+/* .tab-button { ... } */
+/* .tab-button.active { ... } */
+
+/* Profile Tab Content Visibility */
+.profile-tab-content {
+    display: none; /* Hide tab content by default */
+    padding-top: 1.5rem; /* Add some space above the content */
+}
+
+.profile-tab-content.active {
+    display: block; /* Show only the active tab content */
+}
+
+/* Ensure profile sections within tabs don't add excessive margins if not needed */
+.profile-tab-content .profile-section {
+    margin-bottom: 0; /* Adjust as needed */
+}

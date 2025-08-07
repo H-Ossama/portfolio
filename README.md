@@ -44,7 +44,7 @@ You can view the live demo of the portfolio [here](https://yourwebsite.com).
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/ossama21/portfolio.git
+   git clone https://github.com/H-Ossama/portfolio.git
    cd portfolio
    ```
 

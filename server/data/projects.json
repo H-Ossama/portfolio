@@ -10,7 +10,7 @@
       "JWT"
     ],
     "image": "/assets/images/project1.jpg",
-    "githubLink": "https://github.com/your-username/project1",
+    "githubLink": "https://github.com/H-Ossama/project1",
     "liveLink": "https://project1-demo.com",
     "createdAt": "2024-02-11T01:32:07.634Z"
   },
@@ -25,7 +25,7 @@
       "Redis"
     ],
     "image": "/assets/images/project2.jpg",
-    "githubLink": "https://github.com/your-username/project2",
+    "githubLink": "https://github.com/H-Ossama/project2",
     "liveLink": "https://project2-demo.com",
     "createdAt": "2024-02-12T01:32:07.634Z"
   },
@@ -40,7 +40,7 @@
       "PostgreSQL"
     ],
     "image": "/assets/images/project3.jpg",
-    "githubLink": "https://github.com/your-username/project3",
+    "githubLink": "https://github.com/H-Ossama/project3",
     "liveLink": "https://project3-demo.com",
     "createdAt": "2024-02-13T01:32:07.634Z"
   },
@@ -55,7 +55,7 @@
       "WebSocket"
     ],
     "image": "/assets/images/project4.jpg",
-    "githubLink": "https://github.com/your-username/project4",
+    "githubLink": "https://github.com/H-Ossama/project4",
     "liveLink": "https://project4-demo.com",
     "createdAt": "2024-02-14T01:32:07.634Z"
   }

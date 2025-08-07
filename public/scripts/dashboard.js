@@ -378,19 +378,108 @@ const navigation = {
     async loadProjects(contentArea) {
         try {
             const projects = await utils.fetchWithAuth('/api/projects');
+            
+            // Calculate project statistics
+            const totalProjects = projects.length;
+            const technologiesUsed = [...new Set(projects.flatMap(p => Array.isArray(p.technologies) ? p.technologies : []))];
+            const activeProjects = projects.filter(p => p.status !== 'archived').length;
+            
             contentArea.innerHTML = `
                 <div class="section-header">
-                    <h2>Projects</h2>
-                    <button class="add-btn" onclick="openModal('project-modal')">
-                        <i class="fas fa-plus"></i> Add Project
-                    </button>
+                    <div class="section-title-area">
+                        <h2>
+                            <i class="fas fa-project-diagram"></i>
+                            Projects Portfolio
+                        </h2>
+                        <p class="section-subtitle">Manage and showcase your development projects</p>
+                    </div>
+                    <div class="section-actions">
+                        <div class="view-options">
+                            <button class="view-btn active" data-view="grid" title="Grid View">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button class="view-btn" data-view="list" title="List View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                        <button class="add-btn" onclick="openModal('project-modal')">
+                            <i class="fas fa-plus"></i> 
+                            <span>Add Project</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="projects-grid">
-                    ${projects.map(project => this.renderProjectCard(project)).join('')}
+                
+                <div class="projects-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">${totalProjects}</div>
+                        <div class="stat-label">Total Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${activeProjects}</div>
+                        <div class="stat-label">Active Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${technologiesUsed.length}</div>
+                        <div class="stat-label">Technologies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${new Date().getFullYear()}</div>
+                        <div class="stat-label">Latest Update</div>
+                    </div>
                 </div>
+
+                ${projects.length === 0 ? `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <h3>No Projects Yet</h3>
+                        <p>Start building your portfolio by adding your first project!</p>
+                        <button class="add-btn primary" onclick="openModal('project-modal')">
+                            <i class="fas fa-plus"></i> Add Your First Project
+                        </button>
+                    </div>
+                ` : `
+                    <div class="projects-container">
+                        <div class="projects-filters">
+                            <div class="filter-group">
+                                <label>Filter by Technology:</label>
+                                <select id="tech-filter" class="filter-select">
+                                    <option value="">All Technologies</option>
+                                    ${technologiesUsed.map(tech => `<option value="${tech}">${tech}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="search-group">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="project-search" placeholder="Search projects...">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="projects-grid" id="projects-grid">
+                            ${projects.map(project => this.renderProjectCard(project)).join('')}
+                        </div>
+                    </div>
+                `}
             `;
+
+            // Initialize filter and search functionality
+            this.initializeProjectFilters(projects);
         } catch (error) {
             utils.showMessage('Failed to load projects', 'error');
+            contentArea.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Failed to Load Projects</h3>
+                    <p>There was an error loading your projects. Please try again.</p>
+                    <button class="retry-btn" onclick="navigation.navigateToSection('projects')">
+                        <i class="fas fa-redo"></i> Retry
+                    </button>
+                </div>
+            `;
         }
     },
 
@@ -417,26 +506,76 @@ const navigation = {
 
     async loadEducation(contentArea) {
         try {
+            console.log('Loading education data...');
             const education = await utils.fetchWithAuth('/api/education');
+            console.log('Education data loaded:', education);
+            
+            if (!Array.isArray(education)) {
+                console.error('Education data is not an array:', education);
+                throw new Error('Invalid education data format');
+            }
+            
             contentArea.innerHTML = `
                 <div class="section-header">
                     <h2>Education</h2>
-                    <button class="add-btn" onclick="openModal('education-modal')">
+                    <button class="add-btn" onclick="openEducationModal()">
                         <i class="fas fa-plus"></i> Add Education
                     </button>
                 </div>
                 <div class="education-timeline">
-                    ${education.map(edu => this.renderEducationCard(edu)).join('')}
+                    ${education.length > 0 
+                        ? education.map(edu => window.renderEducationCardEnhanced ? window.renderEducationCardEnhanced(edu) : this.renderEducationCard(edu)).join('')
+                        : '<div class="empty-state"><i class="fas fa-graduation-cap"></i><p>No education records found. Add your first education entry!</p></div>'}
                 </div>
             `;
         } catch (error) {
-            utils.showMessage('Failed to load education', 'error');
+            console.error('Failed to load education:', error);
+            utils.showMessage('Failed to load education: ' + error.message, 'error');
+            contentArea.innerHTML = `
+                <div class="section-header">
+                    <h2>Education</h2>
+                    <button class="add-btn" onclick="openEducationModal()">
+                        <i class="fas fa-plus"></i> Add Education
+                    </button>
+                </div>
+                <div class="error-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Failed to load education data.</p>
+                    <button onclick="navigation.navigateToSection('education')" class="retry-btn">
+                        <i class="fas fa-sync"></i> Retry
+                    </button>
+                </div>
+            `;
         }
-    },    renderProjectCard(project) {
+    },
+    
+    // Fallback method to render education cards if the enhanced version is not available
+    renderEducationCard(edu) {
+        return `
+            <div class="education-card" data-id="${edu.id}">
+                <div class="education-year">${edu.year}</div>
+                <div class="education-content">
+                    <h3>${edu.title}</h3>
+                    <h4>${edu.institution}</h4>
+                    <p>${edu.description || ''}</p>
+                    <div class="education-actions">
+                        <button onclick="editEducation('${edu.id}')" class="action-btn edit-btn">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteEducation('${edu.id}')" class="action-btn delete-btn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+    
+    renderProjectCard(project) {
         return `
             <div class="project-card" data-id="${project.id}">
                 <div class="project-image">
-                    <img src="${project.image || 'assets/images/project-placeholder.jpg'}" alt="${project.title}">
+                    <img src="${project.image || 'assets/images/project-placeholder.svg'}" alt="${project.title}" loading="lazy">
                     <div class="project-overlay">
                         <div class="project-action-icons">
                             <button onclick="editProject('${project.id}')" class="card-icon-btn edit-icon" title="Edit Project">
@@ -449,17 +588,34 @@ const navigation = {
                     </div>
                 </div>
                 <div class="project-content">
-                    <h3>${project.title}</h3>
-                    <p>${project.description}</p>
+                    <div class="project-header">
+                        <h3>${project.title}</h3>
+                        <div class="project-status">
+                            <span class="status-badge active">Active</span>
+                        </div>
+                    </div>
+                    <p class="project-description">${project.description}</p>
                     <div class="project-technologies">
-                        ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                        ${Array.isArray(project.technologies) ? project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('') : ''}
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-date">
+                            <i class="fas fa-calendar"></i>
+                            ${new Date().getFullYear()}
+                        </span>
+                        <span class="project-type">
+                            <i class="fas fa-code"></i>
+                            Web App
+                        </span>
                     </div>
                     <div class="project-links">
-                        <a href="${project.githubLink}" target="_blank" class="action-btn github-btn">
-                            <i class="fab fa-github"></i> GitHub
+                        <a href="${project.githubLink}" target="_blank" class="project-link github-btn" ${project.githubLink === '#' ? 'style="pointer-events: none; opacity: 0.5;"' : ''}>
+                            <i class="fab fa-github"></i> 
+                            <span>GitHub</span>
                         </a>
-                        <a href="${project.liveLink}" target="_blank" class="action-btn live-btn">
-                            <i class="fas fa-external-link-alt"></i> Live
+                        <a href="${project.liveLink}" target="_blank" class="project-link live-btn" ${project.liveLink === '#' ? 'style="pointer-events: none; opacity: 0.5;"' : ''}>
+                            <i class="fas fa-external-link-alt"></i> 
+                            <span>Live Demo</span>
                         </a>
                     </div>
                 </div>
@@ -494,6 +650,59 @@ const navigation = {
                 </div>
             </div>
         `;
+    },
+
+    // Add project filtering and search functionality
+    initializeProjectFilters(projects) {
+        const techFilter = document.getElementById('tech-filter');
+        const searchInput = document.getElementById('project-search');
+        const projectsGrid = document.getElementById('projects-grid');
+        const viewButtons = document.querySelectorAll('.view-btn');
+
+        if (!techFilter || !searchInput || !projectsGrid) return;
+
+        // Filter and search function
+        const filterProjects = () => {
+            const selectedTech = techFilter.value.toLowerCase();
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            const filteredProjects = projects.filter(project => {
+                const matchesTech = !selectedTech || 
+                    (Array.isArray(project.technologies) && 
+                     project.technologies.some(tech => tech.toLowerCase().includes(selectedTech)));
+                
+                const matchesSearch = !searchTerm || 
+                    project.title.toLowerCase().includes(searchTerm) ||
+                    project.description.toLowerCase().includes(searchTerm) ||
+                    (Array.isArray(project.technologies) && 
+                     project.technologies.some(tech => tech.toLowerCase().includes(searchTerm)));
+
+                return matchesTech && matchesSearch;
+            });
+
+            // Update the grid with filtered projects
+            projectsGrid.innerHTML = filteredProjects.length > 0 
+                ? filteredProjects.map(project => this.renderProjectCard(project)).join('')
+                : `<div class="no-results">
+                     <i class="fas fa-search"></i>
+                     <p>No projects found matching your criteria</p>
+                   </div>`;
+        };
+
+        // Add event listeners
+        techFilter.addEventListener('change', filterProjects);
+        searchInput.addEventListener('input', filterProjects);
+
+        // View toggle functionality
+        viewButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                viewButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const view = btn.dataset.view;
+                projectsGrid.className = view === 'list' ? 'projects-list' : 'projects-grid';
+            });
+        });
     },
 
     renderEducationCard(edu) {
@@ -630,7 +839,89 @@ async function deleteSkill(id) {
     }
 }
 
-// Initialize form handlers
+// Initialize project form handler
+document.addEventListener('DOMContentLoaded', function() {
+    const projectForm = document.getElementById('project-form');
+    
+    if (projectForm) {
+        projectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const editId = form.dataset.editId;
+
+            try {
+                utils.showLoading();
+                
+                // Get form data using multiple methods to ensure compatibility
+                const getFieldValue = (selectors) => {
+                    for (const selector of selectors) {
+                        const field = form.querySelector(selector);
+                        if (field) return field.value;
+                    }
+                    return '';
+                };
+
+                const title = getFieldValue(['#project-title', 'input[name="title"]', '[name="title"]']);
+                const description = getFieldValue(['#project-description', 'textarea[name="description"]', '[name="description"]']);
+                const technologiesStr = getFieldValue(['#project-technologies', 'input[name="technologies"]', '[name="technologies"]']);
+                const githubLink = getFieldValue(['#project-github', 'input[name="githubLink"]', '[name="githubLink"]']);
+                const liveLink = getFieldValue(['#project-live', 'input[name="liveLink"]', '[name="liveLink"]']);
+                
+                // Basic validation
+                if (!title.trim()) {
+                    throw new Error('Project title is required');
+                }
+                if (!description.trim()) {
+                    throw new Error('Project description is required');
+                }
+                if (!technologiesStr.trim()) {
+                    throw new Error('At least one technology is required');
+                }
+
+                const technologies = technologiesStr.split(',').map(tech => tech.trim()).filter(Boolean);
+
+                const data = {
+                    title: title.trim(),
+                    description: description.trim(),
+                    technologies,
+                    githubLink: githubLink.trim() || '#',
+                    liveLink: liveLink.trim() || '#',
+                    image: 'assets/images/project-placeholder.jpg' // Default image
+                };
+
+                if (editId) {
+                    await utils.fetchWithAuth(`/api/projects/${editId}`, {
+                        method: 'PUT',
+                        body: data
+                    });
+                    utils.showMessage('Project updated successfully', 'success');
+                } else {
+                    await utils.fetchWithAuth('/api/projects', {
+                        method: 'POST',
+                        body: data
+                    });
+                    utils.showMessage('Project added successfully', 'success');
+                }
+
+                // Reset form and close modal
+                form.reset();
+                delete form.dataset.editId;
+                closeModal('project-modal');
+                
+                // Reload projects section
+                await navigation.navigateToSection('projects');
+                
+            } catch (error) {
+                utils.showMessage(error.message || 'Failed to save project', 'error');
+                console.error('Project save error:', error);
+            } finally {
+                utils.hideLoading();
+            }
+        });
+    }
+});
+
+// Initialize skill form handlers
 document.getElementById('skill-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -667,7 +958,7 @@ document.getElementById('skill-form')?.addEventListener('submit', async (e) => {
         closeModal('skill-modal');
         
         // Reload skills section
-        await navigation.loadSectionContent('skills');
+        await navigation.navigateToSection('skills');
     } catch (error) {
         utils.showMessage(error.message || 'Failed to save skill', 'error');
     }
@@ -1720,21 +2011,39 @@ async function editProject(id) {
                 modalTitle.innerHTML = '<i class="fas fa-edit"></i> Edit Project';
             }
             
-            // Populate form fields
-            form.elements.title.value = project.title || '';
-            form.elements.description.value = project.description || '';
-            // Ensure technologies is joined correctly, handling potential non-array values
-            form.elements.technologies.value = Array.isArray(project.technologies) ? project.technologies.join(', ') : '';
-            form.elements.image.value = project.image || '';
-            form.elements.githubLink.value = project.githubLink || '';
-            form.elements.liveLink.value = project.liveLink || '';
+            // Populate form fields - check for proper field names
+            const titleField = form.querySelector('#project-title') || form.querySelector('input[name="title"]');
+            const descField = form.querySelector('#project-description') || form.querySelector('textarea[name="description"]');
+            const techField = form.querySelector('#project-technologies') || form.querySelector('input[name="technologies"]');
+            const githubField = form.querySelector('#project-github') || form.querySelector('input[name="githubLink"]');
+            const liveField = form.querySelector('#project-live') || form.querySelector('input[name="liveLink"]');
+            const imagePreview = form.querySelector('#project-image-preview');
+            const existingImageField = form.querySelector('#project-existing-image');
+            
+            if (titleField) titleField.value = project.title || '';
+            if (descField) descField.value = project.description || '';
+            if (techField) techField.value = Array.isArray(project.technologies) ? project.technologies.join(', ') : '';
+            if (githubField) githubField.value = project.githubLink || '';
+            if (liveField) liveField.value = project.liveLink || '';
+            
+            // Handle image preview for editing
+            if (project.image && imagePreview) {
+                imagePreview.src = project.image;
+                imagePreview.style.display = 'block';
+            }
+            if (existingImageField) {
+                existingImageField.value = project.image || '';
+            }
+            
+            // Set edit ID for form submission
             form.dataset.editId = id;
         }
         
         // Show modal
         modal.style.display = 'block';
     } catch (error) {
-        utils.showMessage('Failed to load project details', 'error');
+        utils.showMessage('Failed to load project details: ' + error.message, 'error');
+        console.error('Edit project error:', error);
     }
 }
 
@@ -1967,9 +2276,85 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add listener for the form submission
-    const projectForm = document.getElementById('project-modal-form');
+    // Add listener for the form submission - Enhanced project form handler
+    const projectForm = document.getElementById('project-form');
     if (projectForm) {
-        projectForm.addEventListener('submit', handleProjectFormSubmit);
+        projectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const editId = form.dataset.editId;
+
+            try {
+                utils.showLoading();
+                
+                // Get form data using multiple methods to ensure compatibility
+                const getFieldValue = (selectors) => {
+                    for (const selector of selectors) {
+                        const field = form.querySelector(selector);
+                        if (field) return field.value;
+                    }
+                    return '';
+                };
+
+                const title = getFieldValue(['#project-title', 'input[name="title"]', '[name="title"]']);
+                const description = getFieldValue(['#project-description', 'textarea[name="description"]', '[name="description"]']);
+                const technologiesStr = getFieldValue(['#project-technologies', 'input[name="technologies"]', '[name="technologies"]']);
+                const githubLink = getFieldValue(['#project-github', 'input[name="githubLink"]', '[name="githubLink"]']);
+                const liveLink = getFieldValue(['#project-live', 'input[name="liveLink"]', '[name="liveLink"]']);
+                
+                // Basic validation
+                if (!title.trim()) {
+                    throw new Error('Project title is required');
+                }
+                if (!description.trim()) {
+                    throw new Error('Project description is required');
+                }
+                if (!technologiesStr.trim()) {
+                    throw new Error('At least one technology is required');
+                }
+
+                const technologies = technologiesStr.split(',').map(tech => tech.trim()).filter(Boolean);
+
+                const data = {
+                    title: title.trim(),
+                    description: description.trim(),
+                    technologies,
+                    githubLink: githubLink.trim() || '#',
+                    liveLink: liveLink.trim() || '#',
+                    image: 'assets/images/project-placeholder.jpg' // Default image
+                };
+
+                if (editId) {
+                    await utils.fetchWithAuth(`/api/projects/${editId}`, {
+                        method: 'PUT',
+                        body: data
+                    });
+                    utils.showMessage('Project updated successfully', 'success');
+                } else {
+                    await utils.fetchWithAuth('/api/projects', {
+                        method: 'POST',
+                        body: data
+                    });
+                    utils.showMessage('Project added successfully', 'success');
+                }
+
+                // Reset form and close modal
+                form.reset();
+                delete form.dataset.editId;
+                closeModal('project-modal');
+                
+                // Reload projects section
+                await navigation.navigateToSection('projects');
+                
+            } catch (error) {
+                utils.showMessage(error.message || 'Failed to save project', 'error');
+                console.error('Project save error:', error);
+            } finally {
+                utils.hideLoading();
+            }
+        });
     }
-});
+});  
+  
+// Initialize when DOM is ready  
+document.addEventListener('DOMContentLoaded', initializeDashboard); 

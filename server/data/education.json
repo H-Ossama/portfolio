@@ -1,18 +1,26 @@
 [
   {
+    "id": "1",
     "year": 2025,
     "title": "European (EFED) Bachelor in Web Development",
     "institution": "MULTIHEXA Meknes",
     "isCurrent": true,
+    "description": "",
     "highlights": [
       "Advanced web development studies with European standards",
       "Modern web technologies and frameworks",
       "Full-stack development practices",
       "Currently pursuing (2024-2025)"
     ],
-    "skills": ["Full-Stack Development", "European Standards", "Web Technologies"]
+    "skills": [
+      "Full-Stack Development",
+      "European Standards",
+      "Web Technologies"
+    ],
+    "updatedAt": "2025-07-30T04:30:02.364Z"
   },
   {
+    "id": "2",
     "year": 2024,
     "title": "Computer Networks and Network Security",
     "institution": "Coursera",
@@ -22,9 +30,18 @@
       "Security protocols and best practices",
       "Professional certification"
     ],
-    "skills": ["Network Security", "Computer Networks", "Security Protocols"]
+    "skills": [
+      "Network Security",
+      "Computer Networks",
+      "Security Protocols"
+    ],
+    "description": "",
+    "isCurrent": false,
+    "updatedAt": "2025-07-30T04:08:37.418Z",
+    "certificate": "/assets/certificates/1753848517412-Coursera EQIGIS8IV9VK.pdf"
   },
   {
+    "id": "3",
     "year": 2024,
     "title": "Software Engineering Bootcamp",
     "institution": "ALX AFRICA",
@@ -34,9 +51,18 @@
       "Full-stack application development",
       "Project-based learning"
     ],
-    "skills": ["Software Engineering", "Full-Stack Development", "Modern Practices"]
+    "skills": [
+      "Software Engineering",
+      "Full-Stack Development",
+      "Modern Practices"
+    ],
+    "description": "",
+    "isCurrent": false,
+    "updatedAt": "2025-07-30T04:07:09.312Z",
+    "certificate": "/assets/certificates/1753848429304-17-short-specializations-certificate-oussama-hattan.png"
   },
   {
+    "id": "4",
     "year": 2023,
     "title": "Technicien Spécialisé en Système et Réseau Informatique",
     "institution": "EFET (Ecole Française D'enseignement Technique)",
@@ -46,6 +72,14 @@
       "Hardware and software integration",
       "Technical specialization (2021-2023)"
     ],
-    "skills": ["IT Systems", "Network Administration", "System Integration"]
+    "skills": [
+      "IT Systems",
+      "Network Administration",
+      "System Integration"
+    ],
+    "description": "",
+    "isCurrent": false,
+    "updatedAt": "2025-07-30T04:09:26.938Z",
+    "certificate": "/assets/certificates/1753848566922-WhatsApp Image 2024-12-26 Ã  20.58.55_50216c56.jpg"
   }
 ]

@@ -65,6 +65,78 @@ const winterParticlesConfig = {
     retina_detect: true
 };
 
+// Light theme particles configuration
+const lightParticlesConfig = {
+    particles: {
+        number: {
+            value: 120,
+            density: { enable: true, value_area: 800 }
+        },
+        color: {
+            value: ["#2b6cb0", "#4299e1", "#63b3ed"]
+        },
+        shape: {
+            type: "circle"
+        },
+        opacity: {
+            value: 0.6,
+            random: true,
+            anim: {
+                enable: true,
+                speed: 0.8,
+                minimumValue: 0.2,
+                sync: false
+            }
+        },
+        size: {
+            value: 3,
+            random: true,
+            anim: {
+                enable: true,
+                speed: 1,
+                minimumValue: 0.5,
+                sync: false
+            }
+        },
+        line_linked: {
+            enable: false
+        },
+        move: {
+            enable: true,
+            speed: 2,
+            direction: "bottom",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false
+        }
+    },
+    interactivity: {
+        detect_on: "canvas",
+        events: {
+            onhover: {
+                enable: true,
+                mode: "repulse"
+            },
+            onclick: {
+                enable: true,
+                mode: "push"
+            },
+            resize: true
+        },
+        modes: {
+            repulse: {
+                distance: 80,
+                duration: 0.4
+            },
+            push: {
+                particles_nb: 4
+            }
+        }
+    },
+    retina_detect: true
+};
+
 // Rain configuration
 const rainParticlesConfig = {
     particles: {
@@ -186,16 +258,67 @@ function createRainEffect() {
 
 let rainInterval;
 
+function initLightParticles() {
+    const particlesContainer = document.getElementById('particles-js');
+    if (!particlesContainer) {
+        const container = document.createElement('div');
+        container.id = 'particles-js';
+        container.style.position = 'fixed';
+        container.style.top = '0';
+        container.style.left = '0';
+        container.style.width = '100%';
+        container.style.height = '100%';
+        container.style.zIndex = '0';
+        container.style.pointerEvents = 'none';
+        document.body.insertBefore(container, document.body.firstChild);
+    }
+    
+    if (window.particlesJS) {
+        particlesJS('particles-js', lightParticlesConfig);
+    }
+}
+
 function initSnowEffect() {
     const particlesContainer = document.getElementById('winter-particles');
     if (!particlesContainer) {
         const container = document.createElement('div');
         container.id = 'winter-particles';
+        container.style.position = 'fixed';
+        container.style.top = '0';
+        container.style.left = '0';
+        container.style.width = '100%';
+        container.style.height = '100%';
+        container.style.zIndex = '0';
+        container.style.pointerEvents = 'none';
         document.body.insertBefore(container, document.body.firstChild);
     }
     
     if (window.particlesJS) {
         particlesJS('winter-particles', winterParticlesConfig);
+    }
+}
+
+function removeParticles() {
+    // Remove light theme particles
+    const lightContainer = document.getElementById('particles-js');
+    if (lightContainer) {
+        if (window.pJSDom && window.pJSDom.length > 0) {
+            window.pJSDom.forEach(pJSObj => {
+                if (pJSObj.pJS && typeof pJSObj.pJS.fn?.vendors?.destroy === 'function') {
+                    pJSObj.pJS.fn.vendors.destroy();
+                }
+            });
+            window.pJSDom = [];
+        }
+        lightContainer.innerHTML = '';
+        lightContainer.style.display = 'none';
+    }
+
+    // Remove winter particles
+    const winterContainer = document.getElementById('winter-particles');
+    if (winterContainer) {
+        winterContainer.innerHTML = '';
+        winterContainer.style.display = 'none';
     }
 }
 

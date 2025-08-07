@@ -6,6 +6,24 @@
     <title>Admin Login | Portfolio</title>
     <link rel="stylesheet" href="./styles/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .login-error-message {
+            color: #ff4d4d;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            padding: 8px;
+            border-radius: 4px;
+            background-color: rgba(255, 77, 77, 0.1);
+            border-left: 3px solid #ff4d4d;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body class="login-page">
     <div class="bg-container">
@@ -15,7 +33,7 @@
     <div class="login-container">
         <div class="login-box" data-aos="zoom-in">
             <div class="login-header">
-                <img src="/assets/images/oussama_chatgpt.png" alt="Profile" class="login-profile-pic">
+                <img src="/assets/images/oussama.png" alt="Profile" class="login-profile-pic">
                 <h2>Welcome Back!</h2>
                 <p>Access your pro dashboard</p>
             </div>
@@ -114,14 +132,44 @@
                         window.location.href = 'pro-user-dashboard.html';
                     }, 500);
                 } else {
-                    throw new Error(data.message || 'Invalid credentials');
-                }            } catch (error) {
+                    // Pass along the server's error type
+                    throw new Error(data.errorType || 'login_error');
+                }            
+            } catch (error) {
                 // Show error state with vibration animation
                 loginBtn.classList.add('error');
-                btnText.textContent = 'Wrong Password';
+                
+                // Show different error messages based on error type
+                if (error.message === 'username_not_found') {
+                    btnText.textContent = 'User Not Found';
+                } else if (error.message === 'incorrect_password') {
+                    btnText.textContent = 'Wrong Password';
+                } else {
+                    btnText.textContent = 'Login Failed';
+                }
+                
                 btnIcon.innerHTML = '<i class="fas fa-times"></i>';
                 
-                // Remove alert for better user experience, the button animation is enough feedback
+                // Add error message below the form
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'login-error-message';
+                
+                if (error.message === 'username_not_found') {
+                    errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Username not found. Please check your credentials.';
+                } else if (error.message === 'incorrect_password') {
+                    errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Incorrect password. Please try again.';
+                } else {
+                    errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Login failed. Please try again later.';
+                }
+                
+                // Remove any existing error messages
+                const existingError = document.querySelector('.login-error-message');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Add error message after the form
+                document.getElementById('login-form').appendChild(errorMsg);
                 
                 // Reset button after delay
                 setTimeout(() => {
@@ -129,6 +177,7 @@
                     btnText.textContent = 'Login';
                     btnIcon.innerHTML = '<i class="fas fa-arrow-right"></i>';
                     loginBtn.disabled = false;
+                    // Keep the error message visible
                 }, 2000);
             }
         });

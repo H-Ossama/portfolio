@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head>    <meta charset="UTF-8">
+<head>    
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Dashboard</title>
-    <link rel="stylesheet" href="styles/dashboard.css">    <link rel="stylesheet" href="styles/settings.css">
+    <link rel="stylesheet" href="styles/dashboard.css">    
+    <link rel="stylesheet" href="styles/settings.css">
+    <link rel="stylesheet" href="styles/education.css">
     <link rel="stylesheet" href="styles/translations-admin.css">
+    <link rel="stylesheet" href="styles/email-templates.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">    <!-- Chart.js -->    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="scripts/dashboard-particles.js"></script>
-    <script src="scripts/settings-modal.js"></script>
-    <script src="scripts/translations-admin.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Loading Overlay -->
@@ -45,7 +48,8 @@
                     <a href="#" class="nav-item" data-section="skills">
                         <i class="fas fa-code-branch"></i>
                         <span>Skills</span>
-                    </a>                    <a href="#" class="nav-item" data-section="education">
+                    </a>                    
+                    <a href="#" class="nav-item" data-section="education">
                         <i class="fas fa-graduation-cap"></i>
                         <span>Education</span>
                     </a>
@@ -66,7 +70,8 @@
                         <i class="fas fa-chart-line"></i>
                         <span>Visitor Stats</span>
                     </a>
-                </div>                <div class="nav-section">
+                </div>                
+                <div class="nav-section">
                     <h3>Settings</h3>
                     <a href="#" class="nav-item" data-section="profile">
                         <i class="fas fa-user-circle"></i>
@@ -217,17 +222,82 @@
         </div>
     </div>
 
+    <!-- Education Modal -->
+    <div id="education-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="education-modal-title"><i class="fas fa-graduation-cap"></i> Add Education</h2>
+                <button class="close-btn" onclick="closeModal('education-modal')">&times;</button>
+            </div>
+            <form id="education-form">
+                <div class="form-group">
+                    <label for="education-year">Year</label>
+                    <input type="number" id="education-year" name="year" min="1900" max="2030" required>
+                </div>
+                <div class="form-group">
+                    <label for="education-title">Title/Degree</label>
+                    <input type="text" id="education-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="education-institution">Institution</label>
+                    <input type="text" id="education-institution" name="institution" required>
+                </div>
+                <div class="form-group">
+                    <label for="education-description">Description</label>
+                    <textarea id="education-description" name="description" rows="3" placeholder="Brief description of the program or achievements"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="education-highlights">Highlights (comma-separated)</label>
+                    <textarea id="education-highlights" name="highlights" rows="3" placeholder="e.g., Advanced web development, Full-stack practices, Professional certification"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="education-skills">Skills Gained (comma-separated)</label>
+                    <input type="text" id="education-skills" name="skills" placeholder="e.g., JavaScript, React, Node.js">
+                </div>
+                <div class="form-group">
+                    <label for="education-certificate">Certificate/Document</label>
+                    <input type="file" id="education-certificate" name="certificate" accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+                    <button type="button" class="upload-btn-styled" onclick="document.getElementById('education-certificate').click()">
+                        <i class="fas fa-upload"></i> Upload Certificate
+                    </button>
+                    <input type="hidden" id="education-existing-certificate" name="existingCertificate">
+                    <div id="education-certificate-preview" style="display: none;">
+                        <div class="certificate-preview">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="certificate-name"></span>
+                            <button type="button" class="remove-certificate" onclick="removeCertificate()">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="education-current" name="isCurrent"> 
+                        Currently pursuing
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Scripts -->
-    <script src="scripts/charts.js"></script>
-    <script src="scripts/messages.js"></script> <!-- Added messages script -->
-    <script src="scripts/profile.js"></script>  <!-- Added profile script -->
-    <script src="scripts/dashboard.js"></script>
-    <script>
-        // Initialize particles and dashboard
-        document.addEventListener('DOMContentLoaded', () => {
-            dashboardParticles.init();
-            initializeDashboard();
-        });
-    </script>
+    <script src="mock-api.js"></script> <!-- Mock API for testing -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Note: Chart.js is included twice, consider removing one -->
+    <script src="scripts/utils.js" defer></script>
+    <script src="scripts/charts.js" defer></script>
+    <script src="scripts/dashboard.js" defer></script>
+    <script src="scripts/project-form-handler.js" defer></script>
+    <script src="scripts/projects.js" defer></script>
+    <script src="scripts/education.js" defer></script>
+    <script src="scripts/messages.js" defer></script>
+    <script src="scripts/translations-admin.js" defer></script>
+    <script src="scripts/email-templates.js" defer></script>
+    <script src="scripts/settings-modal.js" defer></script> <!-- Keep only one -->
+    <script src="scripts/dashboard-particles.js" defer></script> <!-- Keep only one -->
+    <script src="scripts/profile.js" defer></script> <!-- Add profile script -->
 </body>
 </html>

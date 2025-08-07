@@ -1,0 +1,563 @@
+/* Education Section Styles */
+.education-timeline {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.education-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.education-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.education-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-color);
+}
+
+.education-year {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.current-badge {
+    background: var(--success-color);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.education-content {
+    margin-right: 140px; /* Space for year badge */
+}
+
+.education-header h3 {
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.education-header h4 {
+    color: var(--primary-color);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.education-description {
+    color: var(--text-secondary);
+    margin: 0.5rem 0 1rem 0;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.education-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.education-highlights li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.education-highlights li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.education-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.edu-skill-tag {
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1), rgba(var(--secondary-color-rgb), 0.1));
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+    transition: all 0.3s ease;
+}
+
+.edu-skill-tag:hover {
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.2), rgba(var(--secondary-color-rgb), 0.2));
+    transform: translateY(-1px);
+}
+
+.education-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.action-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+}
+
+.action-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.action-btn.edit-btn:hover {
+    background: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+.action-btn.delete-btn:hover {
+    background: var(--error-color);
+    border-color: var(--error-color);
+}
+
+.action-btn.view-cert-btn {
+    background: linear-gradient(135deg, var(--success-color), #28a745);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.action-btn.view-cert-btn:hover {
+    background: linear-gradient(135deg, #28a745, var(--success-color));
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Education Modal Styles */
+#education-modal .modal-content {
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+#education-modal .modal-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#education-modal .form-group {
+    margin-bottom: 1.5rem;
+}
+
+#education-modal .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+#education-modal input[type="text"],
+#education-modal input[type="number"],
+#education-modal textarea,
+#education-modal select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+#education-modal input[type="text"]:focus,
+#education-modal input[type="number"]:focus,
+#education-modal textarea:focus,
+#education-modal select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+#education-modal textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+}
+
+#education-modal .upload-btn-styled {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.certificate-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+/* Checkbox styling */
+#education-modal .form-group label[for="education-current"] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+#education-modal input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    transform: scale(1.2);
+    accent-color: var(--primary-color);
+}
+
+.certificate-preview i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.certificate-name {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.remove-certificate {
+    background: var(--error-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.remove-certificate:hover {
+    background: #c82333;
+}
+
+.upload-btn-styled {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.upload-btn-styled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* Certificate preview styling */
+.certificate-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.certificate-preview i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.certificate-name {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.remove-certificate {
+    background: var(--error-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.remove-certificate:hover {
+    background: #c82333;
+}
+
+/* Checkbox container styling */
+#education-modal .form-group:has(input[type="checkbox"]) {
+    margin-bottom: 1rem;
+}
+
+/* Checkbox styling */
+#education-modal .form-group label[for="education-current"] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 0;
+    padding: 0.5rem 0;
+}
+
+#education-modal input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    transform: scale(1.2);
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .education-card {
+        padding: 1rem;
+    }
+    
+    .education-content {
+        margin-right: 0;
+        margin-top: 3rem;
+    }
+    
+    .education-year {
+        position: static;
+        margin-bottom: 1rem;
+        align-self: flex-start;
+    }
+    
+    .education-skills {
+        gap: 0.3rem;
+    }
+    
+    .edu-skill-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    /* Mobile modal adjustments */
+    #education-modal .modal-content {
+        width: 95%;
+        margin: 1rem;
+        padding: 1.5rem;
+        max-height: 95vh;
+    }
+    
+    #education-modal .modal-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    #education-modal .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    #education-modal input[type="text"],
+    #education-modal input[type="number"],
+    #education-modal textarea,
+    #education-modal select {
+        padding: 0.65rem;
+        font-size: 0.85rem;
+    }
+    
+    .upload-btn-styled {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #education-modal .modal-content {
+        width: 98%;
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+    
+    #education-modal .modal-header h2 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .education-card {
+    background: var(--card-bg-dark);
+    border-color: var(--border-color-dark);
+}
+
+[data-theme="dark"] .education-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .certificate-preview {
+    background: var(--input-bg-dark);
+    border-color: var(--border-color-dark);
+}
+
+/* Animation for new cards */
+.education-card {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Certificate buttons for main portfolio page */
+.certificate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    text-decoration: none;
+}
+
+.certificate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.3);
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+}
+
+.certificate-btn.in-progress {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.certificate-btn.in-progress:hover {
+    transform: none;
+    box-shadow: none;
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+}
+
+.certificate-btn.no-certificate {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.certificate-btn.no-certificate:hover {
+    transform: none;
+    box-shadow: none;
+    background: linear-gradient(135deg, #dc3545, #c82333);
+}
+
+.certificate-btn.error {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Education card description */
+.edu-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0.5rem 0;
+    line-height: 1.4;
+}
