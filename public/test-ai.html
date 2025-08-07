@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .success {
+            color: #28a745;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI API Test Page</h1>
+        
+        <h3>Test 1: Server AI Test Endpoint</h3>
+        <button onclick="testServerAI()">Test Server AI Endpoint</button>
+        <div id="serverResult" class="output"></div>
+        
+        <h3>Test 2: Direct Frontend AI Test</h3>
+        <input type="text" id="testMessage" placeholder="Enter test message" value="Hello, how are you?">
+        <button onclick="testDirectAI()">Test Direct AI Call</button>
+        <div id="directResult" class="output"></div>
+        
+        <h3>Test 3: Personal Info Loading</h3>
+        <button onclick="testPersonalInfo()">Test Personal Info API</button>
+        <div id="personalInfoResult" class="output"></div>
+    </div>
+
+    <script>
+        // Test 1: Server AI endpoint
+        async function testServerAI() {
+            const resultDiv = document.getElementById('serverResult');
+            resultDiv.innerHTML = 'Testing server AI endpoint...';
+            
+            try {
+                const response = await fetch('/api/test-ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'Hello, this is a test message from the frontend.'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `<span class="success">✅ SUCCESS</span>\n\nAI Response: ${data.response}\n\nFull Response:\n${JSON.stringify(data.fullResponse, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">❌ FAILED</span>\n\nError: ${data.error}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">❌ ERROR</span>\n\n${error.message}`;
+            }
+        }
+        
+        // Test 2: Direct AI call
+        async function testDirectAI() {
+            const resultDiv = document.getElementById('directResult');
+            const message = document.getElementById('testMessage').value;
+            resultDiv.innerHTML = 'Testing direct AI call...';
+            
+            try {
+                const apiKey = 'AIzaSyDRXEHvUO5wMETMcyMzWF7gEQY4iIKKK6M';
+                const apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+                
+                console.log('Making direct AI call with message:', message);
+                
+                const response = await fetch(`${apiUrl}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: message
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 200,
+                        }
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response OK:', response.ok);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`API request failed: ${response.status} - ${errorText}`);
+                }
+                
+                const data = await response.json();
+                console.log('AI response data:', data);
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    resultDiv.innerHTML = `<span class="success">✅ SUCCESS</span>\n\nAI Response: ${aiResponse}\n\nFull Response:\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">❌ UNEXPECTED RESPONSE STRUCTURE</span>\n\n${JSON.stringify(data, null, 2)}`;
+                }
+                
+            } catch (error) {
+                console.error('Direct AI test error:', error);
+                resultDiv.innerHTML = `<span class="error">❌ ERROR</span>\n\n${error.message}`;
+            }
+        }
+        
+        // Test 3: Personal info loading
+        async function testPersonalInfo() {
+            const resultDiv = document.getElementById('personalInfoResult');
+            resultDiv.innerHTML = 'Testing personal info loading...';
+            
+            try {
+                const response = await fetch('/api/personal-info');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<span class="success">✅ SUCCESS</span>\n\nPersonal Info:\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">❌ FAILED</span>\n\nError: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">❌ ERROR</span>\n\n${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

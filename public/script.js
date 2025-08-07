@@ -752,11 +752,14 @@ function initProjectCards() {
 
 function initCounters(counters) {
     counters.forEach(counter => {
-        const target = +counter.dataset.target;
+        const target = parseInt(counter.dataset.target) || 0;
         const increment = target / 100;
         
+        // Set initial value to 0
+        counter.innerText = '0';
+        
         const updateCounter = () => {
-            const count = +counter.innerText;
+            const count = parseInt(counter.innerText) || 0;
             if (count < target) {
                 counter.innerText = Math.ceil(count + increment);
                 setTimeout(updateCounter, 20);

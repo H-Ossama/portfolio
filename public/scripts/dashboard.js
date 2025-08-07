@@ -361,6 +361,9 @@ const navigation = {
                 case 'settings':
                     await settingsManager.loadSettingsSection();
                     break;
+                case 'personal-info':
+                    await this.loadPersonalInfo(contentArea);
+                    break;
                 case 'translations': // Add this case
                     await translationManager.loadTranslationsSection();
                     break;
@@ -543,6 +546,48 @@ const navigation = {
                     <p>Failed to load education data.</p>
                     <button onclick="navigation.navigateToSection('education')" class="retry-btn">
                         <i class="fas fa-sync"></i> Retry
+                    </button>
+                </div>
+            `;
+        }
+    },
+    
+    async loadPersonalInfo(contentArea) {
+        try {
+            contentArea.innerHTML = `
+                <div class="section-header">
+                    <div class="section-title-area">
+                        <h2>
+                            <i class="fas fa-robot"></i>
+                            AI Personal Information
+                        </h2>
+                        <p class="section-subtitle">Manage the information that your AI assistant uses to answer questions about you</p>
+                    </div>
+                </div>
+                <div id="personal-info-container">
+                    <!-- Personal info form will be loaded here -->
+                </div>
+            `;
+
+            // Initialize the personal info manager
+            if (typeof PersonalInfoManager === 'function') {
+                personalInfoManager = new PersonalInfoManager();
+                document.getElementById('personal-info-container').innerHTML = personalInfoManager.renderSection();
+            } else {
+                console.error('PersonalInfoManager not found');
+                contentArea.innerHTML += '<div class="error-message">Personal Info Manager not loaded</div>';
+            }
+        } catch (error) {
+            utils.showMessage('Failed to load personal info section', 'error');
+            contentArea.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Failed to Load Personal Info</h3>
+                    <p>There was an error loading the personal information section. Please try again.</p>
+                    <button class="retry-btn" onclick="navigation.navigateToSection('personal-info')">
+                        <i class="fas fa-redo"></i> Retry
                     </button>
                 </div>
             `;

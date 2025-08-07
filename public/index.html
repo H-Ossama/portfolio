@@ -19,6 +19,7 @@
         
         <!-- Styles -->
         <link rel="stylesheet" href="styles/maintenance.css">
+        <link rel="stylesheet" href="styles/ai-chat.css">
         
         <!-- Security Headers -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -542,13 +543,38 @@
                         </a>
                     </div>
                 </div>
-                <div class="tech-stack-wrapper">
-                    <div class="tech-stack">
-                        <i class="fab fa-node-js" title="Node.js"></i>
-                        <i class="fab fa-python" title="Python"></i>
-                        <i class="fas fa-database" title="Databases"></i>
-                        <i class="fab fa-docker" title="Docker"></i>
-                        <i class="fab fa-aws" title="AWS"></i>
+                <div class="ai-chat-wrapper">
+                    <div class="ai-chat-container">
+                        <div class="ai-chat-header">
+                            <div class="ai-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="ai-info">
+                                <h3>Ask my AI about ME</h3>
+                                <p>I'm Oussama's AI clone - ask me anything about him!</p>
+                            </div>
+                            <button class="ai-toggle-btn" id="aiToggleBtn">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <div class="ai-chat-box" id="aiChatBox">
+                            <div class="ai-messages" id="aiMessages">
+                                <div class="ai-message ai-message-bot">
+                                    <div class="ai-message-avatar">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="ai-message-content">
+                                        Hello! I'm Oussama Hattan. Feel free to ask me about my background, experience, skills, or any projects I've worked on. I'm here to provide you with detailed information about my professional journey.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ai-input-container">
+                                <input type="text" id="aiInput" placeholder="Ask about Oussama's experience, skills, projects..." maxlength="500">
+                                <button id="aiSendBtn" class="ai-send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -601,16 +627,6 @@
                                     </div>
                                 </div>
                                 <div class="info-footer">
-                                    <div class="quick-stats">
-                                        <div class="stat">
-                                            <span class="stat-number">15+</span>
-                                            <span class="stat-label">Projects</span>
-                                        </div>
-                                        <div class="stat">
-                                            <span class="stat-number">8+</span>
-                                            <span class="stat-label">Technologies</span>
-                                        </div>
-                                    </div>
                                     <a href="#contact" class="contact-link">
                                         <i class="fas fa-envelope"></i>
                                         Contact Me
@@ -719,7 +735,7 @@
                     <i class="fas fa-layer-group"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="stat-value counter" data-target="15">0</div>
+                    <div class="stat-value counter" data-target="20">0</div>
                     <div class="stat-label">Technologies</div>
                 </div>
                 <div class="ice-crystal"></div>
@@ -731,7 +747,7 @@
                         <i class="fas fa-clipboard-check"></i>
                     </div>
                     <div class="stat-info">
-                        <div class="stat-value counter" data-target="50">0</div>
+                        <div class="stat-value counter" data-target="15">0</div>
                         <div class="stat-label">Projects Completed</div>
                     </div>
                     <div class="view-more">
@@ -973,6 +989,7 @@
     <script src="scripts/profileCard.js"></script>
     <script src="./scripts/particles-config.js"></script>
     <script src="scripts/analytics.js"></script>
+    <script src="scripts/ai-chat.js"></script>
     <script>
         // Loading screen handler
         window.addEventListener('load', () => {

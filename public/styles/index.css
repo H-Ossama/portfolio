@@ -224,7 +224,7 @@
 .profile-card {
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 320px;
     margin: 0 auto;
     transform-style: preserve-3d;
     animation: profileFloat 6s ease-in-out infinite;
@@ -278,7 +278,7 @@
 
 .profile-frame {
     width: 100%;
-    height: 500px;
+    height: 420px;
     border-radius: 30px;
     overflow: hidden;
     position: relative;
@@ -922,7 +922,7 @@
 .scroll-indicator {
     position: absolute;
     bottom: 4rem;
-    left: 50%;
+    left: 55%;
     transform: translateX(-50%);
     text-align: center;
 }
@@ -2758,7 +2758,7 @@
 }
 
 .logo-text {
-    background: linear-gradient(to right, #ffffff, var(--primary-gold));
+    background: linear-gradient(to right, rgba(26, 26, 26, 0.8), var(--primary-gold));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;

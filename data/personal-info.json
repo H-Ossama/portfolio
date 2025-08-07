@@ -1,0 +1,21 @@
+{
+  "name": "Oussama Hattan",
+  "age": 25,
+  "profession": "Backend Developer",
+  "currentRole": "Full Stack Developer",
+  "company": "Freelance",
+  "experience": "3+ years",
+  "yearsCoding": 4,
+  "educationLevel": "Bachelor's Degree",
+  "education": "Bachelor's in Web Development, Full Stack Engineering certification from ALX",
+  "certifications": "ALX Full Stack Engineering Program, AWS Cloud Practitioner",
+  "location": "Azrou, Morocco",
+  "skills": ["Node.js", "Python", "JavaScript", "PHP", "MySQL", "MongoDB", "Docker", "AWS", "Express.js", "React"],
+  "workExperience": "Started as a junior developer and quickly progressed to full-stack development. Worked on various projects ranging from small business websites to large-scale web applications. Experience with both frontend and backend technologies, database design, and cloud deployment.",
+  "achievements": "Successfully completed 15+ projects, mentored junior developers, contributed to open-source projects, achieved 99% client satisfaction rate",
+  "languages": ["Arabic", "French", "English"],
+  "projects": "15+ completed projects including e-commerce platforms, management systems, and API development",
+  "specialization": "Backend development, API design, database optimization, cloud deployment",
+  "personality": "Passionate about technology, continuous learner, problem solver, detail-oriented, team player",
+  "additionalInfo": "I enjoy working with modern technologies and creating efficient, scalable solutions. Always excited to take on new challenges and learn emerging technologies. Strong focus on code quality and best practices."
+}
