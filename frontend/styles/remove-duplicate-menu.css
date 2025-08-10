@@ -1,0 +1,56 @@
+/**
+ * Remove duplicate burger menus and navigation toggles
+ * This file ensures only one burger menu is visible at a time
+ */
+
+/* Hide all burger menus except the first one on mobile */
+@media screen and (max-width: 674px) {
+    /* Keep only the main mobile nav toggle and position it on the right */
+    .mobile-nav-toggle:first-of-type {
+        display: flex !important;
+        position: fixed !important;
+        top: 1rem !important;
+        right: 1rem !important;
+        left: auto !important;
+    }
+    
+    /* Hide all other burger menu variations */
+    .mobile-nav-toggle:not(:first-of-type),
+    .burger-menu,
+    .hamburger-menu,
+    .menu-toggle,
+    .nav-toggle,
+    .mobile-menu-btn,
+    .mobile-burger {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    /* If there's a burger menu inside mobile header, hide it */
+    .mobile-header .mobile-nav-toggle:not(:only-child) {
+        display: none !important;
+    }
+    
+    /* Ensure the profile section doesn't have its own burger menu */
+    .mobile-profile .burger-menu,
+    .mobile-profile .hamburger,
+    .mobile-profile .menu-btn {
+        display: none !important;
+    }
+}
+
+/* For larger screens, hide ALL mobile toggles */
+@media screen and (min-width: 675px) {
+    .mobile-nav-toggle,
+    .burger-menu,
+    .hamburger-menu,
+    .menu-toggle,
+    .nav-toggle,
+    .mobile-menu-btn,
+    .mobile-burger {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}

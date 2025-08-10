@@ -1,0 +1,196 @@
+/* Animation Consistency Fixes */
+/* Fixes animation timing issues across all breakpoints */
+
+/* Global animation timing reset */
+:root {
+    --normal-animation-duration: 3s;
+    --fast-animation-duration: 1.5s;
+    --slow-animation-duration: 4s;
+    --transition-duration: 0.3s;
+}
+
+/* Desktop animations (1351px and above) */
+@media screen and (min-width: 1351px) {
+    .profile-card {
+        animation-duration: var(--normal-animation-duration) !important;
+        transition-duration: var(--transition-duration) !important;
+    }
+    
+    .loading-screen .loader {
+        animation-duration: 2s !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+        animation-iteration-count: infinite !important;
+    }
+    
+    .title-wrapper {
+        animation-duration: var(--fast-animation-duration) !important;
+    }
+}
+
+/* Medium screen animations (769px to 1350px) */
+@media screen and (min-width: 769px) and (max-width: 1350px) {
+    .profile-card {
+        animation-duration: var(--normal-animation-duration) !important;
+        transition-duration: var(--transition-duration) !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    .loading-screen .loader {
+        animation-duration: 2s !important;
+        animation-timing-function: linear !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+        animation-iteration-count: infinite !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    .title-wrapper {
+        animation-duration: var(--fast-animation-duration) !important;
+        animation-timing-function: ease-out !important;
+    }
+    
+    /* Smooth floating animations */
+    .floating-shapes,
+    .shape,
+    .profile-float {
+        animation-duration: var(--slow-animation-duration) !important;
+        animation-timing-function: ease-in-out !important;
+    }
+}
+
+/* Mobile animations (768px and below) */
+@media screen and (max-width: 768px) {
+    .profile-card {
+        animation-duration: var(--normal-animation-duration) !important;
+        transition-duration: var(--transition-duration) !important;
+        animation-timing-function: ease-in-out !important;
+        transform: none !important; /* Prevent jumping */
+    }
+    
+    .loading-screen .loader {
+        animation-duration: 2s !important;
+        animation-timing-function: linear !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+        animation-iteration-count: infinite !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    .title-wrapper {
+        animation-duration: var(--fast-animation-duration) !important;
+        animation-timing-function: ease-out !important;
+    }
+    
+    /* Reduce complexity for mobile performance */
+    .floating-shapes,
+    .shape,
+    .profile-float {
+        animation-duration: var(--slow-animation-duration) !important;
+        animation-timing-function: ease-in-out !important;
+    }
+}
+
+/* CRITICAL FIX: Target the problematic range (675px to 768px) */
+@media screen and (min-width: 675px) and (max-width: 768px) {
+    /* Force consistent animation timing */
+    .profile-card,
+    .profile-content,
+    .profile-frame {
+        animation-duration: var(--normal-animation-duration) !important;
+        transition-duration: var(--transition-duration) !important;
+        animation-timing-function: ease-in-out !important;
+        will-change: auto !important; /* Prevent GPU issues */
+    }
+    
+    .loading-screen,
+    .loading-content,
+    .loader {
+        animation-duration: 2s !important;
+        animation-timing-function: linear !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+        animation-iteration-count: infinite !important;
+        animation-timing-function: ease-in-out !important;
+        animation-delay: 0s !important;
+    }
+    
+    .title-wrapper,
+    .hero-content {
+        animation-duration: var(--fast-animation-duration) !important;
+        animation-timing-function: ease-out !important;
+        animation-fill-mode: both !important;
+    }
+    
+    /* Prevent flickering */
+    .hero-profile,
+    .hero-container {
+        animation-duration: var(--fast-animation-duration) !important;
+        transition-duration: var(--transition-duration) !important;
+    }
+    
+    /* Fix any elements causing rapid animation */
+    .floating-shapes,
+    .shape,
+    .particle {
+        animation-duration: 6s !important;
+        animation-timing-function: linear !important;
+    }
+}
+
+/* Additional fix for 775px-990px range (missing navbar issue) */
+@media screen and (min-width: 775px) and (max-width: 990px) {
+    /* Ensure this is treated as medium screen */
+    nav:not(.drawer-nav):not(.mobile-nav-menu),
+    .bottom-navbar {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        bottom: 1rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 1000 !important;
+    }
+    
+    /* Hide mobile elements */
+    .mobile-header,
+    .mobile-nav-toggle,
+    .mobile-nav-menu {
+        display: none !important;
+    }
+    
+    /* Show top controls */
+    .top-controls {
+        display: flex !important;
+        position: fixed !important;
+        top: 1rem !important;
+        right: 1rem !important;
+    }
+}
+
+/* Prevent animation conflicts during screen resize */
+@media screen and (orientation: landscape) {
+    .profile-card {
+        animation-duration: var(--normal-animation-duration) !important;
+        transition-duration: var(--transition-duration) !important;
+    }
+}
+
+/* Performance optimization for animations */
+.profile-card,
+.loading-screen,
+.greeting-emoji,
+.title-wrapper {
+    will-change: transform, opacity !important;
+    backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
+}

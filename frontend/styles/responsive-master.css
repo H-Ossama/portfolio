@@ -1,0 +1,280 @@
+/* Master Responsive Breakpoints */
+/* This file establishes consistent behavior across all screen sizes */
+
+/* ================================================== */
+/* DESKTOP SCREENS: 1351px and above */
+/* ================================================== */
+@media screen and (min-width: 1351px) {
+    /* Desktop navigation - normal navbar */
+    nav:not(.mobile-nav-menu) {
+        display: flex !important;
+        position: relative !important;
+    }
+    
+    /* Hide mobile elements */
+    .mobile-header,
+    .mobile-nav-toggle,
+    .mobile-nav-menu,
+    .mobile-nav-overlay {
+        display: none !important;
+    }
+    
+    /* Hide bottom navbar */
+    .bottom-navbar {
+        display: none !important;
+    }
+    
+    /* Desktop animations - normal speed */
+    .profile-card {
+        animation-duration: 3s !important;
+        transition-duration: 0.3s !important;
+    }
+    
+    .loading-screen .loader {
+        animation-duration: 2s !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+    }
+    
+    .title-wrapper {
+        animation-duration: 1s !important;
+    }
+    
+    /* Desktop body padding */
+    body {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+/* ================================================== */
+/* MEDIUM SCREENS: 769px to 1350px */
+/* ================================================== */
+@media screen and (min-width: 769px) and (max-width: 1350px) {
+    /* Hide desktop navigation */
+    nav:not(.mobile-nav-menu) {
+        display: none !important;
+    }
+    
+    /* Hide mobile header and mobile nav */
+    .mobile-header,
+    .mobile-nav-toggle,
+    .mobile-nav-menu,
+    .mobile-nav-overlay {
+        display: none !important;
+    }
+    
+    /* Show bottom navbar for medium screens */
+    .bottom-navbar {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 1rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 1000 !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        border-radius: 25px !important;
+        padding: 0.75rem 1.5rem !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Show top controls for medium screens */
+    .top-controls {
+        display: flex !important;
+        position: fixed !important;
+        top: 1rem !important;
+        right: 1rem !important;
+        gap: 1rem !important;
+        z-index: 1000 !important;
+    }
+    
+    .theme-toggle,
+    .lang-switch-btn {
+        display: flex !important;
+    }
+    
+    /* Medium screen animations - normal speed */
+    .profile-card {
+        animation-duration: 3s !important;
+        transition-duration: 0.3s !important;
+    }
+    
+    .loading-screen .loader {
+        animation-duration: 2s !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+    }
+    
+    .title-wrapper {
+        animation-duration: 1s !important;
+    }
+    
+    /* Medium screen body padding */
+    body {
+        padding-top: 0 !important;
+        padding-bottom: 80px !important; /* Space for bottom navbar */
+    }
+}
+
+/* ================================================== */
+/* MOBILE SCREENS: 768px and below */
+/* ================================================== */
+@media screen and (max-width: 768px) {
+    /* Hide desktop navigation */
+    nav:not(.mobile-nav-menu) {
+        display: none !important;
+    }
+    
+    /* Hide bottom navbar */
+    .bottom-navbar {
+        display: none !important;
+    }
+    
+    /* Hide top controls */
+    .top-controls,
+    .theme-toggle:not(.mobile-theme-toggle),
+    .lang-switch-btn:not(.mobile-lang-toggle) {
+        display: none !important;
+    }
+    
+    /* Show mobile elements */
+    .mobile-header {
+        display: flex !important;
+    }
+    
+    .mobile-nav-toggle {
+        display: flex !important;
+    }
+    
+    /* Mobile animations - consistent normal speed */
+    .profile-card {
+        animation-duration: 3s !important;
+        transition-duration: 0.3s !important;
+        transform: none !important; /* Prevent jumping */
+    }
+    
+    .loading-screen .loader {
+        animation-duration: 2s !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+    }
+    
+    .title-wrapper {
+        animation-duration: 1s !important;
+    }
+    
+    /* Fix fast animations between 675px-768px */
+    .floating-shapes,
+    .shape,
+    .profile-float {
+        animation-duration: 4s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    /* Mobile body padding */
+    body {
+        padding-top: 60px !important; /* Space for mobile header */
+        padding-bottom: 0 !important;
+    }
+}
+
+/* ================================================== */
+/* ADDITIONAL FIXES FOR SMOOTH TRANSITIONS */
+/* ================================================== */
+
+/* Ensure smooth transitions between breakpoints */
+* {
+    transition-duration: 0.3s !important;
+}
+
+/* Prevent animation glitches during resize */
+@media screen and (min-width: 675px) and (max-width: 800px) {
+    .profile-card {
+        animation-duration: 3s !important;
+        transition-duration: 0.3s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    .loading-screen .loader {
+        animation-duration: 2s !important;
+        animation-timing-function: linear !important;
+    }
+    
+    .greeting-emoji {
+        animation-duration: 2s !important;
+        animation-iteration-count: infinite !important;
+        animation-timing-function: ease-in-out !important;
+    }
+}
+
+/* ================================================== */
+/* LIGHT THEME ADJUSTMENTS */
+/* ================================================== */
+
+[data-theme="light"] {
+    @media screen and (min-width: 769px) and (max-width: 1350px) {
+        .bottom-navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(52, 152, 219, 0.3) !important;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .mobile-header {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-bottom-color: rgba(52, 152, 219, 0.2) !important;
+        }
+    }
+}
+
+/* ================================================== */
+/* CRITICAL OVERRIDES */
+/* ================================================== */
+
+/* Ensure no conflicting styles */
+@media screen and (min-width: 775px) and (max-width: 990px) {
+    /* Force bottom navbar to show */
+    .bottom-navbar {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Hide mobile elements */
+    .mobile-header,
+    .mobile-nav-toggle,
+    .mobile-nav-menu {
+        display: none !important;
+    }
+}
+
+/* Fix the 768px-675px animation issue specifically */
+@media screen and (min-width: 675px) and (max-width: 768px) {
+    .profile-card,
+    .profile-frame,
+    .profile-content {
+        animation-duration: 3s !important;
+        transition-duration: 0.3s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    .loading-content {
+        animation-duration: 2s !important;
+    }
+    
+    /* Prevent fast flickering */
+    .hero-content,
+    .title-wrapper,
+    .greeting-emoji {
+        animation-duration: 1.5s !important;
+        animation-timing-function: ease-out !important;
+    }
+}

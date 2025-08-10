@@ -1,0 +1,493 @@
+/* Final Mobile Fixes and Overrides */
+/* This file contains final fixes for mobile compatibility issues */
+
+/* Ensure mobile navigation always works */
+@media screen and (max-width: 674px) {
+    /* Force mobile navigation visibility - but hide duplicates */
+    .mobile-nav-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Hide any duplicate burger menus/toggles */
+    .mobile-nav-toggle:not(:first-of-type),
+    .burger-menu:not(.mobile-nav-toggle),
+    .nav-toggle:not(.mobile-nav-toggle),
+    .menu-toggle:not(.mobile-nav-toggle) {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    
+    /* Hide desktop navigation completely */
+    nav:not(.mobile-nav-menu) {
+        display: none !important;
+    }
+    
+    /* Hide desktop theme and language switches */
+    .theme-toggle:not(.mobile-theme-toggle),
+    .lang-switch:not(.mobile-lang-toggle) {
+        display: none !important;
+    }
+    
+    /* Hide any duplicate or legacy navigation elements */
+    .hamburger:not(.mobile-nav-toggle),
+    .menu-btn:not(.mobile-nav-toggle),
+    .nav-btn:not(.mobile-nav-toggle),
+    .mobile-nav-button:not(.mobile-nav-toggle) {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    
+    /* Ensure proper z-index stacking and hide duplicates */
+    .mobile-nav-overlay {
+        z-index: 9998 !important;
+    }
+    
+    .mobile-nav-menu {
+        z-index: 9999 !important;
+    }
+    
+    .mobile-nav-toggle {
+        z-index: 10000 !important;
+    }
+    
+    /* Hide burger menu in mobile header if mobile-nav-toggle exists */
+    .mobile-header .burger-menu,
+    .mobile-header .hamburger,
+    .mobile-header .menu-btn {
+        display: none !important;
+    }
+    
+    /* Fix any layout issues */
+    body {
+        overflow-x: hidden !important;
+    }
+    
+    /* Ensure proper spacing for mobile toggle */
+    .hero {
+        padding-top: 5rem !important;
+    }
+    
+    /* Fix any conflicting positioning */
+    .logo-container {
+        display: none !important;
+    }
+}
+
+/* Specific fixes for very small screens */
+@media screen and (max-width: 480px) {
+    /* Ensure minimum font sizes */
+    body, p, div, span {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    /* Fix button sizes */
+    button, .cta-button, .project-link {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0.75rem 1rem;
+    }
+    
+    /* Fix input sizes for iOS */
+    input, textarea, select {
+        font-size: 16px !important;
+        padding: 0.75rem !important;
+    }
+    
+    /* Fix text readability */
+    h1 { font-size: 1.8rem !important; }
+    h2 { font-size: 1.5rem !important; }
+    h3 { font-size: 1.3rem !important; }
+    h4 { font-size: 1.1rem !important; }
+    
+    /* Fix card paddings */
+    .project-card,
+    .tech-item,
+    .skill-item {
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Fix grid layouts */
+    .project-grid,
+    .skills-grid,
+    .tech-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+}
+
+/* iPhone specific fixes */
+@supports (-webkit-appearance: none) {
+    @media screen and (max-width: 674px) {
+        /* Fix iOS specific issues */
+        input, textarea, select {
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 8px;
+        }
+        
+        /* Fix iOS zoom issues */
+        input:focus, textarea:focus, select:focus {
+            font-size: 16px !important;
+        }
+        
+        /* Fix iOS scrolling */
+        body {
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .mobile-nav-menu {
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+}
+
+/* Android specific fixes */
+@media screen and (max-width: 674px) {
+    /* Fix Android viewport issues */
+    html {
+        height: 100%;
+        height: -webkit-fill-available;
+    }
+    
+    body {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+    
+    /* Fix Android keyboard issues */
+    .keyboard-open .mobile-nav-menu {
+        height: 100vh;
+        height: calc(100vh - env(keyboard-inset-height, 0px));
+    }
+}
+
+/* Fix for landscape orientation */
+@media screen and (max-width: 674px) and (orientation: landscape) {
+    /* Adjust mobile menu for landscape */
+    .mobile-nav-menu {
+        width: 300px;
+        font-size: 0.9rem;
+    }
+    
+    .mobile-nav-links a {
+        padding: 0.6rem 1.5rem;
+    }
+    
+    /* Adjust hero section for landscape */
+    .hero {
+        padding: 2rem 1rem;
+        min-height: auto;
+    }
+    
+    .hero-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+    
+    .profile-card {
+        max-width: 250px;
+        height: 300px;
+    }
+}
+
+/* High DPI display fixes */
+@media screen and (max-width: 674px) and (-webkit-min-device-pixel-ratio: 2) {
+    /* Crisp borders on high DPI */
+    .mobile-nav-menu,
+    .mobile-nav-toggle,
+    .project-card,
+    .cta-button {
+        border-width: 0.5px;
+    }
+    
+    /* Crisp text rendering */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Accessibility fixes */
+@media screen and (max-width: 674px) {
+    /* Better focus indicators */
+    button:focus,
+    a:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: 3px solid var(--primary-gold) !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Skip to content link */
+    .skip-to-content {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--primary-gold);
+        color: var(--primary-black);
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 10001;
+        transform: translateY(-100%);
+        transition: transform 0.3s;
+    }
+    
+    .skip-to-content:focus {
+        transform: translateY(0%);
+    }
+    
+    /* Screen reader improvements */
+    .sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+    }
+}
+
+/* Performance fixes for mobile */
+@media screen and (max-width: 674px) {
+    /* Reduce animation complexity */
+    * {
+        animation-duration: 0.3s !important;
+        transition-duration: 0.3s !important;
+    }
+    
+    /* Hide non-essential decorative elements */
+    .floating-shapes,
+    .section-ambient-light,
+    .snow-particles:not(.essential) {
+        display: none !important;
+    }
+    
+    /* Optimize background effects */
+    .bg-container,
+    #background-canvas {
+        opacity: 0.5 !important;
+    }
+    
+    /* Reduce particle effects */
+    #particles-js,
+    #winter-particles {
+        opacity: 0.3 !important;
+    }
+}
+
+/* Final overrides for stubborn elements */
+@media screen and (max-width: 674px) {
+    /* Force proper mobile layout */
+    .hero-container,
+    .about-wrapper,
+    .contact-content {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+    
+    /* Fix profile card jumping - FINAL OVERRIDE */
+    .profile-card {
+        position: relative !important;
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+        max-width: 280px !important;
+        margin: 0 auto !important;
+    }
+    
+    .profile-frame {
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    
+    .profile-frame img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+    
+    /* Remove ALL hover effects on mobile */
+    .profile-card:hover,
+    .profile-card:active,
+    .profile-card:focus {
+        transform: none !important;
+        animation: none !important;
+    }
+
+    /* Ensure proper text sizes */
+    .name {
+        font-size: clamp(2rem, 8vw, 2.5rem) !important;
+        line-height: 1.1 !important;
+    }
+
+    .section-title {
+        font-size: clamp(1.5rem, 6vw, 2rem) !important;
+        line-height: 1.2 !important;
+    }    /* Fix any overflow issues */
+    .project-card,
+    .skill-item,
+    .edu-card,
+    .stat-card {
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+    
+    /* Ensure proper spacing */
+    .section {
+        padding: 4rem 1rem !important;
+    }
+    
+    /* Fix footer for mobile */
+    .footer-content {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+        gap: 2rem !important;
+    }
+}
+
+/* Dark mode mobile adjustments */
+[data-theme="dark"] {
+    @media screen and (max-width: 674px) {
+        .mobile-nav-menu {
+            background: rgba(10, 10, 10, 0.98) !important;
+            backdrop-filter: blur(20px) !important;
+        }
+        
+        .mobile-nav-toggle {
+            background: rgba(18, 18, 18, 0.95) !important;
+            border-color: rgba(212, 175, 55, 0.3) !important;
+        }
+    }
+}
+
+/* Light mode mobile adjustments */
+[data-theme="light"] {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-menu {
+            background: rgba(248, 250, 252, 0.98) !important;
+            backdrop-filter: blur(20px) !important;
+        }
+        
+        .mobile-nav-toggle {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(52, 152, 219, 0.3) !important;
+            color: #3498db !important;
+        }
+        
+        .mobile-nav-links a {
+            color: #2c3e50 !important;
+        }
+        
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: #3498db !important;
+        }
+    }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+    /* Larger touch targets */
+    button,
+    a,
+    input,
+    textarea,
+    select {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+    
+    /* Remove hover effects that don't work on touch */
+    .project-card:hover,
+    .skill-item:hover,
+    .tech-item:hover {
+        transform: none !important;
+    }
+    
+    /* Add active states for touch feedback */
+    .project-card:active,
+    .skill-item:active,
+    .tech-item:active,
+    .cta-button:active {
+        transform: scale(0.98) !important;
+        opacity: 0.8 !important;
+    }
+}
+
+/* Print styles for mobile */
+@media print {
+    .mobile-nav-toggle,
+    .mobile-nav-overlay,
+    .mobile-nav-menu,
+    .particle-controls,
+    #particles-js,
+    .floating-shapes {
+        display: none !important;
+    }
+    
+    .hero,
+    .projects,
+    .about,
+    .technologies,
+    .education {
+        padding: 1rem !important;
+        page-break-inside: avoid;
+    }
+}
+
+/* Final safety net for very small screens */
+@media screen and (max-width: 320px) {
+    /* Ensure content is always readable */
+    * {
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+    }
+    
+    .mobile-nav-menu {
+        width: 100% !important;
+        left: 0 !important;
+    }
+    
+    .mobile-nav-toggle {
+        right: 0.5rem !important;
+        top: 0.5rem !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .hero {
+        padding: 3rem 0.5rem !important;
+    }
+    
+    .name {
+        font-size: 1.6rem !important;
+    }
+    
+    .section-title {
+        font-size: 1.4rem !important;
+    }
+    
+    .cta-button,
+    .project-link,
+    .submit-btn {
+        font-size: 0.9rem !important;
+        padding: 0.7rem !important;
+    }
+}

@@ -1,0 +1,485 @@
+/* ================================================================
+   CONTACT PAGE RESPONSIVE NAVIGATION FIX
+   Ensures consistent navigation positioning across all screen sizes
+   Matches the main portfolio page configuration
+   ================================================================ */
+
+/* ================================================== */
+/* DESKTOP SCREENS: 1351px and above */
+/* ================================================== */
+@media screen and (min-width: 1351px) {
+    /* Desktop Navigation - Top Center Position */
+    nav {
+        position: fixed !important;
+        top: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 1rem 2rem !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 25px !important;
+        margin-top: 1rem !important;
+        z-index: 1000 !important;
+        width: auto !important;
+        max-width: 600px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Logo positioning */
+    .logo-container {
+        position: fixed !important;
+        top: 1rem !important;
+        left: 1rem !important;
+        z-index: 1001 !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: var(--primary-gold) !important;
+        text-decoration: none !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    /* Theme toggle and language switch */
+    .theme-toggle,
+    .lang-switch {
+        position: fixed !important;
+        top: 1rem !important;
+        z-index: 1001 !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 10px !important;
+        transition: all 0.3s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .theme-toggle {
+        right: 5.5rem !important;
+        padding: 0.75rem !important;
+        width: 3rem !important;
+        height: 3rem !important;
+    }
+    
+    .lang-switch {
+        right: 1rem !important;
+        padding: 0.5rem 0.75rem !important;
+        min-width: 3.5rem !important;
+        height: 3rem !important;
+    }
+    
+    /* Navigation links styling */
+    .nav-links {
+        display: flex !important;
+        list-style: none !important;
+        gap: 1.5rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .nav-links li a {
+        color: var(--text-white) !important;
+        text-decoration: none !important;
+        padding: 0.6rem 1rem !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        font-size: 0.95rem !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+    }
+    
+    .nav-links li a:hover,
+    .nav-links li a.active {
+        background: rgba(212, 175, 55, 0.1) !important;
+        color: var(--primary-gold) !important;
+        transform: translateY(-2px) !important;
+    }
+    
+    /* Hide mobile elements */
+    .mobile-header,
+    .mobile-nav-toggle,
+    .mobile-nav-menu,
+    .mobile-nav-overlay,
+    .bottom-navbar {
+        display: none !important;
+    }
+    
+    /* Contact section padding adjustment */
+    .contact-section {
+        padding-top: 120px !important;
+    }
+}
+
+/* ================================================== */
+/* MEDIUM SCREENS: 769px to 1350px */
+/* ================================================== */
+@media screen and (min-width: 769px) and (max-width: 1350px) {
+    /* Hide desktop navigation */
+    nav {
+        display: none !important;
+    }
+    
+    /* Logo positioning for medium screens */
+    .logo-container {
+        position: fixed !important;
+        top: 1rem !important;
+        left: 1rem !important;
+        z-index: 1001 !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        color: var(--primary-gold) !important;
+        text-decoration: none !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        padding: 0.6rem 0.8rem !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    /* Theme toggle and language switch */
+    .theme-toggle,
+    .lang-switch {
+        position: fixed !important;
+        top: 1rem !important;
+        z-index: 1001 !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 8px !important;
+        transition: all 0.3s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .theme-toggle {
+        right: 5rem !important;
+        padding: 0.6rem !important;
+        width: 2.8rem !important;
+        height: 2.8rem !important;
+    }
+    
+    .lang-switch {
+        right: 1rem !important;
+        padding: 0.4rem 0.6rem !important;
+        min-width: 3rem !important;
+        height: 2.8rem !important;
+    }
+    
+    /* Bottom floating navbar for medium screens */
+    .bottom-navbar {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 1rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 1000 !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        border-radius: 25px !important;
+        padding: 0.75rem 1.5rem !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 1.5rem !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        max-width: 600px !important;
+        min-width: 400px !important;
+    }
+    
+    /* Bottom navbar links */
+    .bottom-navbar .nav-links {
+        display: flex !important;
+        list-style: none !important;
+        gap: 1.5rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .bottom-navbar .nav-links li a {
+        color: var(--text-white) !important;
+        text-decoration: none !important;
+        padding: 0.5rem 0.8rem !important;
+        border-radius: 6px !important;
+        font-weight: 500 !important;
+        font-size: 0.9rem !important;
+        transition: all 0.3s ease !important;
+        white-space: nowrap !important;
+    }
+    
+    .bottom-navbar .nav-links li a:hover,
+    .bottom-navbar .nav-links li a.active {
+        background: rgba(212, 175, 55, 0.1) !important;
+        color: var(--primary-gold) !important;
+    }
+    
+    /* Hide mobile elements */
+    .mobile-header,
+    .mobile-nav-toggle,
+    .mobile-nav-menu,
+    .mobile-nav-overlay {
+        display: none !important;
+    }
+    
+    /* Contact section padding adjustment */
+    .contact-section {
+        padding-top: 80px !important;
+        padding-bottom: 100px !important; /* Space for bottom navbar */
+    }
+}
+
+/* ================================================== */
+/* MOBILE SCREENS: 768px and below */
+/* ================================================== */
+@media screen and (max-width: 768px) {
+    /* Hide desktop navigation and bottom navbar */
+    nav,
+    .bottom-navbar {
+        display: none !important;
+    }
+    
+    /* Mobile header */
+    .mobile-header {
+        display: flex !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: rgba(18, 18, 18, 0.98) !important;
+        backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+        padding: 0.75rem 1rem !important;
+        z-index: 1000 !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    
+    /* Mobile logo */
+    .mobile-header .logo {
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        color: var(--primary-gold) !important;
+        text-decoration: none !important;
+    }
+    
+    /* Mobile navigation toggle */
+    .mobile-nav-toggle {
+        display: flex !important;
+        background: none !important;
+        border: none !important;
+        color: var(--text-white) !important;
+        font-size: 1.2rem !important;
+        cursor: pointer !important;
+        padding: 0.5rem !important;
+        border-radius: 6px !important;
+        transition: background 0.3s ease !important;
+    }
+    
+    .mobile-nav-toggle:hover {
+        background: rgba(212, 175, 55, 0.1) !important;
+    }
+    
+    /* Hide theme toggle and language switch - move to mobile menu */
+    .theme-toggle,
+    .lang-switch {
+        display: none !important;
+    }
+    
+    /* Hide desktop logo container */
+    .logo-container {
+        display: none !important;
+    }
+    
+    /* Mobile navigation menu */
+    .mobile-nav-menu {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 280px !important;
+        height: 100vh !important;
+        background: rgba(18, 18, 18, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border-left: 1px solid rgba(212, 175, 55, 0.2) !important;
+        z-index: 1100 !important;
+        transition: right 0.3s ease !important;
+        padding: 2rem 1rem !important;
+        overflow-y: auto !important;
+    }
+    
+    .mobile-nav-menu.active {
+        right: 0 !important;
+    }
+    
+    /* Mobile navigation overlay */
+    .mobile-nav-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        z-index: 1050 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .mobile-nav-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Contact section padding adjustment */
+    .contact-section {
+        padding-top: 80px !important;
+    }
+}
+
+/* ================================================== */
+/* LIGHT THEME ADJUSTMENTS */
+/* ================================================== */
+[data-theme="light"] {
+    @media screen and (min-width: 1351px) {
+        nav {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .logo {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+            color: var(--primary-gold) !important;
+        }
+    }
+    
+    @media screen and (min-width: 769px) and (max-width: 1350px) {
+        .bottom-navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.3) !important;
+        }
+        
+        .logo {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .theme-toggle,
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .theme-toggle,
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .mobile-header {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-bottom-color: rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .mobile-nav-menu {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-left-color: rgba(37, 99, 235, 0.2) !important;
+        }
+    }
+}
+
+/* ================================================== */
+/* ADDITIONAL UTILITIES */
+/* ================================================== */
+
+/* Force bottom navbar visibility on medium screens */
+@media screen and (min-width: 769px) and (max-width: 1350px) {
+    .bottom-navbar {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+    
+    /* Ensure no conflicting styles from contact.css */
+    nav.bottom-navbar {
+        position: fixed !important;
+        bottom: 1rem !important;
+        top: auto !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        border-radius: 25px !important;
+        padding: 0.75rem 1.5rem !important;
+        width: auto !important;
+        max-width: 600px !important;
+    }
+}
+
+/* Smooth scrolling for contact page */
+html {
+    scroll-behavior: smooth !important;
+}
+
+/* Prevent layout shifts */
+* {
+    box-sizing: border-box !important;
+}
+
+/* Ensure proper stacking order */
+.contact-section {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Contact form responsive adjustments */
+@media screen and (max-width: 768px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+        padding: 0 1rem !important;
+    }
+    
+    .contact-header h1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .contact-subtitle .typing-text {
+        font-size: 1.2rem !important;
+        text-align: center !important;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1350px) {
+    .contact-wrapper {
+        max-width: 900px !important;
+        gap: 3rem !important;
+    }
+    
+    .contact-header h1 {
+        font-size: 3.5rem !important;
+    }
+}

@@ -1,0 +1,83 @@
+/* =================================================================
+   MOBILE NAVIGATION CONFLICT RESOLVER
+   Disables all conflicting mobile navigation systems
+   ================================================================= */
+
+/* Disable all existing mobile navigation toggles on mobile screens */
+@media screen and (max-width: 768px) {
+    /* Hide all existing toggle buttons */
+    .mobile-header .open-drawer-toggle,
+    .mobile-nav-menu .mobile-nav-toggle,
+    .mobile-nav-toggle:not(.mobile-nav-toggle-unified),
+    .burger-menu,
+    .hamburger-menu,
+    .menu-toggle,
+    .nav-toggle,
+    .mobile-menu-btn,
+    .mobile-burger,
+    .drawer-toggle,
+    .nav-drawer-toggle {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Hide mobile header completely when using unified navigation */
+    .mobile-header {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    /* Ensure unified toggle is always visible */
+    .mobile-nav-toggle-unified {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+    
+    /* Reset any conflicting z-index values */
+    .mobile-nav-overlay {
+        z-index: 9998 !important;
+    }
+    
+    .mobile-nav-menu {
+        z-index: 9999 !important;
+    }
+    
+    .mobile-nav-toggle-unified {
+        z-index: 10001 !important;
+    }
+    
+    /* Disable any conflicting JavaScript event handlers */
+    .mobile-nav-menu .mobile-nav-toggle {
+        pointer-events: none !important;
+    }
+    
+    /* Hide any duplicate overlays */
+    .mobile-nav-overlay:not(:first-of-type) {
+        display: none !important;
+    }
+    
+    /* Ensure body overflow is manageable */
+    body {
+        overflow-x: hidden !important;
+    }
+    
+    /* Reset any problematic positioning */
+    .mobile-nav-menu {
+        left: auto !important;
+        right: 0 !important;
+    }
+}
+
+/* Force hide on larger screens */
+@media screen and (min-width: 769px) {
+    .mobile-nav-toggle-unified {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}

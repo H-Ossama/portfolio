@@ -1,0 +1,97 @@
+/**
+ * Specifically fixes top controls overlap and layout issues
+ */
+
+/* Force hide mobile header on ALL screens above 674px */
+@media (min-width: 768px) {
+    .mobile-header,
+    .mobile-drawer,
+    .mobile-backdrop,
+    .profile-dropdown,
+    .mobile-nav-toggle,
+    .mobile-profile,
+    .mobile-nav-menu {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+}
+
+/* Fix for logo and controls in top bar */
+.top-controls-logo {
+    display: flex;
+    align-items: center;
+}
+
+.top-controls-logo .logo {
+    color: var(--primary-gold) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-controls-logo .logo i {
+    font-size: 1rem;
+}
+
+.top-controls-logo .logo .logo-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.top-controls-logo .logo .portfolio-tag {
+    display: none; /* Hide portfolio tag in top controls */
+}
+
+/* Fix for top controls actions */
+.top-controls-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Ensure original navigation elements are properly hidden */
+@media (min-width: 768px) and (max-width: 1300px) {
+    body > .logo-container,
+    body > .theme-toggle:not(.top-theme-toggle),
+    body > .lang-switch:not(.top-lang-switch) {
+        display: none !important;
+    }
+    
+    /* Hide mobile navigation elements */
+    .mobile-header,
+    .mobile-drawer,
+    .mobile-backdrop,
+    .profile-dropdown {
+        display: none !important;
+    }
+    
+    /* Make bottom nav appear with blur on scroll */
+    nav:not(.drawer-nav):not(.mobile-nav-menu) {
+        transition: transform 0.3s ease, opacity 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    
+    nav:not(.drawer-nav):not(.mobile-nav-menu).scrolled {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: rgba(10, 10, 10, 0.7);
+    }
+}
+
+/* Mobile navigation only for screens under 675px */
+@media (max-width: 674px) {
+    .mobile-header {
+        display: flex !important;
+    }
+    
+    /* Make sure desktop navigation is hidden */
+    body > nav:not(.mobile-nav-menu),
+    body > .logo-container,
+    body > .theme-toggle:not(.mobile-theme-toggle),
+    body > .lang-switch:not(.mobile-lang-switch),
+    body > .particle-controls,
+    .top-controls {
+        display: none !important;
+    }
+}

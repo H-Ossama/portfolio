@@ -1,0 +1,167 @@
+/* ================================================================
+   CONTACT PAGE CRITICAL RESPONSIVE OVERRIDES
+   Final override to ensure proper responsive behavior
+   ================================================================ */
+
+/* Critical: Override contact.css nav styles */
+@media screen and (min-width: 769px) and (max-width: 1350px) {
+    /* Force hide desktop nav */
+    nav:not(.bottom-navbar):not(.mobile-nav-menu) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    /* Force show bottom navbar */
+    nav.bottom-navbar,
+    .bottom-navbar {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        bottom: 1rem !important;
+        top: auto !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 1000 !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        border-radius: 25px !important;
+        padding: 0.75rem 1.5rem !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        width: auto !important;
+        max-width: 600px !important;
+        min-width: 400px !important;
+        pointer-events: auto !important;
+    }
+    
+    /* Theme toggle and lang switch horizontal positioning */
+    .theme-toggle {
+        position: fixed !important;
+        top: 1rem !important;
+        right: 5rem !important;
+        z-index: 1001 !important;
+        display: flex !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 8px !important;
+        width: 2.8rem !important;
+        height: 2.8rem !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.6rem !important;
+    }
+    
+    .lang-switch {
+        position: fixed !important;
+        top: 1rem !important;
+        right: 1rem !important;
+        z-index: 1001 !important;
+        display: flex !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 8px !important;
+        min-width: 3rem !important;
+        height: 2.8rem !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.4rem 0.6rem !important;
+    }
+}
+
+/* Desktop overrides */
+@media screen and (min-width: 1351px) {
+    /* Hide bottom navbar */
+    .bottom-navbar {
+        display: none !important;
+    }
+    
+    /* Show desktop nav with proper positioning */
+    nav:not(.bottom-navbar):not(.mobile-nav-menu) {
+        display: flex !important;
+        position: fixed !important;
+        top: 1rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        border-radius: 25px !important;
+        z-index: 1000 !important;
+        width: auto !important;
+        max-width: 700px !important;
+    }
+    
+    /* Desktop theme toggle positioning */
+    .theme-toggle {
+        position: fixed !important;
+        top: 1rem !important;
+        right: 5.5rem !important;
+        z-index: 1001 !important;
+        width: 3rem !important;
+        height: 3rem !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 10px !important;
+    }
+    
+    .lang-switch {
+        position: fixed !important;
+        top: 1rem !important;
+        right: 1rem !important;
+        z-index: 1001 !important;
+        min-width: 3.5rem !important;
+        height: 3rem !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 10px !important;
+    }
+}
+
+/* Mobile overrides */
+@media screen and (max-width: 768px) {
+    /* Hide desktop and bottom navbar */
+    nav:not(.mobile-nav-menu),
+    .bottom-navbar {
+        display: none !important;
+    }
+    
+    /* Show mobile header */
+    .mobile-header {
+        display: flex !important;
+    }
+    
+    /* Hide desktop theme controls */
+    .theme-toggle,
+    .lang-switch {
+        display: none !important;
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] {
+    @media screen and (min-width: 769px) and (max-width: 1350px) {
+        .bottom-navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.3) !important;
+        }
+        
+        .theme-toggle,
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+    }
+    
+    @media screen and (min-width: 1351px) {
+        nav:not(.bottom-navbar):not(.mobile-nav-menu) {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .theme-toggle,
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+    }
+}

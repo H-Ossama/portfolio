@@ -1,0 +1,139 @@
+/**
+ * Enhanced bottom navigation bar with dynamic blur effect
+ * Creates a glass-like surface that allows content to appear through
+ */
+
+/* Specific styling for the floating bottom navbar on medium screens */
+@media (min-width: 769px) and (max-width: 1350px) {
+    /* Enhance the bottom navbar appearance with dynamic blur effect */
+    nav:not(.drawer-nav):not(.mobile-nav-menu),
+    .bottom-navbar {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 1rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        background: rgba(10, 10, 10, 0.45) !important; /* Reduced opacity for enhanced blur effect */
+        border: 1px solid rgba(38, 38, 38, 0.6) !important;
+        width: auto !important;
+        min-width: 500px !important;
+        padding: 0.7rem 1.5rem !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 
+                    0 4px 8px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(8px) !important; /* Starting with less blur to show more content */
+        -webkit-backdrop-filter: blur(8px) !important;
+        border-radius: 50px !important;
+        transition: backdrop-filter 0.3s ease, 
+                    background 0.3s ease, 
+                    border-color 0.3s ease,
+                    transform 0.4s ease,
+                    opacity 0.4s ease !important;
+        z-index: 1000 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Create a before pseudo-element for a more refined blur effect */
+    nav:not(.drawer-nav):not(.mobile-nav-menu)::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50px;
+        padding: 1.5px; /* Border width */
+        background: linear-gradient(
+            to bottom right,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.05) 30%,
+            rgba(255, 255, 255, 0) 50%
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Style for reduced blur state when content passes behind */
+    nav:not(.drawer-nav):not(.mobile-nav-menu).reduced-blur {
+        backdrop-filter: blur(4px) !important;
+        -webkit-backdrop-filter: blur(4px) !important;
+        background: rgba(10, 10, 10, 0.3) !important;
+        border-color: rgba(38, 38, 38, 0.4) !important;
+    }
+    
+    /* Reduced blur pseudo element */
+    nav:not(.drawer-nav):not(.mobile-nav-menu).reduced-blur::before {
+        opacity: 0.7;
+    }
+    
+    /* Smooth hover transitions for nav items */
+    nav:not(.drawer-nav):not(.mobile-nav-menu) .nav-links li a {
+        background: transparent;
+        border-radius: 8px;
+        padding: 0.7rem 1.2rem;
+        font-weight: 500;
+        position: relative;
+        z-index: 2; /* Ensure links are above the blur effect */
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+    
+    /* Hover effect for nav links */
+    nav:not(.drawer-nav):not(.mobile-nav-menu) .nav-links li a:hover {
+        background: rgba(255, 255, 255, 0.07);
+        transform: translateY(-2px);
+    }
+    
+    /* Active state for nav items */
+    nav:not(.drawer-nav):not(.mobile-nav-menu) .nav-links li a.active {
+        background: rgba(212, 175, 55, 0.15);
+        color: var(--primary-gold);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        transform: translateY(-3px);
+    }
+    
+    /* Hide bottom navbar when scrolled to the bottom */
+    html.at-bottom nav:not(.drawer-nav):not(.mobile-nav-menu) {
+        transform: translate(-50%, 100px);
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    /* Light theme styles */
+    [data-theme="light"] nav:not(.drawer-nav):not(.mobile-nav-menu) {
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(224, 224, 224, 0.8);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 
+                    0 4px 8px rgba(0, 0, 0, 0.05),
+                    0 0 0 1px rgba(0, 0, 0, 0.02);
+    }
+    
+    /* Light theme reduced blur */
+    [data-theme="light"] nav:not(.drawer-nav):not(.mobile-nav-menu).reduced-blur {
+        background: rgba(255, 255, 255, 0.4) !important;
+        border-color: rgba(224, 224, 224, 0.5) !important;
+    }
+    
+    /* Light theme pseudo element */
+    [data-theme="light"] nav:not(.drawer-nav):not(.mobile-nav-menu)::before {
+        background: linear-gradient(
+            to bottom right,
+            rgba(255, 255, 255, 0.8),
+            rgba(255, 255, 255, 0.4) 30%,
+            rgba(255, 255, 255, 0.1) 50%
+        );
+    }
+    
+    /* Light theme active and hover state */
+    [data-theme="light"] nav:not(.drawer-nav):not(.mobile-nav-menu) .nav-links li a.active {
+        background: rgba(52, 152, 219, 0.15);
+        color: #2980b9;
+    }
+    
+    /* Light theme hover effect */
+    [data-theme="light"] nav:not(.drawer-nav):not(.mobile-nav-menu) .nav-links li a:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+}

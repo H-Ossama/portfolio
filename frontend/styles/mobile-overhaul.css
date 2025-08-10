@@ -1,0 +1,575 @@
+/* Mobile Overhaul - Complete Mobile Experience Redesign */
+
+:root {
+    --mobile-header-height: 60px;
+    --profile-mobile-size: 50px;
+    --menu-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --mobile-menu-width: 85vw;
+    --mobile-menu-max-width: 300px;
+}
+
+/* ===== MOBILE HEADER BAR ===== */
+.mobile-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--mobile-header-height);
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    z-index: 10001; /* Higher than any other element */
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Profile Section in Header */
+.mobile-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-profile-pic {
+    width: var(--profile-mobile-size);
+    height: var(--profile-mobile-size);
+    border-radius: 50%;
+    border: 2px solid var(--primary-gold);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.mobile-profile-pic:active {
+    transform: scale(0.95);
+}
+
+.mobile-profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mobile-profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mobile-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-gold);
+    margin: 0;
+}
+
+.mobile-title {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-btn:active {
+    transform: scale(0.95);
+}
+
+.menu-line {
+    width: 22px;
+    height: 2px;
+    background: var(--primary-gold);
+    margin: 2px 0;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ===== MOBILE NAVIGATION DRAWER ===== */
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--mobile-menu-width);
+    max-width: var(--mobile-menu-max-width);
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(212, 175, 55, 0.2);
+    z-index: 10002; /* Higher than the header */
+    transform: translateX(-100%);
+    transition: transform var(--menu-transition);
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mobile-drawer.active {
+    transform: translateX(0);
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.drawer-header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.drawer-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-gold);
+    margin: 0;
+}
+
+.drawer-close {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.1);
+    border: none;
+    color: var(--primary-gold);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.drawer-close:active {
+    transform: scale(0.95);
+    background: rgba(212, 175, 55, 0.2);
+}
+
+/* Navigation Links */
+.drawer-nav {
+    padding: 1rem 0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.drawer-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.drawer-nav-item {
+    margin-bottom: 5px;
+}
+
+.drawer-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.drawer-nav-link:active {
+    background: rgba(212, 175, 55, 0.15);
+}
+
+.drawer-nav-link.active {
+    border-left-color: var(--primary-gold);
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary-gold);
+}
+
+.drawer-nav-icon {
+    width: 20px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.drawer-nav-text {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Drawer Settings Section */
+.drawer-settings {
+    padding: 1rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.settings-title {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.settings-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.settings-btn {
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 6px;
+    color: var(--primary-gold);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.settings-btn:active {
+    transform: scale(0.95);
+    background: rgba(212, 175, 55, 0.2);
+}
+
+.settings-btn-icon {
+    font-size: 0.9rem;
+}
+
+.settings-btn-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Backdrop for Mobile Menu */
+.mobile-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 10000; /* Just below the header */
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--menu-transition);
+    display: none;
+}
+
+.mobile-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== PROFILE DROPDOWN MENU ===== */
+.profile-dropdown {
+    position: fixed;
+    top: calc(var(--mobile-header-height) + 5px);
+    left: 1rem;
+    width: 200px;
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 10003; /* Higher than drawer */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    display: none;
+}
+
+.profile-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-header {
+    padding: 0.8rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.dropdown-title {
+    font-size: 0.9rem;
+    color: var(--primary-gold);
+    margin: 0;
+    font-weight: 500;
+}
+
+.dropdown-options {
+    padding: 0.5rem 0;
+}
+
+.dropdown-option {
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.dropdown-option:active {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.dropdown-option-icon {
+    width: 18px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.dropdown-option-text {
+    font-size: 0.9rem;
+}
+
+.dropdown-language-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lang-option:active {
+    transform: scale(0.95);
+}
+
+.lang-option.active {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+    font-weight: 500;
+}
+
+/* ===== CONTENT ADJUSTMENTS ===== */
+.content-wrapper {
+    padding-top: 0;
+    transition: padding-top 0.3s ease;
+}
+
+/* ===== RESPONSIVE MEDIA QUERIES ===== */
+@media screen and (max-width: 674px) {
+    /* Show mobile header and hide desktop nav */
+    .mobile-header,
+    .mobile-drawer,
+    .mobile-backdrop,
+    .profile-dropdown {
+        display: flex;
+    }
+    
+    /* Hide desktop navigation */
+    nav:not(.drawer-nav),
+    .theme-toggle:not(.mobile-theme-toggle),
+    .lang-switch:not(.mobile-lang-toggle),
+    .logo-container,
+    .particle-controls,
+    .mobile-nav-toggle,
+    .mobile-nav-menu {
+        display: none !important;
+    }
+    
+    /* Adjust content for mobile header */
+    body {
+        padding-top: var(--mobile-header-height);
+    }
+    
+    /* Make hero section work with mobile header */
+    .hero {
+        min-height: calc(100vh - var(--mobile-header-height));
+        margin-top: var(--mobile-header-height);
+    }
+    
+    /* Fix profile card jumping */
+    .profile-card,
+    .hero-profile {
+        display: none !important;
+    }
+    
+    /* Adjust hero layout for mobile */
+    .hero-container {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+    
+    /* Expand hero content to full width */
+    .hero-content {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Adjust typography for mobile */
+    .name {
+        font-size: clamp(1.8rem, 7vw, 2.2rem) !important;
+        text-align: center !important;
+    }
+    
+    .title {
+        font-size: clamp(1rem, 5vw, 1.2rem) !important;
+        text-align: center !important;
+    }
+    
+    /* Center buttons on mobile */
+    .cta-wrapper,
+    .cta-container {
+        justify-content: center !important;
+        width: 100% !important;
+        display: flex !important;
+    }
+    
+    /* Reduce section paddings */
+    section {
+        padding: 3rem 1rem !important;
+    }
+    
+    /* Fix hero section positioning */
+    #home {
+        margin-top: 0;
+    }
+    
+    /* Adjust greeting to be centered */
+    .greeting-wrapper {
+        justify-content: center !important;
+        width: 100% !important;
+        display: flex !important;
+    }
+    
+    .title-wrapper, 
+    .dynamic-text,
+    .hero-description-wrapper {
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .hero-header {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+}
+
+/* Very small screen adjustments */
+@media screen and (max-width: 480px) {
+    .mobile-drawer {
+        width: 85vw;
+    }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-width: 674px) and (orientation: landscape) {
+    .mobile-drawer {
+        padding-bottom: 2rem;
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .mobile-header {
+    background: rgba(248, 250, 252, 0.95);
+    border-bottom-color: rgba(52, 152, 219, 0.2);
+}
+
+[data-theme="light"] .mobile-drawer {
+    background: rgba(248, 250, 252, 0.97);
+    border-right-color: rgba(52, 152, 219, 0.2);
+}
+
+[data-theme="light"] .mobile-menu-btn,
+[data-theme="light"] .settings-btn {
+    background: rgba(52, 152, 219, 0.1);
+    border-color: rgba(52, 152, 219, 0.2);
+}
+
+[data-theme="light"] .menu-line {
+    background: #3498db;
+}
+
+[data-theme="light"] .mobile-name,
+[data-theme="light"] .drawer-title {
+    color: #3498db;
+}
+
+[data-theme="light"] .drawer-nav-link {
+    color: #2c3e50;
+}
+
+[data-theme="light"] .drawer-nav-link.active {
+    border-left-color: #3498db;
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+[data-theme="light"] .settings-btn,
+[data-theme="light"] .profile-dropdown {
+    background: rgba(248, 250, 252, 0.95);
+    border-color: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+}
+
+[data-theme="light"] .drawer-close {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+[data-theme="light"] .dropdown-title {
+    color: #3498db;
+}
+
+[data-theme="light"] .lang-option.active {
+    background: rgba(52, 152, 219, 0.3);
+    border-color: #3498db;
+    color: #3498db;
+}

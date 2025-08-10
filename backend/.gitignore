@@ -1,0 +1,40 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnpm-debug.log
+
+# Environment variables
+.env
+
+# Build files
+dist/
+build/
+
+# Logs
+logs/
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Dependency directories
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+
+# Uploads
+public/assets/images/
+public/assets/certificates/
+
+# Misc
+.DS_Store
+Thumbs.db

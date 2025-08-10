@@ -1,0 +1,40 @@
+/**
+ * Final override to ensure mobile header is hidden on medium and large screens
+ * This file should be loaded LAST to override any conflicting rules
+ */
+
+/* Absolute override - hide mobile header on screens 768px and above */
+@media screen and (min-width: 768px) {
+    .mobile-header {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+    }
+    
+    .mobile-drawer,
+    .mobile-backdrop,
+    .profile-dropdown,
+    .mobile-nav-toggle,
+    .mobile-profile,
+    .mobile-nav-menu {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Ensure body doesn't have mobile header padding */
+    body {
+        padding-top: 60px !important; /* For top controls instead */
+    }
+    
+    /* Ensure hero section doesn't account for mobile header */
+    .hero {
+        margin-top: 0 !important;
+        min-height: calc(100vh - 60px) !important; /* Account for top controls */
+    }
+}

@@ -1,0 +1,326 @@
+/* Mobile Navigation Fix - Final Override */
+/* This file ensures mobile navigation always works correctly */
+
+/* Force mobile navigation to show on MOBILE screens only (768px and below) */
+@media screen and (max-width: 768px) {
+    /* Mobile Navigation Toggle */
+    .mobile-nav-toggle {
+        display: flex !important;
+        position: relative !important;
+        z-index: 10002 !important;
+        background: rgba(18, 18, 18, 0.6) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 2px solid rgba(212, 175, 55, 0.3) !important;
+        border-radius: 8px !important;
+        width: 40px !important;
+        height: 40px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        margin: 0 !important;
+    }
+
+    /* Hamburger Lines */
+    .hamburger-line {
+        width: 20px !important;
+        height: 2px !important;
+        background: #d4af37 !important;
+        margin: 3px 0 !important;
+        transition: all 0.3s ease !important;
+        border-radius: 1px !important;
+        display: block !important;
+    }
+
+    .mobile-nav-toggle.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px) !important;
+    }
+
+    .mobile-nav-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+    }
+
+    .mobile-nav-toggle.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px) !important;
+    }
+
+    /* Mobile Navigation Overlay */
+    .mobile-nav-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+        backdrop-filter: blur(5px) !important;
+        z-index: 9998 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+        display: block !important;
+    }
+
+    .mobile-nav-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Mobile Header */
+    .mobile-header {
+        display: flex !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        padding: 0.75rem 1rem !important;
+        background: rgba(18, 18, 18, 0.98) !important;
+        backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+        z-index: 9995 !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+    
+    .mobile-header-logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+    }
+    
+    .mobile-header-logo img {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50% !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    }
+    
+    .mobile-header-title {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: #d4af37 !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-header-subtitle {
+        font-size: 0.75rem !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-header-controls {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+    }
+
+    /* Mobile Navigation Menu - slides from RIGHT */
+    .mobile-nav-menu {
+        position: fixed !important;
+        top: 60px !important; /* Position below mobile header */
+        right: 0 !important;
+        width: 280px !important;
+        max-width: 85vw !important;
+        height: calc(100vh - 60px) !important; /* Adjust for header */
+        background: rgba(18, 18, 18, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border-left: 1px solid rgba(212, 175, 55, 0.3) !important;
+        z-index: 9990 !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        overflow-y: auto !important;
+        display: block !important;
+    }
+
+    .mobile-nav-menu.active {
+        transform: translateX(0) !important;
+    }
+
+    /* Mobile Navigation Header */
+    .mobile-nav-header {
+        padding: 2rem 1.5rem 1rem !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+        text-align: center !important;
+        position: relative !important;
+        display: block !important;
+    }
+
+    .mobile-nav-title {
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+        color: #d4af37 !important;
+        margin: 0 !important;
+        display: block !important;
+    }
+
+    .mobile-nav-close {
+        position: absolute !important;
+        top: 1rem !important;
+        right: 1rem !important;
+        background: none !important;
+        border: none !important;
+        color: #d4af37 !important;
+        font-size: 1.2rem !important;
+        cursor: pointer !important;
+        padding: 0.5rem !important;
+        border-radius: 50% !important;
+        transition: all 0.3s ease !important;
+        display: block !important;
+    }
+
+    .mobile-nav-close:hover {
+        background: rgba(212, 175, 55, 0.1) !important;
+    }
+
+    /* Mobile Navigation Links */
+    .mobile-nav-links {
+        padding: 1rem 0 !important;
+        list-style: none !important;
+        margin: 0 !important;
+        display: block !important;
+    }
+
+    .mobile-nav-links li {
+        margin: 0 !important;
+        display: block !important;
+    }
+
+    .mobile-nav-links a {
+        display: flex !important;
+        align-items: center !important;
+        padding: 1rem 1.5rem !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-decoration: none !important;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        border-left: 3px solid transparent !important;
+    }
+
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+        background: rgba(212, 175, 55, 0.1) !important;
+        color: #d4af37 !important;
+        border-left-color: #d4af37 !important;
+    }
+
+    .mobile-nav-links a i {
+        margin-right: 1rem !important;
+        width: 20px !important;
+        text-align: center !important;
+        font-size: 1rem !important;
+    }
+
+    /* Mobile Navigation Controls */
+    .mobile-nav-controls {
+        padding: 1.5rem !important;
+        border-top: 1px solid rgba(212, 175, 55, 0.2) !important;
+        display: flex !important;
+        gap: 1rem !important;
+    }
+
+    .mobile-theme-toggle,
+    .mobile-lang-toggle {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        padding: 0.75rem !important;
+        background: rgba(212, 175, 55, 0.1) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        border-radius: 8px !important;
+        color: #d4af37 !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        text-decoration: none !important;
+    }
+
+    .mobile-theme-toggle:hover,
+    .mobile-lang-toggle:hover {
+        background: rgba(212, 175, 55, 0.2) !important;
+        border-color: rgba(212, 175, 55, 0.5) !important;
+    }
+
+    .mobile-theme-toggle i,
+    .mobile-lang-toggle i {
+        margin-right: 0 !important;
+    }
+}
+
+/* Increase top padding to make space for mobile header */
+body {
+    padding-top: 70px !important;
+}
+
+/* Ensure hero section doesn't get hidden by mobile header */
+.hero {
+    padding-top: 2rem !important;
+}
+
+/* Additional small screen fixes */
+@media screen and (max-width: 480px) {
+    .mobile-nav-menu {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-toggle {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(52, 152, 219, 0.3) !important;
+            color: #3498db !important;
+        }
+
+        .hamburger-line {
+            background: #3498db !important;
+        }
+
+        .mobile-nav-menu {
+            background: rgba(248, 250, 252, 0.98) !important;
+            border-right-color: rgba(52, 152, 219, 0.3) !important;
+        }
+
+        .mobile-nav-links a {
+            color: #2c3e50 !important;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: #3498db !important;
+            background: rgba(52, 152, 219, 0.1) !important;
+            border-left-color: #3498db !important;
+        }
+
+        .mobile-nav-title,
+        .mobile-nav-close {
+            color: #3498db !important;
+        }
+
+        .mobile-theme-toggle,
+        .mobile-lang-toggle {
+            background: rgba(52, 152, 219, 0.1) !important;
+            border-color: rgba(52, 152, 219, 0.3) !important;
+            color: #3498db !important;
+        }
+
+        .mobile-theme-toggle:hover,
+        .mobile-lang-toggle:hover {
+            background: rgba(52, 152, 219, 0.2) !important;
+            border-color: rgba(52, 152, 219, 0.5) !important;
+        }
+    }
+}
+
+/* Prevent body scroll when menu is open */
+body.mobile-nav-open {
+    overflow: hidden !important;
+}

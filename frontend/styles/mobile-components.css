@@ -1,0 +1,651 @@
+/* Mobile Component Fixes */
+/* Additional fixes for specific components and sections */
+
+/* AI Chat Mobile Optimization */
+@media screen and (max-width: 768px) {
+    .ai-chat-wrapper {
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    .ai-chat-container {
+        max-width: 100%;
+        border-radius: 15px;
+    }
+
+    .ai-chat-header {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .ai-info h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .ai-info p {
+        font-size: 0.9rem;
+    }
+
+    .ai-chat-box {
+        max-height: 300px;
+        border-radius: 0 0 15px 15px;
+    }
+
+    .ai-messages {
+        padding: 1rem;
+        max-height: 200px;
+    }
+
+    .ai-message-content {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .ai-input-container {
+        padding: 1rem;
+    }
+
+    .ai-input-container input {
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 0.8rem;
+    }
+
+    .ai-send-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* Particle Controls Mobile */
+@media screen and (max-width: 768px) {
+    .particle-controls {
+        bottom: 1rem;
+        right: 1rem;
+        left: auto;
+        top: auto;
+    }
+
+    .particle-controls-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .admin-dashboard-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .control-panel {
+        width: 280px;
+        right: 0;
+        bottom: 70px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .control-group {
+        padding: 0.8rem;
+    }
+
+    .control-group label {
+        font-size: 0.9rem;
+    }
+
+    .control-group input[type="range"] {
+        width: 100%;
+        height: 30px; /* Larger touch target */
+    }
+}
+
+/* Profile Card Mobile Enhancements */
+@media screen and (max-width: 768px) {
+    .profile-toggle-btn {
+        width: 36px;
+        height: 36px;
+        top: 10px;
+        right: 10px;
+        font-size: 14px;
+    }
+
+    .profile-info-back {
+        padding: 1.5rem;
+    }
+
+    .info-header h2 {
+        font-size: 1.6rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .profession {
+        font-size: 1rem;
+    }
+
+    .info-item {
+        padding: 0.6rem;
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    .info-item i {
+        font-size: 1rem;
+        width: 20px;
+    }
+
+    .info-detail .label {
+        font-size: 0.8rem;
+    }
+
+    .info-detail .value {
+        font-size: 1rem;
+    }
+
+    .quick-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 0;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 1.4rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .contact-link {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Education Section Mobile */
+@media screen and (max-width: 768px) {
+    .education {
+        padding: 6rem 0;
+    }
+
+    .edu-cards-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .edu-card {
+        margin: 0 auto;
+        max-width: 100%;
+        min-height: auto;
+    }
+
+    .edu-card-inner {
+        padding: 2rem 1.5rem;
+    }
+
+    .edu-institution {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .edu-degree {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .edu-duration {
+        font-size: 0.9rem;
+    }
+
+    .edu-description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .edu-achievements {
+        margin-top: 1.5rem;
+    }
+
+    .achievement {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Skills Stats Mobile */
+@media screen and (max-width: 768px) {
+    .skills-stats {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .stat-icon {
+        margin-bottom: 1rem;
+    }
+
+    .stat-icon i {
+        font-size: 2rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+
+    .view-more {
+        margin-top: 0.5rem;
+    }
+}
+
+/* Loading Screen Mobile */
+@media screen and (max-width: 768px) {
+    .loading-screen {
+        padding: 2rem;
+    }
+
+    .loading-content {
+        transform: scale(0.8);
+    }
+
+    .loader {
+        width: 60px;
+        height: 60px;
+    }
+
+    .loading-text {
+        font-size: 1.2rem;
+        margin-top: 1.5rem;
+    }
+
+    .progress-container {
+        width: 200px;
+        height: 6px;
+        margin-top: 1.5rem;
+    }
+}
+
+/* Modal Mobile Optimization */
+@media screen and (max-width: 768px) {
+    .modal {
+        padding: 1rem;
+        align-items: flex-start;
+        padding-top: 2rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 0;
+        padding: 1.5rem;
+        border-radius: 15px;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+
+    .modal-content h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 0.8rem;
+        border-radius: 8px;
+    }
+
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .close-btn {
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.2rem;
+        width: 30px;
+        height: 30px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Scroll Indicator Mobile */
+@media screen and (max-width: 768px) {
+    .scroll-indicator {
+        bottom: 1.5rem;
+        transform: translateX(-50%) scale(0.8);
+    }
+
+    .mouse {
+        width: 25px;
+        height: 40px;
+        border-width: 2px;
+        border-radius: 12px;
+    }
+
+    .wheel {
+        width: 3px;
+        height: 6px;
+        top: 6px;
+    }
+
+    .arrows span {
+        width: 8px;
+        height: 8px;
+        border-width: 2px;
+    }
+}
+
+/* Performance Optimizations for Mobile */
+@media screen and (max-width: 768px) {
+    /* Reduce animations for better performance */
+    .floating-shapes,
+    .shape,
+    .profile-float {
+        animation-duration: 8s;
+        animation-timing-function: ease-in-out;
+    }
+
+    /* Simplify complex animations */
+    .profile-card {
+        animation: none;
+    }
+
+    .profile-card:hover .profile-content {
+        transition-duration: 0.4s;
+    }
+
+    /* Optimize background effects */
+    .section-ambient-light,
+    .snow-particles,
+    .floating-particles {
+        display: none;
+    }
+
+    /* Reduce particle density */
+    #particles-js,
+    #winter-particles {
+        opacity: 0.3;
+    }
+}
+
+/* High DPI and Retina Display Support */
+@media screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2),
+       screen and (max-width: 768px) and (min-resolution: 192dpi) {
+    .profile-image,
+    .image-frame img,
+    .project-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+
+    .mobile-nav-toggle,
+    .cta-button,
+    .project-link {
+        border-width: 1px;
+    }
+}
+
+/* Dark Mode Mobile Adjustments */
+[data-theme="dark"] {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-menu {
+            background: rgba(10, 10, 10, 0.98);
+            border-right: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .mobile-nav-header {
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .mobile-nav-footer {
+            background: rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+/* Light Mode Mobile Adjustments */
+[data-theme="light"] {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-menu {
+            background: rgba(248, 250, 252, 0.98);
+            border-right: 1px solid rgba(52, 152, 219, 0.15);
+        }
+
+        .mobile-nav-header {
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .mobile-nav-footer {
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .mobile-nav-links a {
+            color: #2c3e50;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+    }
+}
+
+/* Accessibility Enhancements for Mobile */
+@media screen and (max-width: 768px) {
+    /* Larger focus indicators */
+    button:focus,
+    a:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: 3px solid var(--primary-gold);
+        outline-offset: 2px;
+    }
+
+    /* Better touch feedback */
+    .mobile-nav-links a:active,
+    .cta-button:active,
+    .project-link:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    /* Screen reader improvements */
+    .mobile-nav-toggle {
+        position: relative;
+    }
+
+    .mobile-nav-toggle::after {
+        content: attr(aria-label);
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .mobile-nav-toggle:focus::after {
+        opacity: 1;
+    }
+}
+
+/* iPhone X/11/12 Safe Area Support */
+@supports (padding: max(0px)) {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-menu {
+            padding-left: max(1rem, env(safe-area-inset-left));
+            padding-right: max(1rem, env(safe-area-inset-right));
+            padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        }
+
+        .mobile-nav-toggle {
+            top: max(1rem, env(safe-area-inset-top));
+            right: max(1rem, env(safe-area-inset-right));
+        }
+
+        .hero,
+        .projects,
+        .about,
+        .technologies,
+        .education {
+            padding-left: max(var(--mobile-padding), env(safe-area-inset-left));
+            padding-right: max(var(--mobile-padding), env(safe-area-inset-right));
+        }
+    }
+}
+
+/* Landscape Orientation Optimizations */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .hero-content {
+        order: 1;
+        text-align: left;
+    }
+
+    .hero-profile {
+        order: 2;
+    }
+
+    .name {
+        font-size: 2.2rem;
+    }
+
+    .profile-card {
+        max-width: 220px;
+        height: 280px;
+    }
+
+    .mobile-nav-menu {
+        width: 250px;
+    }
+
+    .mobile-nav-links a {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* Adjust sections for landscape */
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .projects,
+    .about,
+    .technologies,
+    .education {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+}
+
+/* Very Small Screens (< 320px) */
+@media screen and (max-width: 320px) {
+    :root {
+        --mobile-padding: 0.75rem;
+        --mobile-menu-width: 100%;
+    }
+
+    .name {
+        font-size: 1.6rem;
+        line-height: 1.1;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+    }
+
+    .hero-description {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .cta-button {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .mobile-nav-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .profile-card {
+        max-width: 200px;
+        height: 250px;
+    }
+
+    .project-info {
+        padding: 1rem;
+    }
+
+    .project-title {
+        font-size: 1.1rem;
+    }
+
+    .about-title h2 {
+        font-size: 1.6rem;
+    }
+
+    .tech-tag {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.7rem;
+    }
+}

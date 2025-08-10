@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>Mobile Animation Speed Test - Fixed</title>
+    
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="./styles/responsive-master.css">
+    <link rel="stylesheet" href="./styles/base.css">
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/language.css">
+    <link rel="stylesheet" href="./styles/animation-fixes.css">
+    <link rel="stylesheet" href="./styles/animation-consistency.css">
+    <link rel="stylesheet" href="./styles/mobile-animation-speed-fix.css">  <!-- NEW FIX -->
+    
+    <!-- Mobile Responsive Styles -->
+    <link rel="stylesheet" href="./styles/mobile-responsive.css">
+    <link rel="stylesheet" href="./styles/mobile-components.css">
+    <!-- Unified mobile navigation styles -->
+    <link rel="stylesheet" href="./styles/mobile-nav-unified.css">
+    <link rel="stylesheet" href="./styles/mobile-nav-conflict-resolver.css">
+    <link rel="stylesheet" href="./styles/mobile-nav-smallest-screens.css">
+    
+    <!-- Theme Styles -->
+    <link rel="stylesheet" href="./styles/theme-transition.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        .test-info {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 10000;
+            max-width: 200px;
+        }
+        
+        .animation-test-section {
+            padding: 2rem;
+            text-align: center;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .test-title {
+            color: var(--primary-gold);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Test Info -->
+    <div class="test-info">
+        <strong>Mobile Animation Speed Test</strong><br>
+        Profile Card: 8s (was fast)<br>
+        Scroll Indicator: 3s (was 1.5s)<br>
+        Fixed for screens ≤674px
+    </div>
+
+    <!-- Unified Mobile Navigation (exact copy from working test) -->
+    <nav class="mobile-nav-unified">
+        <div class="mobile-nav-container">
+            <!-- Mobile burger button (will be created by JS) -->
+        </div>
+        
+        <!-- Mobile drawer -->
+        <div class="mobile-drawer">
+            <div class="mobile-drawer-header">
+                <h3>Oussama Hattan</h3>
+                <button class="mobile-close-btn">&times;</button>
+            </div>
+            <div class="mobile-drawer-content">
+                <a href="index.html" class="mobile-nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="contact.html" class="mobile-nav-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+                <a href="#about" class="mobile-nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>About</span>
+                </a>
+                <a href="#projects" class="mobile-nav-link">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="#skills" class="mobile-nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <span>Skills</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mobile overlay -->
+        <div class="mobile-overlay"></div>
+    </nav>
+
+    <!-- Animation Test Section -->
+    <section class="animation-test-section">
+        <h1 class="test-title">Mobile Animation Speed Test - FIXED</h1>
+        
+        <!-- Profile Card Test -->
+        <div class="profile-card">
+            <div class="profile-content">
+                <div class="profile-front">
+                    <div class="profile-frame">
+                        <img src="assets/images/profile.jpg" alt="Profile" class="profile-image" loading="lazy">
+                    </div>
+                    <h3>Profile Card Animation Test</h3>
+                    <p>Should float slowly on mobile (8 seconds)</p>
+                    <div class="experience-badge">
+                        <span class="years">3+</span>
+                        <span class="label">Years</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator Test -->
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrows">
+                <span></span>
+                <span></span>
+            </div>
+            <p>Scroll Indicator Test</p>
+            <p>Should animate slowly on mobile (3 seconds)</p>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="scripts/mobile-animation-speed-fix.js"></script>
+    <script src="scripts/mobile-nav-unified.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Display current screen size info
+        function updateScreenInfo() {
+            const testInfo = document.querySelector('.test-info');
+            const width = window.innerWidth;
+            let category = '';
+            
+            if (width <= 674) {
+                category = 'Small Mobile (≤674px)';
+            } else if (width <= 768) {
+                category = 'Medium Mobile (675-768px)';
+            } else {
+                category = 'Desktop/Tablet (>768px)';
+            }
+            
+            testInfo.innerHTML = `
+                <strong>Mobile Animation Speed Test</strong><br>
+                Screen: ${width}px (${category})<br>
+                Profile Card: ${width <= 674 ? '8s' : width <= 768 ? '6s' : '4s'}<br>
+                Scroll Indicator: ${width <= 674 ? '3s' : width <= 768 ? '2.5s' : '1.5s'}<br>
+                Status: ${width <= 768 ? 'FIXED' : 'Normal'}
+            `;
+        }
+        
+        updateScreenInfo();
+        window.addEventListener('resize', updateScreenInfo);
+    </script>
+</body>
+</html>

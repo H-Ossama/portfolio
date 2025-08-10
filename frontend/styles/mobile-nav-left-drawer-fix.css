@@ -1,0 +1,203 @@
+/* Mobile Navigation Left Side Drawer Fix */
+/* This file positions the mobile navigation as a left-side drawer */
+
+@media screen and (max-width: 768px) {
+    /* Left side drawer with full height */
+    .mobile-nav-menu {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important; /* Position on LEFT side */
+        right: auto !important; /* Ensure right is not set */
+        width: 280px !important;
+        max-width: 85vw !important;
+        height: 100vh !important;
+        background: rgba(18, 18, 18, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border-right: 1px solid rgba(212, 175, 55, 0.3) !important; /* Right border */
+        border-left: none !important; /* No left border */
+        z-index: 10001 !important;
+        transform: translateX(-100%) !important; /* Slide from LEFT */
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        overflow-y: auto !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        padding: 0 !important;
+    }
+    
+    /* Active state - drawer is visible */
+    .mobile-nav-menu.active {
+        transform: translateX(0) !important;
+        left: 0 !important; /* Ensure positioned at left */
+    }
+    
+    /* Redesign mobile nav header to include hamburger */
+    .mobile-nav-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 1rem 1.25rem !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+        background: rgba(18, 18, 18, 0.8) !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 2 !important;
+    }
+    
+    /* Center the Navigation title */
+    .mobile-nav-title {
+        color: #d4af37 !important;
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        flex-grow: 1 !important;
+        margin-left: 40px !important; /* Offset for visual balance with toggle */
+    }
+    
+    /* Position hamburger toggle inside drawer header */
+    .mobile-nav-menu .mobile-nav-toggle {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 8px !important;
+        border-radius: 6px !important;
+        transition: background-color 0.3s ease !important;
+    }
+    
+    .mobile-nav-menu .mobile-nav-toggle:hover {
+        background: rgba(212, 175, 55, 0.1) !important;
+    }
+    
+    /* Hamburger lines */
+    .mobile-nav-menu .hamburger-line {
+        width: 20px !important;
+        height: 2px !important;
+        background: #d4af37 !important;
+        margin: 2px 0 !important;
+        transition: all 0.3s ease !important;
+        border-radius: 1px !important;
+    }
+    
+    /* X animation */
+    .mobile-nav-menu.active .mobile-nav-toggle .hamburger-line:nth-child(1) {
+        transform: translateY(6px) rotate(45deg) !important;
+    }
+    
+    .mobile-nav-menu.active .mobile-nav-toggle .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+        transform: scale(0) !important;
+    }
+    
+    .mobile-nav-menu.active .mobile-nav-toggle .hamburger-line:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg) !important;
+    }
+    
+    /* Mobile nav links and content */
+    .mobile-nav-links {
+        padding: 1rem 0 !important;
+        margin: 0 !important;
+        list-style: none !important;
+    }
+    
+    .mobile-nav-link {
+        display: flex !important;
+        align-items: center !important;
+        padding: 0.875rem 1.5rem !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+        font-size: 1rem !important;
+    }
+    
+    .mobile-nav-link:hover, 
+    .mobile-nav-link:focus {
+        background: rgba(212, 175, 55, 0.1) !important;
+        color: #d4af37 !important;
+    }
+    
+    .mobile-nav-link i {
+        margin-right: 1rem !important;
+        width: 20px !important;
+        text-align: center !important;
+        color: #d4af37 !important;
+    }
+    
+    /* Overlay behind the drawer */
+    .mobile-nav-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        z-index: 10000 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .mobile-nav-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Ensure header hamburger button is visible */
+    .mobile-header .open-drawer-toggle {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 8px !important;
+        border-radius: 6px !important;
+        transition: background-color 0.3s ease !important;
+        margin-left: auto !important;
+    }
+    
+    .mobile-header-controls .open-drawer-toggle:hover {
+        background: rgba(212, 175, 55, 0.1) !important;
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-menu {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-right-color: rgba(37, 99, 235, 0.3) !important;
+        }
+        
+        .mobile-nav-header {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-bottom-color: rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .mobile-nav-title {
+            color: #2563eb !important;
+        }
+        
+        .mobile-nav-menu .hamburger-line {
+            background: #2563eb !important;
+        }
+        
+        .mobile-nav-link:hover, 
+        .mobile-nav-link:focus {
+            background: rgba(37, 99, 235, 0.1) !important;
+            color: #2563eb !important;
+        }
+        
+        .mobile-nav-link i {
+            color: #2563eb !important;
+        }
+    }
+}

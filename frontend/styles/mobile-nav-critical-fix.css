@@ -1,0 +1,182 @@
+/* Critical Mobile Navigation Fix */
+/* Ensures mobile navigation drawer works reliably on all screen sizes */
+
+@media screen and (max-width: 768px) {
+    /* Force mobile navigation menu to display correctly */
+    .mobile-nav-menu {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 280px !important;
+        height: 100vh !important;
+        max-width: 85vw !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        z-index: 99999 !important; /* Extremely high z-index to be above everything */
+        transform: translateX(-100%) !important; /* Start off-screen */
+        transition: transform 0.3s ease-in-out !important;
+        overflow-y: auto !important;
+        padding: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    /* Force show when active */
+    .mobile-nav-menu.active {
+        transform: translateX(0) !important;
+    }
+    
+    /* Ensure overlay is behind the drawer but above other content */
+    .mobile-nav-overlay {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        z-index: 99998 !important; /* Just below the menu */
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out !important;
+    }
+    
+    /* Force show overlay when active */
+    .mobile-nav-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Mobile header button to open drawer */
+    .open-drawer-toggle {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 8px !important;
+        border-radius: 6px !important;
+    }
+    
+    /* Make toggle button inside drawer visible */
+    .mobile-nav-toggle {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 8px !important;
+    }
+    
+    /* Navigation header styles */
+    .mobile-nav-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 15px !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+        background: rgba(18, 18, 18, 0.9) !important;
+    }
+    
+    .mobile-nav-title {
+        color: #d4af37 !important;
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Force hamburger lines to display */
+    .hamburger-line {
+        display: block !important;
+        width: 22px !important;
+        height: 2px !important;
+        background-color: #d4af37 !important;
+        margin: 4px 0 !important;
+        transition: all 0.3s ease-in-out !important;
+    }
+    
+    /* X animation */
+    .mobile-nav-toggle.active .hamburger-line:nth-child(1) {
+        transform: translateY(6px) rotate(45deg) !important;
+    }
+    
+    .mobile-nav-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+    }
+    
+    .mobile-nav-toggle.active .hamburger-line:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg) !important;
+    }
+    
+    /* Navigation link styling */
+    .mobile-nav-links {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-nav-link {
+        display: flex !important;
+        align-items: center !important;
+        padding: 15px 20px !important;
+        color: #fff !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .mobile-nav-link i {
+        margin-right: 15px !important;
+        width: 20px !important;
+        color: #d4af37 !important;
+    }
+    
+    /* Hide scrollbar but allow scrolling */
+    .mobile-nav-menu {
+        scrollbar-width: none !important; /* Firefox */
+        -ms-overflow-style: none !important; /* IE/Edge */
+    }
+    
+    .mobile-nav-menu::-webkit-scrollbar {
+        display: none !important; /* Chrome/Safari/Opera */
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-menu {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .mobile-nav-header {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .mobile-nav-title {
+            color: #2563eb !important;
+        }
+        
+        .hamburger-line {
+            background-color: #2563eb !important;
+        }
+        
+        .mobile-nav-link {
+            color: #333 !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .mobile-nav-link i {
+            color: #2563eb !important;
+        }
+    }
+}

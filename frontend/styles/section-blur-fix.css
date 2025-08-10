@@ -1,0 +1,96 @@
+/* Section Blur Fix
+   Removes problematic fixed position blur overlays that create stacking blur effects
+   at section boundaries, causing elements to appear blurred incorrectly
+*/
+
+/* Disable the fixed position section blur overlays that cause stacking issues */
+.hero::before,
+.about::before,
+.projects::before,
+.technologies::before,
+.education::before {
+    display: none !important;
+}
+
+[data-theme="light"] .hero::before,
+[data-theme="light"] .about::before,
+[data-theme="light"] .projects::before,
+[data-theme="light"] .technologies::before,
+[data-theme="light"] .education::before {
+    display: none !important;
+}
+
+/* Fix any other section blur overlays */
+section::before {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Ensure profile card and titles are not affected by blur stacking */
+.profile-card,
+.section-title,
+.projects-title,
+.education-title,
+.technologies-title,
+.about-title,
+h1, h2, h3 {
+    position: relative !important;
+    z-index: 10 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Remove any fixed blur overlays that might affect section boundaries */
+*::before,
+*::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Exception: Keep legitimate blur effects on specific UI elements */
+nav,
+.mobile-nav-menu,
+.theme-toggle,
+.logo-container {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Ensure section content is clear and unblurred */
+.hero-content,
+.projects-container,
+.education-container,
+.tech-container,
+.about-wrapper {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+}
+
+/* Clean section boundaries - no overlapping effects */
+section {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Remove any blur from section backgrounds */
+.section-bg-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+}
+
+/* Ensure clear visibility at section transitions */
+.profile-card {
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.profile-frame,
+.profile-content,
+.profile-image {
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}

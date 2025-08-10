@@ -1,0 +1,96 @@
+/* Mobile Overhaul Fixes */
+
+/* Fix for the mobile menu and floating elements issues */
+@media screen and (max-width: 674px) {
+    /* Hide all control panels */
+    .particle-controls,
+    .lang-switch, 
+    .theme-toggle,
+    .logo-container,
+    .mobile-nav-toggle {
+        display: none !important;
+    }
+    
+    /* Remove any margin that might be pushing content */
+    .hero {
+        margin-top: 0 !important;
+    }
+    
+    /* Ensure content starts after mobile header */
+    #home, .hero {
+        padding-top: var(--mobile-header-height) !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Hide profile card on mobile as we have the header profile */
+    .hero-profile {
+        display: none !important;
+    }
+    
+    /* Center hero content on mobile */
+    .hero-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Ensure main content is centered */
+    .hero-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 1rem !important;
+        height: auto !important;
+        min-height: calc(100vh - var(--mobile-header-height)) !important;
+    }
+    
+    /* Ensure text is centered on mobile */
+    .name, 
+    .title, 
+    .hero-description, 
+    .greeting,
+    .greeting-wrapper,
+    .title-wrapper {
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    /* Center buttons on mobile */
+    .cta-wrapper, 
+    .cta-container {
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    
+    /* Fix for floating buttons on the right side */
+    .particle-controls-toggle, 
+    .admin-dashboard-toggle {
+        display: none !important;
+    }
+    
+    /* Ensure proper spacing throughout the page */
+    section {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    /* Hide any floating control buttons */
+    button.floating-btn,
+    .float-button,
+    .float-controls,
+    .floating-controls {
+        display: none !important;
+    }
+    
+    /* Ensure all content is horizontally centered on mobile */
+    .container,
+    .section-container,
+    .content-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}

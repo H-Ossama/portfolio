@@ -1,0 +1,200 @@
+/* ================================================================
+   DESKTOP NAVIGATION POSITIONING FIX
+   Centers the navbar at the top of the screen like in the screenshot
+   ================================================================ */
+
+/* ================================================== */
+/* DESKTOP SCREENS: 1351px and above */
+/* ================================================== */
+@media screen and (min-width: 1351px) {
+    /* Main Navigation - Top Center Fixed Position */
+    nav:not(.mobile-nav-menu):not(.mobile-drawer):not(.bottom-navbar) {
+        position: fixed !important;
+        top: 1rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 1rem 2rem !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 25px !important;
+        z-index: 1000 !important;
+        width: auto !important;
+        max-width: 700px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        margin: 0 !important;
+    }
+    
+    /* Navigation Links Container */
+    .nav-links {
+        display: flex !important;
+        list-style: none !important;
+        gap: 1.5rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        align-items: center !important;
+    }
+    
+    /* Navigation Link Styling */
+    .nav-links li a {
+        color: var(--text-white) !important;
+        text-decoration: none !important;
+        padding: 0.6rem 1rem !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        font-size: 0.95rem !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Active and Hover States */
+    .nav-links li a:hover,
+    .nav-links li a.active {
+        background: rgba(212, 175, 55, 0.1) !important;
+        color: var(--primary-gold) !important;
+        transform: translateY(-2px) !important;
+    }
+    
+    /* Logo positioning - top left */
+    .logo-container {
+        position: fixed !important;
+        top: 1rem !important;
+        left: 1rem !important;
+        z-index: 1001 !important;
+    }
+    
+    .logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: var(--primary-gold) !important;
+        text-decoration: none !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .logo:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+    }
+    
+    /* Theme toggle and language switch - top right */
+    .theme-toggle,
+    .lang-switch {
+        position: fixed !important;
+        top: 1rem !important;
+        z-index: 1001 !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 10px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .theme-toggle {
+        right: 5rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    .lang-switch {
+        right: 1rem !important;
+    }
+    
+    .theme-toggle:hover,
+    .lang-switch:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+    }
+    
+    /* Ensure proper body padding to account for fixed navbar */
+    body {
+        padding-top: 0 !important;
+    }
+    
+    /* Adjust main content to account for fixed navbar */
+    .hero-section,
+    main,
+    .contact-section {
+        margin-top: 80px !important;
+    }
+    
+    /* Hide mobile and medium screen elements */
+    .mobile-header,
+    .mobile-nav-toggle,
+    .mobile-nav-menu,
+    .mobile-nav-overlay,
+    .bottom-navbar {
+        display: none !important;
+    }
+}
+
+/* ================================================== */
+/* LIGHT THEME ADJUSTMENTS */
+/* ================================================== */
+[data-theme="light"] {
+    @media screen and (min-width: 1351px) {
+        nav:not(.mobile-nav-menu):not(.mobile-drawer):not(.bottom-navbar) {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15) !important;
+        }
+        
+        .logo {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+            color: var(--primary-gold) !important;
+        }
+        
+        .theme-toggle,
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(37, 99, 235, 0.2) !important;
+        }
+        
+        .logo:hover,
+        .theme-toggle:hover,
+        .lang-switch:hover {
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25) !important;
+        }
+    }
+}
+
+/* ================================================== */
+/* ENSURE PROPER STACKING ORDER */
+/* ================================================== */
+@media screen and (min-width: 1351px) {
+    /* Navigation elements should be above content */
+    nav:not(.mobile-nav-menu):not(.mobile-drawer):not(.bottom-navbar),
+    .logo-container,
+    .theme-toggle,
+    .lang-switch {
+        z-index: 1000 !important;
+    }
+    
+    /* Particles and background effects should be behind */
+    #particles-js,
+    .winter-overlay,
+    .bg-container,
+    #winter-particles {
+        z-index: 1 !important;
+    }
+    
+    /* Main content should be between background and navigation */
+    .hero-section,
+    .contact-section,
+    .profile-card,
+    .section {
+        z-index: 10 !important;
+        position: relative !important;
+    }
+}

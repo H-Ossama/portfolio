@@ -1,0 +1,120 @@
+/* Emergency Mobile Navigation Fix */
+/* This file fixes mobile navigation issues with right-side sliding */
+
+@media screen and (max-width: 768px) {
+    /* Force mobile navigation to work properly */
+    .mobile-nav-menu {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 280px !important;
+        max-width: 85vw !important;
+        height: 100vh !important;
+        background: rgba(18, 18, 18, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        border-left: 1px solid rgba(212, 175, 55, 0.3) !important;
+        z-index: 10001 !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.3s ease !important;
+        overflow-y: auto !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .mobile-nav-menu.active {
+        transform: translateX(0) !important;
+        right: 0 !important;
+    }
+    
+    /* Ensure mobile nav toggle is visible and clickable */
+    .mobile-nav-toggle {
+        display: flex !important;
+        position: relative !important;
+        z-index: 10002 !important;
+        width: 40px !important;
+        height: 40px !important;
+        cursor: pointer !important;
+        background: none !important;
+        border: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .hamburger-line {
+        width: 20px !important;
+        height: 2px !important;
+        background: #d4af37 !important;
+        margin: 2px 0 !important;
+        transition: all 0.3s ease !important;
+        border-radius: 1px !important;
+        display: block !important;
+    }
+    
+    /* Hamburger animation */
+    .mobile-nav-toggle.active .hamburger-line:nth-child(1) {
+        transform: translateY(6px) rotate(45deg) !important;
+    }
+    
+    .mobile-nav-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+        transform: scale(0) !important;
+    }
+    
+    .mobile-nav-toggle.active .hamburger-line:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg) !important;
+    }
+    
+    /* Mobile nav overlay */
+    .mobile-nav-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        z-index: 10000 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .mobile-nav-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Force mobile header to show */
+    .mobile-header {
+        display: flex !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 60px !important;
+        z-index: 9999 !important;
+        background: rgba(18, 18, 18, 0.98) !important;
+        backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Light theme support */
+[data-theme="light"] {
+    @media screen and (max-width: 768px) {
+        .mobile-nav-menu {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-left-color: rgba(37, 99, 235, 0.3) !important;
+        }
+        
+        .mobile-header {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-bottom-color: rgba(37, 99, 235, 0.2) !important;
+        }
+    }
+}

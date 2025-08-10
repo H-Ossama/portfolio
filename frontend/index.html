@@ -1,0 +1,1288 @@
+<!-- Updated index.html -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="format-detection" content="telephone=no">
+        <title>Oussama Hattan | Backend Developer</title>
+        
+        <!-- Enhanced Meta Tags -->
+        <meta name="description" content="Professional backend developer portfolio of Oussama Hattan, specializing in scalable server-side applications">
+        <meta name="keywords" content="backend developer, web development, Node.js, Python, Database Management, API Development">
+        <meta name="author" content="Oussama Hattan">
+        
+        <!-- Open Graph / Social Media Meta Tags -->
+        <meta property="og:title" content="Oussama Hattan | Backend Developer Portfolio">
+        <meta property="og:description" content="Professional backend developer portfolio showcasing projects and expertise">
+        <meta property="og:image" content="https://photos.app.goo.gl/fNsc8FvG2eNELT6Z7">
+        <meta property="og:url" content="https://yourwebsite.com">
+        
+        <!-- Styles -->
+        <link rel="stylesheet" href="styles/maintenance.css">
+        <link rel="stylesheet" href="styles/ai-chat.css">
+        
+        <!-- Security Headers -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <!-- Core Styles -->
+        <link rel="stylesheet" href="./styles/responsive-master.css">    <!-- Master responsive breakpoints -->
+        <link rel="stylesheet" href="./styles/base.css">
+        <link rel="stylesheet" href="./styles/index.css">
+        <link rel="stylesheet" href="./styles/language.css">
+        <link rel="stylesheet" href="./styles/animation-fixes.css">
+        <link rel="stylesheet" href="./styles/animation-consistency.css">    <!-- Animation timing fixes -->
+        <link rel="stylesheet" href="./styles/mobile-animation-speed-fix.css">  <!-- Fix fast mobile animations -->
+        <link rel="stylesheet" href="./styles/section-blur-fix.css">  <!-- Fix section boundary blur issues -->
+        <link rel="stylesheet" href="./styles/medium-screen-fixes.css">
+        <link rel="stylesheet" href="./styles/mobile-loading-fixes.css">
+        <link rel="stylesheet" href="./styles/bottom-nav-styles.css">
+        <link rel="stylesheet" href="./styles/top-controls-fix.css">
+        <link rel="stylesheet" href="./styles/mobile-layout-professional.css">  <!-- Professional mobile layout fixes -->
+    <!-- Keep head lighter; unified nav has its own CSS -->
+    <link rel="stylesheet" href="./styles/mobile-override-final.css">
+    <link rel="stylesheet" href="./styles/remove-duplicate-menu.css">
+        
+        <!-- Mobile Responsive Styles -->
+    <link rel="stylesheet" href="./styles/mobile-responsive.css">
+    <link rel="stylesheet" href="./styles/mobile-components.css">
+    <link rel="stylesheet" href="./styles/mobile-final.css">
+    <!-- Unified mobile navigation styles (exact set used by the working test) -->
+    <link rel="stylesheet" href="./styles/mobile-nav-unified.css">
+    <link rel="stylesheet" href="./styles/mobile-nav-conflict-resolver.css">
+    <link rel="stylesheet" href="./styles/mobile-nav-smallest-screens.css">
+    <link rel="stylesheet" href="./styles/desktop-nav-fix.css">    <!-- Desktop navigation positioning fix -->
+
+    <link rel="stylesheet" href="./styles/mobile-nav-force.css">    <!-- Final mobile nav override -->
+    <link rel="stylesheet" href="./styles/mobile-nav-unified.css">    <!-- Unified mobile navigation -->
+        <link rel="preload" href="./styles/winter-theme.css" as="style">
+        <link rel="preload" href="./styles/winter-animations.css" as="style">
+        <link rel="preload" href="./styles/theme-transition.css" as="style">
+        
+        <!-- Light theme CSS will be loaded dynamically -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+        <!-- Preload light theme for faster switching -->
+        <link rel="preload" href="./styles/light-theme.css" as="style">
+        
+        <!-- Winter theme CSS will be loaded dynamically -->
+        <link rel="preload" href="./styles/winter-theme.css" as="style">
+          <!-- Skills Section Styles -->
+        <link rel="stylesheet" href="./styles/skills-winter.css">
+        
+        <!-- Preload winter animations for faster switching -->
+        <link rel="preload" href="./styles/winter-animations.css" as="style">
+        
+        <!-- Particles.js for snow effect -->
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script src="./scripts/skills.js" defer></script>
+        
+        <!-- Main Script -->
+        
+        <!-- Theme Styles -->
+        <link rel="stylesheet" href="./styles/theme-transition.css">
+        <link rel="stylesheet" href="./styles/light-theme.css">
+        <link rel="stylesheet" href="./styles/winter-animations.css">
+        
+        <!-- Particles.js -->
+        
+        <!-- Ensure winter particles script is loaded -->
+        <script src="./scripts/winterParticles.js"></script>
+        <link rel="stylesheet" href="./styles/loading-screen.css">
+
+        <!-- Theme Styles -->
+        <link rel="stylesheet" href="./styles/theme-transitions.css">
+        
+        <!-- Custom Scripts -->
+        <script src="./scripts/themeTransition.js" defer></script>
+        <script src="./script.js" defer></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="./scripts/language.js"></script>
+</head>
+<body>
+    <!-- SVG Filters -->
+    <svg class="particle-filters">
+        <defs>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Full page particles container -->
+    <div id="particles-js"></div>    <!-- Particle Controls -->    <div class="particle-controls">
+        <button class="particle-controls-toggle">
+            <i class="fas fa-sliders-h"></i>
+            <span class="tooltip">Particle Controls</span>
+        </button>
+        <button class="admin-dashboard-toggle" onclick="window.location.href='login.html'">
+            <i class="fas fa-user-shield"></i>
+            <span class="tooltip">Admin Dashboard</span>
+        </button>
+        <div class="control-panel">
+            <div class="control-group">
+                <label for="particleAmount">Amount</label>
+                <input type="range" id="particleAmount" min="50" max="1000" value="600" />
+                <span class="value-display">600</span>
+            </div>
+            <div class="control-group">
+                <label for="particleSpeed">Speed</label>
+                <input type="range" id="particleSpeed" min="0.1" max="5" value="3" step="0.1" />
+                <span class="value-display">3</span>
+            </div>
+            <div class="control-group">
+                <label for="particleSize">Size</label>
+                <input type="range" id="particleSize" min="0.5" max="5" value="2" step="0.1" />
+                <span class="value-display">2</span>
+            </div>
+            <div class="control-group">
+                <label for="particleGlow">Glow</label>
+                <input type="range" id="particleGlow" min="0.1" max="1" value="0.3" step="0.1" />
+                <span class="value-display">0.3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Warning Popup -->
+    <div class="theme-warning-popup">
+        <div class="popup-content">
+            <h3 class="popup-title">Switch to Light Theme?</h3>
+            <p class="popup-message">Experience our bright light theme with beautiful animations.</p>
+            <div class="popup-actions">
+                <button class="popup-button popup-preview">Try It</button>
+                <button class="popup-button popup-close">Stay Dark</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Loading Screen -->
+    <div class="theme-loading-screen">
+        <div class="theme-transition-backdrop"></div>
+        <div class="theme-transition-elements">
+            <div class="theme-horizon"></div>
+            <div class="theme-transition-sun"></div>
+            <div class="theme-transition-moon"></div>
+            <div class="theme-rays"></div>
+        </div>
+    </div>
+
+    <style>
+        .theme-loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .theme-loading-screen.active {
+            opacity: 1;
+        }
+
+        .theme-transition-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            transition: background-color 1.5s ease;
+        }
+
+        .theme-transition-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .theme-transition-sun,
+        .theme-transition-moon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateX(-50%) scale(0);
+            opacity: 0;
+        }
+
+        .theme-transition-sun {
+            background: #ffd700;
+            box-shadow: 0 0 60px #ffd700;
+            bottom: -100px; /* Start below viewport */
+        }
+
+        .theme-transition-moon {
+            background: #fff;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+            top: -100px; /* Start above viewport */
+        }
+
+        .theme-rays {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            left: 50%;
+            bottom: -140px; /* Position relative to sun */
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            pointer-events: none;
+        }
+
+        /* Create 8 rays around the sun */
+        .theme-rays:before,
+        .theme-rays:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: linear-gradient(to right, rgba(255, 215, 0, 0), rgba(255, 215, 0, 0.8), rgba(255, 215, 0, 0));
+            height: 3px;
+            width: 200px;
+            transform: translate(-50%, -50%);
+        }
+
+        .theme-rays:after {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        /* Add more rays at different angles */
+        .theme-rays:before {
+            box-shadow: 
+                0 0 15px rgba(255, 215, 0, 0.8),
+                0 0 30px rgba(255, 215, 0, 0.6),
+                0 0 45px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Add horizontal line as horizon */
+        .theme-horizon {
+            position: absolute;
+            bottom: 30%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scaleX(0);
+            transition: transform 0.8s ease;
+        }
+
+        /* Sunrise state - sun appears from bottom */
+        [data-transition="to-light"] .theme-transition-backdrop {
+            background: linear-gradient(to top, #ff7e5f, #feb47b, #ffedbc, #87ceeb);
+        }
+
+        [data-transition="to-light"] .theme-transition-sun {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            bottom: 35%; /* Rise to slightly above horizon */
+        }
+
+        [data-transition="to-light"] .theme-rays {
+            opacity: 1;
+            bottom: calc(35% - 50px); /* Position relative to sun */
+            transform: translateX(-50%) rotate(0deg);
+        }
+        
+        [data-transition="to-light"] .theme-horizon {
+            transform: scaleX(1);
+        }
+
+        /* Sunset state - moon rises from top */
+        [data-transition="to-dark"] .theme-transition-backdrop {
+            background: linear-gradient(to bottom, #614385, #516395, #1a1a2e);
+        }
+
+        [data-transition="to-dark"] .theme-transition-moon {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            top: 35%; /* Moon rises from top to middle */
+        }
+        
+        [data-transition="to-dark"] .theme-horizon {
+            transform: scaleX(1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Add -webkit-backdrop-filter for Safari support */
+        .lang-options {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Theme Warning Popup Styles */
+        .theme-warning-popup {
+            position: fixed;
+            top: 1;
+            width: 100%;
+            height: 40%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .theme-warning-popup.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-content {
+            background: rgba(30, 30, 40, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-warning-popup.show .popup-content {
+            transform: translateY(0);
+        }
+        
+        .popup-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-gold);
+        }
+        
+        .popup-message {
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .popup-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .popup-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-preview {
+            background: var(--primary-gold);
+            color: #121212;
+            border: none;
+        }
+        
+        .popup-preview:hover {
+            background: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        .popup-close {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="light"] .popup-content {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        
+        [data-theme="light"] .popup-title {
+            color: #3498db;
+        }
+        
+        [data-theme="light"] .popup-preview {
+            background: #3498db;
+            color: white;
+        }
+        
+        [data-theme="light"] .popup-preview:hover {
+            background: #2980b9;
+        }
+        
+        [data-theme="light"] .popup-close {
+            color: #333;
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="loader">
+                <div class="cube">
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                    <div class="cube-face"></div>
+                </div>
+            </div>
+            <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="loading-text">Loading</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Transition Overlay -->
+    <div class="theme-transition-overlay">
+        <div class="theme-loader"></div>
+    </div>
+
+    <!-- Winter particles container (moved to top for proper layering) -->
+    <div id="winter-particles"></div>
+
+    <!-- Fallback for JavaScript disabled -->
+    <noscript>
+        <div class="noscript-message">
+            Please enable JavaScript to view this website properly.
+        </div>
+    </noscript>
+
+    <!-- Winter theme overlay container -->
+    <div class="winter-overlay"></div>
+
+    <!-- Background Canvas -->
+    <div class="bg-container">
+        <canvas id="background-canvas"></canvas>
+    </div>
+    
+    <!-- Particles container for snow effect -->
+    <div id="winter-particles"></div>
+    
+    <!-- Navigation -->
+    <div class="logo-container">
+        <a href="#home" class="logo nav-exclude" aria-label="Home">
+            <i class="fas fa-code-branch"></i>
+            <span class="logo-text">Oussama.dev</span>
+            <span class="portfolio-tag">Portfolio</span>
+        </a>
+    </div>
+
+
+
+  
+
+    <!-- Medium Screen Top Controls -->
+    <div class="top-controls">
+        <div class="top-controls-logo">
+            <a href="#home" class="logo nav-exclude" aria-label="Home">
+                <i class="fas fa-code-branch"></i>
+                <span class="logo-text">Oussama.dev</span>
+            </a>
+        </div>
+        <div class="top-controls-actions">
+            <div class="theme-toggle top-theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="lang-switch top-lang-switch">
+                <button class="lang-switch-btn">
+                    <i class="fas fa-globe"></i>
+                    <span class="current-lang">EN</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Navigation - Exact copy from working test page -->
+    <div class="mobile-nav-overlay"></div>
+    <nav class="mobile-nav-menu" role="navigation" aria-label="Mobile navigation">
+        <div class="mobile-nav-header">
+            <div class="mobile-logo">
+                <a href="#home" class="mobile-logo-link" aria-label="Home">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="mobile-logo-text">Oussama.dev</span>
+                </a>
+            </div>
+            <span class="mobile-nav-title">Navigation</span>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="#home" class="mobile-nav-link active"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="#projects" class="mobile-nav-link"><i class="fas fa-folder-open"></i>Projects</a></li>
+            <li><a href="#education" class="mobile-nav-link"><i class="fas fa-graduation-cap"></i>Education</a></li>
+            <li><a href="#technologies" class="mobile-nav-link"><i class="fas fa-code"></i>Skills</a></li>
+            <li><a href="#about" class="mobile-nav-link"><i class="fas fa-user"></i>About</a></li>
+            <li><a href="contact.html" class="mobile-nav-link"><i class="fas fa-envelope"></i>Contact</a></li>
+        </ul>
+        <div class="mobile-nav-controls">
+            <button class="mobile-theme-toggle">
+                <i class="fas fa-moon"></i> Theme
+            </button>
+            <button class="mobile-lang-toggle">
+                <i class="fas fa-globe"></i> EN
+            </button>
+        </div>
+    </nav>
+
+    <nav role="navigation" aria-label="Main navigation">
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#technologies">Skills</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="contact.html">Contact</a></li> <!-- Fixed link to navigate to contact page -->
+        </ul>
+    </nav>
+
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="lang-switch">
+        <button class="lang-switch-btn">
+            <i class="fas fa-globe"></i>
+            <span class="current-lang">EN</span>
+        </button>
+        <div class="lang-options">
+            <button class="lang-option active" data-lang="en">English</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="de">Deutsch</button> <!-- Changed from ar to de -->
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero frost-hover" id="home">
+        <div class="particles-container" id="particles-js"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-header">
+                    <div class="greeting-wrapper shimmer-text">
+                        <span class="greeting-emoji">👋</span>
+                        <span class="greeting">Hello, I'm</span>
+                    </div>
+                    <h1 class="name shimmer-text">Oussama Hattan</h1>
+                    <div class="title-wrapper">
+                        <div class="title-container">
+                            <div class="dynamic-text">
+                                <span class="text first">Backend Developer</span>
+                                <span class="text">API Architect</span>
+                                <span class="text">Database Expert</span>
+                                <span class="text">Problem Solver</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-description-wrapper">
+                    <p class="hero-description">
+                        Crafting robust and scalable backend solutions with a passion for clean code
+                        and optimal performance. Specialized in building enterprise-grade applications
+                        that drive business success.
+                    </p>
+                </div>
+                <div class="cta-wrapper">
+                    <div class="cta-container">
+                        <a href="contact.html" class="cta-button primary collaborate-btn"> <!-- Added collaborate-btn class -->
+                            <span class="button-content">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Let's Collaborate</span>
+                            </span>
+                            <span class="button-border"></span>
+                        </a>
+                        <a href="/assets/HATTAN_OUSSAMA.pdf" class="cta-button secondary resume-btn"> <!-- Added resume-btn class -->
+                            <span class="button-content">
+                                <i class="fas fa-file-alt"></i>
+                                <span>View Resume</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="ai-chat-wrapper">
+                    <div class="ai-chat-container">
+                        <div class="ai-chat-header">
+                            <div class="ai-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="ai-info">
+                                <h3>Ask my AI about ME</h3>
+                                <p>I'm Oussama's AI clone - ask me anything about him!</p>
+                            </div>
+                            <button class="ai-toggle-btn" id="aiToggleBtn">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                        <div class="ai-chat-box" id="aiChatBox">
+                            <div class="ai-messages" id="aiMessages">
+                                <div class="ai-message ai-message-bot">
+                                    <div class="ai-message-avatar">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="ai-message-content">
+                                        Hello! I'm Oussama Hattan. Feel free to ask me about my background, experience, skills, or any projects I've worked on. I'm here to provide you with detailed information about my professional journey.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ai-input-container">
+                                <input type="text" id="aiInput" placeholder="Ask about Oussama's experience, skills, projects..." maxlength="500">
+                                <button id="aiSendBtn" class="ai-send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-profile">
+                <div class="profile-wrapper winter-card">
+                    <div class="profile-card frosted-card">
+                        <!-- Rotation Toggle Icon -->
+                        <button class="profile-toggle-btn" aria-label="Toggle profile information">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <div class="profile-content">
+                            <div class="profile-frame">
+                                <img src="../assets/images/oussama.png" alt="Oussama Hattan" class="profile-image">
+                                <div class="profile-backdrop"></div>
+                            </div>
+                            <div class="profile-info-back">
+                                <div class="info-header">
+                                    <h2>Oussama Hattan</h2>
+                                    <span class="profession">Backend Developer</span>
+                                </div>
+                                <div class="info-divider"></div>
+                                <div class="info-section">
+                                    <div class="info-item" style="--item-index: 1" data-type="expertise">
+                                        <i class="fas fa-code"></i>
+                                        <div class="info-detail">
+                                            <span class="label">Expertise</span>
+                                            <span class="value">Backend Development</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item" style="--item-index: 2" data-type="experience">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <div class="info-detail">
+                                            <span class="label">Experience</span>
+                                            <span class="value">3+ Years</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item" style="--item-index: 3" data-type="location">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <div class="info-detail">
+                                            <span class="label">Location</span>
+                                            <span class="value">Azrou, Morocco</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item" style="--item-index: 4" data-type="education">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        <div class="info-detail">
+                                            <span class="label">Education</span>
+                                            <span class="value">Computer Science</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-footer">
+                                    <a href="#contact" class="contact-link">
+                                        <i class="fas fa-envelope"></i>
+                                        Contact Me
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrows">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+<!-- Projects Section -->
+<section class="projects snowfall-parallax" id="projects">
+    <div class="section-ambient-light"></div>
+    <div class="projects-container">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A selection of my recent work</p>
+        
+        <div class="project-grid">
+            <!-- Projects will be dynamically loaded here -->
+            <div class="projects-loading">
+                <div class="loading-spinner"></div>
+                <p>Loading projects...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section class="education snowfall-parallax" id="education">
+    <div class="section-ambient-light"></div>
+    <div class="education-container">
+        <div class="section-header">
+            <h2 class="section-title">Education Journey</h2>
+            <p class="section-subtitle">My academic and professional qualifications</p>
+        </div>
+
+        <div class="education-timeline">
+            <div class="edu-cards-container">
+                <div class="education-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading education details...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="snow-particles"></div>
+</section>
+
+<!-- Skills Section -->
+<section id="technologies" class="skills-section snowfall-parallax">
+    <div class="section-ambient-light"></div>
+    <div class="skills-stars-bg"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title frost-text" data-aos="fade-down">Technical Expertise</h2>
+            <p class="section-subtitle" data-aos="fade-up">Building robust digital solutions with cutting-edge technologies</p>
+        </div>
+        
+        <div class="skills-filter" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-globe"></i> All
+            </button>
+            <button class="filter-btn" data-filter="backend">
+                <i class="fas fa-server"></i> Backend
+            </button>
+            <button class="filter-btn" data-filter="database">
+                <i class="fas fa-database"></i> Database
+            </button>
+            <button class="filter-btn" data-filter="tools">
+                <i class="fas fa-tools"></i> Tools
+            </button>
+        </div>
+
+        <div class="skills-grid">
+            <!-- Skills will be dynamically loaded here -->
+            <div class="skills-loading">
+                <div class="loading-spinner"></div>
+                <p>Loading skills...</p>
+            </div>        <div class="skills-stats aos-init aos-animate" data-aos="fade-up">
+            <div class="stat-card frost-card winter-card aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value counter" data-target="5">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="ice-crystal"></div>
+            </div>
+            
+            <div class="stat-card frost-card winter-card aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value counter" data-target="20">0</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+                <div class="ice-crystal"></div>
+            </div>
+            
+            <a href="https://github.com/H-Ossama" class="stat-card-link" target="_blank" rel="noopener noreferrer" aria-label="View Projects on GitHub">
+                <div class="stat-card frost-card winter-card aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value counter" data-target="15">0</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="view-more">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="ice-crystal"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="floating-particles"></div>
+    <div class="snow-particles"></div>
+</section>
+
+<!-- About Section -->
+<section class="about snowfall-parallax" id="about">
+    <div class="about-wrapper">
+        <div class="about-left">
+            <div class="about-image-container winter-card frosted-card">
+                <div class="image-frame">
+                    <img src="../assets/images/oussama.png" alt="Oussama Hattan">
+                </div>
+                <div class="ice-crystal"></div>
+            </div>
+        </div>
+        <div class="about-right">
+            <div class="about-title">
+                <h2>About Me</h2>
+                <p class="about-subtitle">Turning Ideas into Efficient Backend Solutions</p>
+            </div>
+            <div class="about-content">
+                <p class="about-text">
+                    I'm a <strong>passionate Backend Developer</strong> with over 3 years of experience in building scalable server-side applications. 
+                    My journey in software development started with a deep curiosity about how things work behind the scenes, 
+                    which led me to specialize in backend technologies.
+                </p>
+                <p class="about-text">
+                    With a <strong>Bachelor's in Web Development</strong> and certification in <strong>Full Stack Engineering</strong> from ALX, 
+                    I combine strong theoretical foundations with hands-on experience in modern development practices. 
+                    I specialize in Node.js, Python, and database optimization, always focusing on writing clean, 
+                    efficient, and maintainable code.
+                </p>
+                
+                <div class="skill-tags">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Docker</span>
+                </div>
+                
+                <div class="about-stats">
+                    <div class="stat-item" data-aos="fade-up">
+                        <div class="stat-number" data-count="23">0</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-number" data-count="3">0</div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                </div>
+                
+                <div class="about-cta">
+                    <a href="../assets/HATTAN_OUSSAMA.pdf" class="cta-button download-btn" download>
+                        <i class="fas fa-download"></i>
+                        <span>Download CV</span>
+                    </a>
+                    <a href="../assets/HATTAN_OUSSAMA.pdf" class="cta-button view-btn" target="_blank">
+                        <i class="fas fa-eye"></i>
+                        <span>View CV</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pro User Login Modal -->
+<div id="pro-user-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Pro User Login</h2>
+        <form id="pro-user-form">
+            <div class="form-group">
+                <label for="pro-user-name">Full Name</label>
+                <input type="text" id="pro-user-name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-email">Email</label>
+                <input type="email" id="pro-user-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-company">Company</label>
+                <input type="text" id="pro-user-company" name="company" required>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-project-type">Project Type</label>
+                <select id="pro-user-project-type" name="projectType" required>
+                    <option value="">Select project type</option>
+                    <option value="api">API Development</option>
+                    <option value="database">Database Architecture</option>
+                    <option value="system">System Integration</option>
+                    <option value="microservices">Microservices Development</option>
+                    <option value="cloud">Cloud Infrastructure</option>
+                    <option value="automation">Process Automation</option>
+                    <option value="maintenance">System Maintenance & Support</option>
+                    <option value="security">Security Implementation</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="project-timeline">Estimated Timeline</label>
+                <select id="project-timeline" name="timeline" required>
+                    <option value="">Select timeline</option>
+                    <option value="urgent">Urgent (1-2 weeks)</option>
+                    <option value="short">Short term (2-4 weeks)</option>
+                    <option value="medium">Medium term (1-3 months)</option>
+                    <option value="long">Long term (3+ months)</option>
+                    <option value="flexible">Flexible</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pro-user-message">Message</label>
+                <textarea id="pro-user-message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .modal select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(30, 30, 30, 0.95);
+        color: #fff;
+        font-size: 16px;
+        margin-top: 5px;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 1em;
+    }
+
+    .modal select option {
+        background: #1e1e1e;
+        color: #fff;
+        padding: 10px;
+    }
+
+    .modal select:focus {
+        outline: none;
+        border-color: var(--primary-gold);
+    }
+
+    [data-theme="light"] .modal select {
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #333;
+        border-color: rgba(0, 0, 0, 0.1);
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    }
+
+    [data-theme="light"] .modal select option {
+        background: #ffffff;
+        color: #333;
+        padding: 10px;
+    }
+</style>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Me</h3>
+                <p>Backend developer specializing in building robust and scalable server-side applications. Passionate about creating efficient solutions and learning new technologies.</p>
+                <div class="social-links">
+                    <a href="https://github.com/H-Ossama" class="github" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/h-oussama/" class="linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://x.com/H_Oussama77" class="twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter Profile">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                    <a href="mailto:ossamahattan@gmail.com" class="email" aria-label="Email Contact">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#projects"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                    <li><a href="#technologies"><i class="fas fa-chevron-right"></i> Technologies</a></li>
+                    <li><a href="#education"><i class="fas fa-chevron-right"></i> Education</a></li>
+                    <li><a href="#about"><i class="fas fa-chevron-right"></i> About</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li>
+                        <a href="mailto:ossamahattan@gmail.com">
+                            <i class="fas fa-envelope"></i>
+                            ossamahattan@gmail.com
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/H-Ossama" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                            @H-Ossama
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/h-oussama/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin-in"></i>
+                            h-oussama
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="current-year">2024</span> Hattan Oussama. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./script.js"></script>
+    <script src="scripts/profileCard.js"></script>
+    <script src="./scripts/particles-config.js"></script>
+    <script src="scripts/analytics.js"></script>
+    <script src="scripts/ai-chat.js"></script>
+    <!-- Mobile animation speed fix -->
+    <script src="scripts/mobile-animation-speed-fix.js"></script>
+    <!-- Only the unified mobile navigation should run on this page -->
+    <script src="scripts/mobile-nav-unified.js"></script>
+    <script src="scripts/bottom-nav-handler.js"></script>
+    <!-- <script src="scripts/blur-effect-handler.js"></script> DISABLED - causes section boundary blur issues -->
+    <script>
+        // Loading screen handler with longer transitions
+        window.addEventListener('load', () => {
+            const loadingScreen = document.querySelector('.loading-screen');
+            const isMobile = window.innerWidth <= 674;
+            
+            // Different timing for mobile vs desktop
+            const displayTime = isMobile ? 5500 : 3500; // Much longer for mobile
+            const fadeOutTime = isMobile ? 2000 : 1000; // Much longer fade-out for mobile
+            
+            setTimeout(() => {
+                loadingScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, fadeOutTime);
+            }, displayTime);
+        });
+
+        // Fix theme toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create new instance of theme transition manager
+            const transitionManager = new ThemeTransitionManager();
+            
+            // Remove any existing event listeners by cloning and replacing the button
+            const themeToggle = document.querySelector('.theme-toggle');
+            const newThemeToggle = themeToggle.cloneNode(true);
+            themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+            
+            // Add the fixed event listener
+            newThemeToggle.addEventListener('click', async () => {
+                // Get current theme
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'dark') {
+                    // Only show popup when going from dark to light
+                    const confirmed = await transitionManager.showThemePopup();
+                    
+                    if (confirmed) {
+                        // Dark to Light transition
+                        await transitionManager.transitionToLight();
+                    }
+                } else {
+                    // Light to Dark transition - no popup
+                    await transitionManager.transitionToDark();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+<style>
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle i {
+    font-size: 1.4rem;
+}
+
+.lang-switch {
+    width: auto;
+    min-width: 50px;
+    height: 50px;
+    padding: 0 1rem;
+    border-radius: 15px;
+    position: fixed;
+    top: 2rem;
+    right: 6rem;
+    z-index: 10001;
+    background: rgba(18, 18, 18, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+}
+
+.lang-switch:hover {
+    transform: scale(1.05) translateY(-2px);
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.lang-switch-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    color: var(--primary-gold);
+    cursor: pointer;
+    padding: 0;
+}
+
+.lang-switch-btn i {
+    font-size: 1.4rem;
+}
+
+.current-lang {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--primary-gold);
+}
+
+.lang-options {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 0.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 120px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.lang-switch.active .lang-options {
+    display: flex;
+}
+
+.lang-option {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    color: var(--text-white);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.lang-option:hover,
+.lang-option.active {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary-gold);
+}
+
+[data-theme="light"] .lang-switch {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(52, 152, 219, 0.2);
+    box-shadow: 0 8px 32px rgba(52, 152, 219, 0.15);
+}
+
+[data-theme="light"] .lang-switch-btn,
+[data-theme="light"] .current-lang {
+    color: #3498DB;
+}
+
+[data-theme="light"] .lang-options {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(52, 152, 219, 0.2);
+}
+
+[data-theme="light"] .lang-option {
+    color: #2c3e50;
+}
+
+[data-theme="light"] .lang-option:hover,
+[data-theme="light"] .lang-option.active {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498DB;
+}
+
+/* Match theme toggle responsive behavior */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+    .lang-switch {
+        top: 1rem;
+        right: 4rem;
+        width: auto;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 0.75rem;
+    }
+    .lang-switch-btn i {
+        font-size: 1.2rem;
+    }
+    .current-lang {
+        font-size: 0.8rem;
+    }
+}
+</style>

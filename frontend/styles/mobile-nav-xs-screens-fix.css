@@ -1,0 +1,103 @@
+/* Extra Small Screen Navigation Fix */
+/* Ensures mobile navigation drawer works reliably on very small screens (<400px) */
+
+@media screen and (max-width: 400px) {
+    /* Force mobile navigation menu to display correctly on extra small screens */
+    .mobile-nav-menu {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 90vw !important; /* Wider percentage of viewport on tiny screens */
+        max-width: 280px !important;
+        height: 100vh !important;
+        background: rgba(18, 18, 18, 0.97) !important;
+        z-index: 99999 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s ease-in-out !important;
+        overflow-y: auto !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.7) !important;
+    }
+    
+    /* Make sure overlay covers entire screen */
+    .mobile-nav-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important; /* Force full viewport width */
+        height: 100vh !important; /* Force full viewport height */
+        background: rgba(0, 0, 0, 0.8) !important;
+        z-index: 99998 !important;
+    }
+    
+    /* Ensure the hamburger menu button is visible and properly positioned */
+    .mobile-nav-toggle,
+    .open-drawer-toggle {
+        top: 0.5rem !important;
+        left: 0.5rem !important;
+        width: 45px !important;
+        height: 45px !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        z-index: 100000 !important; /* Above everything */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Make sure navigation links are visible and properly sized */
+    .mobile-nav-links {
+        padding-top: 1rem !important;
+    }
+    
+    .mobile-nav-links a,
+    .mobile-nav-link {
+        padding: 1rem 1.25rem !important;
+        font-size: 1rem !important;
+        min-height: 48px !important; /* Better touch target */
+    }
+    
+    /* Improve header visibility */
+    .mobile-nav-header {
+        padding: 1rem !important;
+        min-height: 60px !important;
+    }
+    
+    /* Ensure drawer appears when active */
+    .mobile-nav-menu.active {
+        transform: translateX(0) !important;
+        left: 0 !important;
+    }
+    
+    /* Debug outline to make sure the drawer is visible */
+    .mobile-nav-menu.active {
+        outline: 2px solid rgba(212, 175, 55, 0.5) !important;
+    }
+    
+    /* Make sure controls at bottom of drawer are visible */
+    .mobile-nav-controls {
+        padding: 1rem !important;
+    }
+    
+    /* Force mobile menu to be visible when active by adding higher z-index */
+    .mobile-nav-menu.active {
+        z-index: 999999 !important;
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] {
+    @media screen and (max-width: 400px) {
+        .mobile-nav-menu {
+            background: rgba(255, 255, 255, 0.97) !important;
+        }
+        
+        .mobile-nav-toggle,
+        .open-drawer-toggle {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(37, 99, 235, 0.4) !important;
+        }
+    }
+}

@@ -1,0 +1,314 @@
+/* Mobile Layout Professional Fixes
+   Addressing top section layout and profile card issues on mobile
+   Created: August 10, 2025
+*/
+
+/* Fix top section layout on mobile */
+@media screen and (max-width: 768px) {
+    /* Hero section spacing and layout */
+    .hero {
+        padding: 5rem 1rem 3rem !important;
+        min-height: auto !important;
+        overflow: visible !important;
+    }
+
+    .hero-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+        padding-top: 2rem !important;
+    }
+    
+    /* Adjust hero content spacing */
+    .hero-content {
+        order: 0 !important;
+        text-align: left !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Fix spacing around hero content */
+    .hero-header {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .greeting-wrapper {
+        margin-top: 0 !important;
+    }
+    
+    .name {
+        font-size: 2.25rem !important;
+        line-height: 1.2 !important;
+        margin: 0.5rem 0 !important;
+    }
+    
+    .hero-description-wrapper {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .hero-description {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+    }
+    
+    /* CTA buttons alignment */
+    .cta-wrapper {
+        margin-top: 0.5rem !important;
+    }
+    
+    .cta-container {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 1rem !important;
+        justify-content: flex-start !important;
+    }
+    
+    .cta-button {
+        padding: 0.75rem 1.5rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Profile card positioning and styling */
+    .hero-profile {
+        margin-top: 1rem !important;
+        padding: 0 !important;
+    }
+    
+    .profile-wrapper {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 290px !important;
+        margin: 0 auto !important;
+        transform: none !important;
+    }
+    
+    .profile-card {
+        width: 100% !important;
+        max-width: 290px !important;
+        height: 370px !important;
+        margin: 0 auto !important;
+        animation: none !important;
+        transform: none !important;
+        border-radius: 20px !important;
+        background: rgba(26, 26, 26, 0.7) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(212, 175, 55, 0.15) !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .profile-card:hover {
+        transform: translateY(-5px) !important;
+    }
+    
+    .profile-content {
+        border-radius: 20px !important;
+        overflow: hidden !important;
+    }
+    
+    .profile-frame {
+        padding: 12px !important;
+        height: 370px !important;
+        transform: none !important;
+        background: transparent !important;
+        border: none !important;
+    }
+    
+    .profile-image {
+        border-radius: 15px !important;
+        transform: none !important;
+    }
+    
+    /* Fix profile toggle button */
+    .profile-toggle-btn {
+        width: 36px !important;
+        height: 36px !important;
+        top: 15px !important;
+        right: 15px !important;
+        font-size: 0.9rem !important;
+        background: rgba(212, 175, 55, 0.1) !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        z-index: 10 !important;
+    }
+    
+    /* Fix profile info back */
+    .profile-info-back {
+        padding: 1.5rem !important;
+    }
+    
+    .info-header h2 {
+        font-size: 1.6rem !important;
+    }
+    
+    .profession {
+        font-size: 1rem !important;
+    }
+    
+    .info-divider {
+        margin: 1rem auto !important;
+    }
+    
+    .info-section {
+        margin: 1.2rem 0 !important;
+    }
+    
+    .info-item {
+        padding: 0.7rem !important;
+        margin-bottom: 0.7rem !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+    }
+    
+    .info-item i {
+        font-size: 1rem !important;
+    }
+    
+    .info-detail .label {
+        font-size: 0.8rem !important;
+    }
+    
+    .info-detail .value {
+        font-size: 1rem !important;
+    }
+    
+    .contact-link {
+        padding: 0.7rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Fix scroll indicator */
+    .scroll-indicator {
+        bottom: 1rem !important;
+        transform: translateX(-50%) scale(0.8) !important;
+    }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 480px) {
+    .hero {
+        padding: 5rem 0.75rem 3rem !important;
+    }
+    
+    .name {
+        font-size: 2rem !important;
+    }
+    
+    .hero-description {
+        font-size: 0.9rem !important;
+    }
+    
+    .cta-container {
+        flex-wrap: wrap !important;
+    }
+    
+    .cta-button {
+        flex: 1 0 45% !important;
+        padding: 0.7rem 1rem !important;
+        font-size: 0.85rem !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    
+    .profile-card {
+        max-width: 270px !important;
+        height: 350px !important;
+    }
+    
+    .profile-frame {
+        height: 350px !important;
+    }
+    
+    .info-header h2 {
+        font-size: 1.4rem !important;
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 375px) {
+    .hero {
+        padding: 4.5rem 0.5rem 2.5rem !important;
+    }
+    
+    .name {
+        font-size: 1.8rem !important;
+    }
+    
+    .title-wrapper {
+        height: 2.5rem !important;
+    }
+    
+    .dynamic-text .text {
+        font-size: 1.2rem !important;
+    }
+    
+    .hero-description {
+        font-size: 0.85rem !important;
+    }
+    
+    .cta-button {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .profile-card {
+        max-width: 250px !important;
+        height: 330px !important;
+    }
+    
+    .profile-frame {
+        height: 330px !important;
+    }
+}
+
+/* Fix for the Mobile Menu Button placement */
+@media screen and (max-width: 768px) {
+    .mobile-nav-toggle-unified {
+        top: 0.75rem !important;
+        right: 0.75rem !important;
+        z-index: 10002 !important;
+    }
+    
+    .theme-toggle,
+    .lang-switch {
+        display: none !important; /* Hide desktop controls on mobile */
+    }
+    
+    /* Fix positioning and spacing for top section elements */
+    .top-controls {
+        padding: 0.75rem !important;
+    }
+    
+    .logo-container {
+        position: fixed !important;
+        top: 0.75rem !important;
+        left: 0.75rem !important;
+        z-index: 10000 !important;
+    }
+    
+    .logo {
+        font-size: 1.1rem !important;
+    }
+    
+    .logo-text {
+        font-size: 1.1rem !important;
+    }
+    
+    .portfolio-tag {
+        display: none !important; /* Hide on mobile to save space */
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .profile-card {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(37, 99, 235, 0.15) !important;
+}
+
+[data-theme="light"] .info-item {
+    background: rgba(37, 99, 235, 0.05) !important;
+    border: 1px solid rgba(37, 99, 235, 0.1) !important;
+}
+
+[data-theme="light"] .profile-toggle-btn {
+    background: rgba(37, 99, 235, 0.1) !important;
+    border: 1px solid rgba(37, 99, 235, 0.3) !important;
+    color: #2563eb !important;
+}

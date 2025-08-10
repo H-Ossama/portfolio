@@ -1,0 +1,112 @@
+/* Mobile Animation Speed Fix
+   Specifically fixes fast-moving profile card and scroll indicator on mobile screens
+*/
+
+/* Small mobile screens - slowest animations */
+@media screen and (max-width: 674px) {
+    /* Profile card floating animation - much slower */
+    .profile-card {
+        animation: profileFloat 8s ease-in-out infinite !important;
+    }
+    
+    .hero-profile {
+        animation: profileFloat 8s ease-in-out infinite !important;
+    }
+    
+    /* Scroll indicator wheel and arrows - much slower */
+    .scroll-indicator .wheel {
+        animation: scroll 3s infinite !important; /* Was 1.5s, now 3s */
+    }
+    
+    .scroll-indicator .arrows span {
+        animation: arrowDown 3s infinite !important; /* Was 1.5s, now 3s */
+    }
+    
+    /* General floating elements - slower */
+    .floating-shapes .shape {
+        animation-duration: 8s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    /* All profile float elements */
+    [class*="profile-float"],
+    .profile-content {
+        animation-duration: 6s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    /* Badge pulse animation - slower */
+    .experience-badge {
+        animation: badgePulse 4s ease-in-out infinite !important; /* Was 2s */
+    }
+    
+    /* Border pulse animations - slower */
+    .cta-button {
+        animation-duration: 3s !important; /* Was 1.5s */
+    }
+    
+    /* Any remaining fast animations */
+    .profile-frame {
+        transition-duration: 0.6s !important;
+        animation-duration: 6s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+}
+
+/* Medium mobile screens (675px-768px) - moderate speed */
+@media screen and (min-width: 675px) and (max-width: 768px) {
+    /* Profile card floating animation - slower */
+    .profile-card {
+        animation: profileFloat 6s ease-in-out infinite !important;
+    }
+    
+    .hero-profile {
+        animation: profileFloat 6s ease-in-out infinite !important;
+    }
+    
+    /* Scroll indicator - slower */
+    .scroll-indicator .wheel {
+        animation: scroll 2.5s infinite !important;
+    }
+    
+    .scroll-indicator .arrows span {
+        animation: arrowDown 2.5s infinite !important;
+    }
+    
+    /* Floating shapes */
+    .floating-shapes .shape {
+        animation-duration: 6s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    /* Badge pulse */
+    .experience-badge {
+        animation: badgePulse 3s ease-in-out infinite !important;
+    }
+}
+
+/* Additional fix for any fast mouse/wheel animations */
+@media screen and (max-width: 768px) {
+    /* Ensure scroll indicator components are consistent */
+    .mouse {
+        animation-duration: 3s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    /* Any other scroll-related animations */
+    [class*="scroll"] {
+        animation-duration: 3s !important;
+        animation-timing-function: ease-in-out !important;
+    }
+    
+    /* Profile card hover effects - slower on mobile */
+    .profile-card:hover .profile-content {
+        transition-duration: 0.8s !important;
+    }
+    
+    /* General animation performance fix */
+    * {
+        animation-fill-mode: both !important;
+        backface-visibility: hidden !important;
+    }
+}

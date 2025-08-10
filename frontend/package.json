@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-frontend",
+  "version": "1.0.0",
+  "description": "Portfolio Frontend - HTML, CSS, JavaScript client-side application",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 8080 -c-1",
+    "build": "echo 'No build process needed for static frontend'",
+    "dev": "npx http-server . -p 8080 -c-1 --cors"
+  },
+  "keywords": ["portfolio", "frontend", "html", "css", "javascript"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
