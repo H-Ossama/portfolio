@@ -17,7 +17,7 @@ class AIChat {
 
     async loadPersonalInfo() {
         try {
-            const response = await fetch('/api/personal-info');
+            const response = await fetch(config.getApiPath('/api/personal-info'));
             if (response.ok) {
                 this.personalInfo = await response.json();
             }

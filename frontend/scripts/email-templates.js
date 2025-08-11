@@ -435,7 +435,7 @@ const emailTemplatesModule = (() => {
         reader.readAsDataURL(file);
         
         // Then upload to server
-        fetch('/api/upload/email-logo', {
+        fetch(config.getApiPath('/api/upload/email-logo'), {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`

@@ -95,7 +95,7 @@ const profileManager = {
                 return; // Stop execution
             }
 
-            const response = await fetch('/api/user/settings', {
+            const response = await fetch(config.getApiPath('/api/user/settings'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -236,7 +236,7 @@ const profileManager = {
                 formData.append('avatar', imageFile);
             }
 
-            const response = await fetch('/api/user/settings', {
+            const response = await fetch(config.getApiPath('/api/user/settings'), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`

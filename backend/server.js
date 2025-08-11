@@ -37,14 +37,16 @@ const limiter = rateLimit({
 app.use('/api/contact', limiter);
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/portfolio', {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => {
-    console.log('Connected to MongoDB');
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+// Initialize default user after connection
+mongoose.connection.once('open', () => {
     initializeDefaultUser();
-}).catch(err => {
-    console.error('MongoDB connection error:', err);
 });
 
 // Models
@@ -1735,6 +1737,8 @@ app.use(errorHandler);
 
 // Initialize cron jobs
 initCronJobs();
+
+
 
 // Start server
 app.listen(PORT, () => {

@@ -1,7 +1,7 @@
 const analytics = {
     async recordVisit() {
         try {
-            await fetch('/api/stats/visitor', { method: 'POST' });
+            await fetch(config.getApiPath('/api/stats/visitor'), { method: 'POST' });
         } catch (error) {
             console.error('Error recording visit:', error);
         }
@@ -9,7 +9,7 @@ const analytics = {
 
     async recordCVView() {
         try {
-            await fetch('/api/stats/cv-view', { method: 'POST' });
+            await fetch(config.getApiPath('/api/stats/cv-view'), { method: 'POST' });
         } catch (error) {
             console.error('Error recording CV view:', error);
         }
@@ -17,7 +17,7 @@ const analytics = {
 
     async recordCVDownload() {
         try {
-            await fetch('/api/stats/cv-download', { method: 'POST' });
+            await fetch(config.getApiPath('/api/stats/cv-download'), { method: 'POST' });
         } catch (error) {
             console.error('Error recording CV download:', error);
         }

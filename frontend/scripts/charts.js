@@ -10,7 +10,7 @@ const charts = {
 
     async fetchStats() {
         try {
-            const response = await fetch('/api/stats', {
+            const response = await fetch(config.getApiPath('/api/stats'), {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }

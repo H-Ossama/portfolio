@@ -84,7 +84,7 @@ const messageManager = {
 
     async loadMessages() {
         try {
-            const response = await fetch('/api/messages', {
+            const response = await fetch(config.getApiPath('/api/messages'), {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }

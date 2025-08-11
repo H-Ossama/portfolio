@@ -134,7 +134,7 @@ async function loadProjectsData() {
     }
 
     try {
-        const response = await fetch('/api/projects'); // Fetch from the backend API
+        const response = await fetch(config.getApiPath('/api/projects')); // Fetch from the backend API
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -1694,7 +1694,7 @@ async function loadEducationData() {
     }
     
     try {
-        const response = await fetch('/api/public/education');
+        const response = await fetch(config.getApiPath('/api/public/education'));
         if (!response.ok) throw new Error('Failed to load education data');
         const educationData = await response.json();
         renderEducationData(educationData);

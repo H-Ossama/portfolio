@@ -257,7 +257,7 @@ const contactFormHandler = {
                 read: false
             };
 
-            const response = await fetch('/api/contact', { // Changed endpoint from /api/messages
+            const response = await fetch(config.getApiPath('/api/contact'), { // Changed endpoint from /api/messages
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

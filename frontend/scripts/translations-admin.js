@@ -450,7 +450,7 @@ const translationManager = {
             const translationData = this.collectTranslationData();
             
             // Send to server
-            const response = await fetch('/api/translations', {
+            const response = await fetch(config.getApiPath('/api/translations'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

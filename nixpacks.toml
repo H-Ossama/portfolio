@@ -1,0 +1,13 @@
+[phases.install]
+cmds = [
+  "cd backend && npm ci --only=production"
+]
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "node backend/server.js"
+
+[variables]
+NODE_ENV = "production"
